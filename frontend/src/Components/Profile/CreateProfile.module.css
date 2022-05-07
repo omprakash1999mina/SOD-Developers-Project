@@ -1,0 +1,119 @@
+.container
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid purple;
+    background-color: white;
+    border-radius: 20px;
+    width: 65%;
+    margin: 5px auto;
+    padding: 5px;
+}
+.primaryHeading
+{
+    text-align: center;
+    font-size: xx-large;
+    font-weight: 800;
+    margin: 3px 0;
+}
+.form 
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: auto;
+}
+.bigBox
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.box
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 40px;
+}
+.secondaryHeading
+{
+    text-align: center;
+    font-size: x-large;
+    font-weight: 600;
+    margin: 2px 0;
+}
+.basicDetails, .acDetails
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.input
+{
+    text-align: center;
+    outline: none;
+    border: none;
+    color: black;
+    background-color: #edf2f8;
+    height: 40px;
+    width: 250px;
+    margin: 7px 0px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: medium;
+    font-weight: 400;
+}
+.documents
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+.imageInput
+{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 5px;
+}
+.label
+{
+    text-align: left;
+    font-size: medium;
+    font-weight: 400;
+    margin-right: 10px;
+}
+.btn
+{
+    outline: none;
+    text-align: center;
+    background-color: #3ecf8e;
+    border-radius: 15px;
+    color: white;
+    font-size: large;
+    font-weight: 500;
+    padding: 7px 15px;
+    margin: 7px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.btn:hover
+{
+    transform: translateY(-1px);
+    color: rgb(247, 234, 234);
+}
+.btn:active
+{
+    transform: scale(0.8);
+}
