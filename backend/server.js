@@ -10,8 +10,6 @@ import path from "path";
 import cors from "cors";
 
 global.appRoot = path.resolve(__dirname);
-app.use(express.static('public'));
-
 app.use(cors({
   origin: '*',
   methods: ["GET", "POST","DELETE","PUT"]
@@ -20,6 +18,7 @@ app.use(cors({
 //Database connection
 try{
 
+  // mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
   mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
   const db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
@@ -31,25 +30,16 @@ try{
 }
 
 app.use(express.json());
-// const bodyParser = require("body-parser");
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(express.urlencoded({ extended: false}));
-
-// app.post()
 app.use('/api', routes);
-app.use('/public', express.static('public'));
-
 app.use(errorHandler);
-
-// app.set('build',path.join(__dirname, '/build'));
-
-app.get('/',(req,res)=>{
-  res.render('index')
-})
+app.set('view engine', 'ejs');
 
 //The 404 Route (ALWAYS Keep this as the last route)
 app.get('*',(req, res)=>{
-  res.render('NotFound.html')
+  res.render('NotFound')
+})
+app.post('*',(req, res)=>{
+  res.render('NotFound')
 })
 
 app.listen(PORT,() => console.log(`Listening on port ${PORT}. `));

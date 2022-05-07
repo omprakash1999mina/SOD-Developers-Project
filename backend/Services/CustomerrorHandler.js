@@ -22,6 +22,9 @@ class CustomErrorHandler extends Error{
     static serverError(message = ' Internal server error  '){
         return new CustomErrorHandler(500, message);
     }
+    static badRequest(message = 'bad request !!'){
+        return new CustomErrorHandler(400, message);
+    }
 }
 
 export default CustomErrorHandler;
