@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     border: 2px solid purple;
-    background-color: white;
+    background-color: #e4e9f0;
     border-radius: 20px;
     width: 65%;
     margin: 5px auto;
@@ -60,7 +60,7 @@
 {
     text-align: center;
     outline: none;
-    border: none;
+    border: 2px solid black;
     color: black;
     background-color: #edf2f8;
     height: 40px;
@@ -70,6 +70,11 @@
     border-radius: 20px;
     font-size: medium;
     font-weight: 400;
+}
+.input:focus
+{
+    border-color: purple;
+    box-shadow: 0 0 5px purple;
 }
 .documents
 {
@@ -92,6 +97,7 @@
     font-size: medium;
     font-weight: 400;
     margin-right: 10px;
+    width: 200px;
 }
 .btn
 {

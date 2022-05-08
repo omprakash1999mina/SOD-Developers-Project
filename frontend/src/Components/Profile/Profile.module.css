@@ -61,6 +61,7 @@
 .slipsPhoto
 {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     border: 1px solid black;
@@ -70,8 +71,44 @@
 }
 .slipsPhoto img
 {
-    height: 100%;
+    height: 85%;
     width: 100%;
+}
+.buttons 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 15%;
+}
+.btn
+{
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    background-color: #3ecf8e;
+    border-radius: 5px;
+    color: white;
+    font-size: large;
+    font-weight: 400;
+    margin: 0px 7px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.btn:hover
+{
+    transform: translateY(-0.5px);
+    color: rgb(247, 234, 234);
+}
+.btn:active
+{
+    transform: scale(0.8);
 }
 .right 
 {
