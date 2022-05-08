@@ -14,8 +14,14 @@ const CreateProfile = () => {
                         <div className={style.basicDetails}>
                             <input className={style.input} type="text" name='name' placeholder='Enter your name' required />
                             <input className={style.input} type="text" name='age' placeholder='Enter your age' required />
+                            <div className={style.radios}>
+                                <label htmlFor="gender">Gender : &nbsp;</label>
+                                <label htmlFor="male">Male</label><input className={style.radio} id='male' type="radio" name='gender' value='Male'/>
+                                <label htmlFor="female">Female</label><input className={style.radio} id='female' type="radio" name='gender' value='Female'/>
+                                <label htmlFor="other">Other</label><input className={style.radio} id='other' type="radio" name='gender' value='Other'/>
+                            </div>
                             <input className={style.input} type="email" name='email' placeholder='Enter your email' required />
-                            <input className={style.input} type="text" name='aadharNo' placeholder='Enter your Aadhar No.' required />
+                            <input className={style.input} type="text" name='aadhaarNo' placeholder='Enter your Aadhaar No.' required />
                             <input className={style.input} type="text" name='ctc' placeholder='Enter your CTC' required />
                         </div>
                     </div>
@@ -37,8 +43,8 @@ const CreateProfile = () => {
                         <input className={style.imgInp} type="file" name='profilePhoto' id='profilePhoto' required />
                     </div>
                     <div className={style.imageInput}>
-                        <label className={style.label} htmlFor="aadharPhoto">Upload Aadhar Card Photo</label>
-                        <input className={style.imgInp} type="file" name='aadharPhoto' id='aadharPhoto' required />
+                        <label className={style.label} htmlFor="aadhaarPhoto">Upload Aadhaar Card Photo</label>
+                        <input className={style.imgInp} type="file" name='aadhaarPhoto' id='aadhaarPhoto' required />
                     </div>
                     <div className={style.imageInput}>
                         <label className={style.label} htmlFor="panPhoto">Upload PAN Card Photo</label>
