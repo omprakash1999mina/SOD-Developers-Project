@@ -8,6 +8,7 @@ import TakeLoan from './Components/TakeLoan/TakeLoan.js';
 import Profile from './Components/Profile/Profile.js';
 import PublicProfile from './Components/Profile/PublicProfile.js';
 import CreateProfile from './Components/Profile/CreateProfile.js';
+import ModifyProfile from './Components/Profile/ModifyProfile.js';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route exact path = '/profile' element={<Profile/>}/>
           <Route exact path = '/publicProfile' element={<PublicProfile/>}/>
           <Route exact path = '/createProfile' element={<CreateProfile/>}/>
+          <Route exact path = '/modifyProfile' element={<ModifyProfile/>}/>
         </Routes>
       </Router>
     </>

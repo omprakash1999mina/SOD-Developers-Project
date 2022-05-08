@@ -15,7 +15,7 @@ const userData = {
   salarySlips : ['https://www.hrcabin.com/wp-content/uploads/2021/05/Salary-slip-format-in-excel-download.png', 'https://i.pinimg.com/736x/ed/f6/28/edf6283d6955d5b8488e977e8613b557.jpg'],
   acHolderName : 'Sudheer Kumar Prajapat',
   acNo : '123456780123456',
-  ifacCode : 'hgvfdhbfgh',
+  ifacCode : 'abc',
   bankName : 'PNB'
 }
 
