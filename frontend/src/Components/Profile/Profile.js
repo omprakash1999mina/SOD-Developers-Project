@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import style from './Profile.module.css';
 
@@ -15,11 +15,12 @@ const userData = {
   salarySlips : ['https://www.hrcabin.com/wp-content/uploads/2021/05/Salary-slip-format-in-excel-download.png', 'https://i.pinimg.com/736x/ed/f6/28/edf6283d6955d5b8488e977e8613b557.jpg'],
   acHolderName : 'Sudheer Kumar Prajapat',
   acNo : '123456780123456',
-  ifacCode : 'hgvfdhbfgh',
+  ifacCode : 'abc',
   bankName : 'PNB'
 }
 
 const Profile = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
   return (
     <div className={style.container}>
       <div className={style.left}>
@@ -35,7 +36,11 @@ const Profile = () => {
           </div>  
         </div>
         <div className={style.slipsPhoto}>
-          <img src={userData.salarySlips[0]} alt="Slips"/>
+          <img src={userData.salarySlips[currentIndex]} alt="Slips"/>
+          <div className={style.buttons}>
+            <button className={style.btn} onClick={() => ((currentIndex === 0)?(setCurrentIndex(userData.salarySlips.length-1)):(setCurrentIndex(currentIndex-1)))}>&lt;</button>
+            <button className={style.btn} onClick={() => ((currentIndex === userData.salarySlips.length-1)?(setCurrentIndex(0)):(setCurrentIndex(currentIndex+1)))}>&gt;</button>
+          </div>
         </div>
       </div>
       <div className={style.right}>
