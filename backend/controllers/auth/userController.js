@@ -1,22 +1,22 @@
 import { User } from "../../models";
 import CustomErrorHandler from "../../Services/CustomerrorHandler";
-import multer from 'multer';
+// import multer from 'multer';
 import path from 'path';
 import bcrypt from 'bcrypt';
 import Joi, { ref } from 'joi';
 import fs from 'fs';
 
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, 'uploads/'),
-    filename: (req, file, cb) =>  {
-        const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`;
-        // 3746674586-836534453.png
-        cb(null, uniqueName);
-    }
-});
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => cb(null, 'uploads/'),
+//     filename: (req, file, cb) =>  {
+//         const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`;
+//         // 3746674586-836534453.png
+//         cb(null, uniqueName);
+//     }
+// });
 
-const handleMultipartData = multer({ storage, limits: { fileSize: 1000000 * 2 } }).single('image') // 2mb
+// const handleMultipartData = multer({ storage, limits: { fileSize: 1000000 * 2 } }).single('image') // 2mb
 
 
 const userController = {

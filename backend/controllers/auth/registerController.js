@@ -2,7 +2,7 @@ import Joi, { ref } from 'joi';
 import { User , RefreshToken } from "../../models";
 import CustomErrorHandler from '../../Services/CustomerrorHandler';
 import bcrypt from 'bcrypt';
-import multer from 'multer';
+// import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import JwtService from '../../Services/JwtService';
@@ -10,16 +10,16 @@ import { REFRESH_SECRET } from '../../config';
 
 
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, 'uploads/'),
-    filename: (req, file, cb) =>  {
-        const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`;
-        // 3746674586-836534453.png
-        cb(null, uniqueName);
-    }
-});
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => cb(null, 'uploads/'),
+//     filename: (req, file, cb) =>  {
+//         const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`;
+//         // 3746674586-836534453.png
+//         cb(null, uniqueName);
+//     }
+// });
 
-const handleMultipartData = multer({ storage, limits: { fileSize: 1000000 * 5 } }).single('image') // 5mb
+// const handleMultipartData = multer({ storage, limits: { fileSize: 1000000 * 5 } }).single('image') // 5mb
 
 
 
