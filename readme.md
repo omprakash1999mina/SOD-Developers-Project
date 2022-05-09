@@ -1,5 +1,5 @@
-# Rest-Api-s
-This repository give you a bit introduction about REST-API'S 
+# SOD DEVELOPERS PROJECT
+This is a project developed by SOD ( [Sudheer](https://github.com/sudheerkrp) [Omprakash](https://github.com/omprakash1999mina) and [Devansh](https://github.com/Devansh-gaur-1611) ) and in this project we are building a C2C based Loan Platform.
 ## Available Scripts
 In the project directory, you can run:
 ### For Setup the Project follow these Steps
