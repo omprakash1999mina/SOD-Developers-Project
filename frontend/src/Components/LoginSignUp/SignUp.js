@@ -21,7 +21,7 @@ const SignUp = () => {
   }
     return (
         <div className={style.card}>
-          <h1 className={style.heading}>Sign Un</h1>
+          <h1 className={style.heading}>Sign Up</h1>
             <div className={style.signUp} onClick={(e) => submitHandler(e)}>
               <img src={googleLogo} alt="Google"/>
               <span>Sign up with Google</span>
