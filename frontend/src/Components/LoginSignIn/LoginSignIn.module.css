@@ -1,0 +1,127 @@
+@import url(https://fonts.googleapis.com/css2?family=Roboto&display=swap);
+
+/* CSS Reset */
+*
+{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Container Styling */
+.container
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(34 38 45);
+}
+
+/* Card Component Styling */
+.card
+{
+  /* background-color: rgb(24,24,24); */
+  background-color: #e4e9f0;
+  width: 300px;
+  height: 325px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 10px 10px 5px #dde2e9;
+  margin: 10px;
+}
+.heading
+{
+  color: black;
+  font-size: x-large;
+  font-weight: lighter;
+  font-family: 'Roboto', sans-serif;
+  margin: 10px;
+  text-decoration: underline;
+}
+.formGroup
+{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.link
+{
+  text-decoration: none;
+  color: #5b5bd4;
+  font-size: medium;
+  font-weight: lighter;
+  font-family: 'Roboto', sans-serif;
+  margin: 10px;
+}
+.link:hover
+{
+  color: #3a3aaf;
+}
+
+/* Input Component Styling */
+.input
+{
+    text-align: center;
+    outline: none;
+    border: 2px solid black;
+    color: black;
+    background-color: #edf2f8;
+    height: 40px;
+    width: 250px;
+    margin: 10px 0px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: medium;
+    font-weight: 400;
+}
+.input:focus
+{
+    border-color: purple;
+    box-shadow: 0 0 5px purple;
+}
+
+/* Btn Component Styling */
+.btn
+{
+    outline: none;
+    text-align: center;
+    background-color: #3ecf8e;
+    border-radius: 15px;
+    color: white;
+    font-size: large;
+    font-weight: 500;
+    padding: 7px 15px;
+    margin: 7px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.btn:hover
+{
+    transform: translateY(-1px);
+    color: rgb(247, 234, 234);
+}
+.btn:active
+{
+    transform: scale(0.8);
+}
+.signIn
+{
+  margin: 50px 0px;
+  cursor: pointer;
+}
+.signIn:hover
+{
+  box-shadow: 3px 3px 4px rgb(182, 224, 243),
+              -3px -3px 4px rgb(182, 224, 243);
+}
+.signIn:active
+{
+  transform: scale(0.97);
+}
