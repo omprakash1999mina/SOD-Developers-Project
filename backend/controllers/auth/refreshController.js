@@ -3,35 +3,32 @@ import { User ,RefreshToken } from "../../models";
 import CustomErrorHandler from '../../Services/CustomerrorHandler';
 import JwtService from '../../Services/JwtService';
 import { REFRESH_SECRET } from '../../config';
+import discord from '../../Services/discord';
 
 
 
 const refreshController = {
 
      async refresh(req, res, next){
-        
-        ///      refresh  Logic
+        // refresh  Logic
 
         const refreshSchema = Joi.object({
             refresh_token: Joi.string().required()
-
         });
 
         const { error } = refreshSchema.validate(req.body);
 
         if(error){
-
             return next(error);
         }
         //   DataBasse   
-
-
         let refreshtoken;
         
         try{
             refreshtoken = await RefreshToken.findOne({refresh_token: req.body.refresh_token });
             if(!refreshtoken){
-                return  next( CustomErrorHandler.unAuthorized(' Invailed refresh token 1'));
+                discord.SendErrorMessageToDiscord(req.body.refresh_token, "Refresh token", "invalid refresh token !!");
+                return  next( CustomErrorHandler.unAuthorized(' Invalid refresh token'));
             }    
 
             let userId;
@@ -40,21 +37,21 @@ const refreshController = {
                 const { _id } = JwtService.verify(refreshtoken.refresh_token , REFRESH_SECRET);
                 userId = _id;
             }catch(err){
-                return next(CustomErrorHandler.unAuthorized('  Invalid refresh token  2'));
+                discord.SendErrorMessageToDiscord(req.body.refresh_token, "Refresh token", err);
+                return next(CustomErrorHandler.unAuthorized('  Invalid refresh token'));
             }
 
             const user = await User.findOne({_id: userId});
             if(!user){
-                return next(CustomErrorHandler.unAuthorized('  No user found  !!!  '));
+                discord.SendErrorMessageToDiscord(req.body.refresh_token + "\n"+ userId, "Refresh token", "invalid refresh token user not exist !!");
+                return next(CustomErrorHandler.unAuthorized('  Invalid refresh token !!  '));
             }
-
 
                 //       Tokens
             const access_token = JwtService.sign({_id: user._id, role: user.role } );
-            const refresh_token = JwtService.sign({_id: user._id, role: user.role },'1y',REFRESH_SECRET);
+            const refresh_token = JwtService.sign({_id: user._id, role: user.role },'7d',REFRESH_SECRET);
     
                 //       Database Whitelilst 
-                
             RefreshToken.create({refres_htoken: refresh_token});
             res.json({access_token , refresh_token});
 
