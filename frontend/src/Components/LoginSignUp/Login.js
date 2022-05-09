@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import style from './LoginSignIn.module.css';
+import style from './LoginSignUp.module.css';
 
 const Input = (props) => {
 return (
@@ -24,7 +24,7 @@ const Login = () => {
             <Input type='password' name='password' placeholder='Enter Password'></Input>
             <Btn btnText = 'Login'></Btn>
           </form>
-          <Link to="/signIn" className={style.link}>Don't have an account?</Link>
+          <Link to="/signUp" className={style.link}>Don't have an account?</Link>
           <Link to="/forgetPassword" className={style.link}>Forget password?</Link>
         </div>
       );
