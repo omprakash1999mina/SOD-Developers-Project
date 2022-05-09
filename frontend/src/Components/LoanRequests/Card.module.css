@@ -175,11 +175,11 @@
 }
 
 /* Media Query for Responsiveness */
-@media only screen and (min-width:993px)
+@media only screen and (min-width:768px)
 {
     .modalContent
     {
-        width: 900px;
+        width: 500px;
     }
 }
 @media only screen and (max-width:768px)
@@ -187,11 +187,6 @@
     .modal
     {
         padding-top: 50px;
-        
-    }
-    .modalContent
-    {
-        width: 500px;
         
     }
 }
