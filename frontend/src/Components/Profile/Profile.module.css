@@ -1,0 +1,138 @@
+.container
+{
+    display: flex;
+    flex-direction: row;
+    /* width: 100%; */
+    justify-content: space-evenly;
+    align-items: center;
+    border: 2px solid purple;
+    border-radius: 20px;
+    margin: 10px;
+    margin-top: 25px;
+    padding: 10px;
+}
+.left
+{
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 40%;
+}
+.profilePhoto
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border-radius: 50%; */
+    border: 1px solid black;
+    margin: 5px;
+    height: 75px;
+    width: 75px;
+}
+.profilePhoto img
+{
+    height: 100%;
+    width: 100%;
+}
+.documentsPhoto
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.aadharPhoto, .panPhoto
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    margin: 7px;
+    height: 150px;
+    width: 250px;
+}
+.aadharPhoto img, .panPhoto img
+{
+    height: 100%;
+    width: 100%;
+}
+.slipsPhoto
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    margin: 7px;
+    height: 250px;
+    width: 510px;
+}
+.slipsPhoto img
+{
+    height: 85%;
+    width: 100%;
+}
+.buttons 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 15%;
+}
+.btn
+{
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    background-color: #3ecf8e;
+    border-radius: 5px;
+    color: white;
+    font-size: large;
+    font-weight: 400;
+    margin: 0px 7px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.btn:hover
+{
+    transform: translateY(-0.5px);
+    color: rgb(247, 234, 234);
+}
+.btn:active
+{
+    transform: scale(0.8);
+}
+.right 
+{
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    /* align-items: center; */
+    width: 40%;
+}
+.heading
+{
+    text-align: left;
+    font-size: xx-large;
+    font-weight: 800;
+    text-decoration: underline;
+    margin: 5px 0px;
+}
+
+.detail
+{
+    text-align: left;
+    font-size: x-large;
+    font-weight: 500;
+    /* text-decoration: underline; */
+    margin: 5px 0px;
+}
