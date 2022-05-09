@@ -11,6 +11,7 @@ import CreateProfile from './Components/Profile/CreateProfile.js';
 import ModifyProfile from './Components/Profile/ModifyProfile.js';
 import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicy.js';
 import LoanPolicy from './Components/LoanPolicy/LoanPolicy.js';
+import AccountStatus from './Components/AccountStatus/AccountStatus.js';
 import Login from './Components/LoginSignIn/Login';
 import SignIp from './Components/LoginSignIn/SignIn';
 import Footer from "./Components/Footer/Footer.js";
@@ -31,6 +32,7 @@ function App() {
             <Route exact path = '/modifyProfile' element={<ModifyProfile/>}/>
             <Route exact path = '/privacyPolicy' element={<PrivacyPolicy/>}/>
             <Route exact path = '/loanPolicy' element={<LoanPolicy/>}/>
+            <Route exact path = '/accountStatus' element={<AccountStatus/>}/>
             <Route exact path='/login' element={<Login/>}></Route>
             <Route exact path='/signIn' element={<SignIp/>}></Route>
           </Routes>

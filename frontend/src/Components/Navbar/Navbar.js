@@ -31,6 +31,7 @@ const Navbar = () => {
             <li><Link className={style.link} to="/">Home</Link></li>
             <li><Link className={style.link} to="/loanRequests">Loan Requests</Link></li>
             <li><Link className={style.link} to="/takeLoan">Take Loan</Link></li>
+            <li><Link className={style.link} to="/accountStatus">Account Status</Link></li>
         </ul>
         <div className={`${style.profile} ${(!burgerClicked)?(style.hideVisibility):('')}`} onClick={handelClick}>
           <img src={profile} alt="Profile"/>
