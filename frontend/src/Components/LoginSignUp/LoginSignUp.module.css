@@ -111,17 +111,31 @@
 {
     transform: scale(0.8);
 }
-.signIn
+.signUp
 {
   margin: 50px 0px;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 5px;
+  background-color: rgb(238, 238, 238);
+  border-radius: 10px;
+  color: rgb(117, 142, 160);
+  font-size: medium;
+  font-weight: 500;
 }
-.signIn:hover
+.signUp:hover
 {
   box-shadow: 3px 3px 4px rgb(182, 224, 243),
               -3px -3px 4px rgb(182, 224, 243);
 }
-.signIn:active
+.signUp:active
 {
   transform: scale(0.97);
+}
+.signUp img
+{
+  width: 45px;
 }
