@@ -12,10 +12,10 @@ const Footer = () => {
             <div className={style.logo}>
                 <img src={logo} alt="Logo"/>
             </div>
-                <div className={style.companyName}>LoanCircle</div>
+                <div className={style.companyName}>LoanCorner</div>
         </div>
         <div className={style.middle}>
-            <div className={style.text}>&copy;2022 LoanCircle</div>
+            <div className={style.text}>&copy;2022 LoanCorner</div>
             <div className={style.text}>All Rights Reserved!</div>
         </div>
         <div className={style.right}>
