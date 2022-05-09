@@ -79,3 +79,28 @@
 {
     transform: scale(0.8);
 }
+
+/* Media Query for Responsiveness */
+@media only screen and (max-width : 450px) 
+{
+    .secondaryHeading
+    {
+        font-size: large;
+    }
+}
+@media only screen and (max-width : 300px) 
+{
+    .container
+    {
+        padding: 10px 5px;
+    }
+    .form
+    {
+        padding: 15px 3px;
+        width: 100%;
+    }
+    .input
+    {
+        width: 95%;
+    }
+}
