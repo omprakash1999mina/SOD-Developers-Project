@@ -7,3 +7,10 @@
     align-items: center;
     flex-wrap: wrap;
 }
+.heading
+{
+    text-align: center;
+    font-size: xx-large;
+    font-weight: 800;
+    margin: 0.75rem 0;
+}
