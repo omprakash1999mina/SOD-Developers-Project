@@ -123,6 +123,10 @@
     {
         display: block;
     }
+    .navbar
+    {
+        width: 100%;
+    }
     .navbar, .navList, .profile
     {
         flex-direction: column;
