@@ -17,10 +17,12 @@ const AccountStatus = () => {
     const depositBalance = (e) => {
         e.preventDefault();
         handelOpenModal1(e);
+        setBalance(balance+5);
     }
     const withdrawBalance = (e) => {
         e.preventDefault();
         handelOpenModal2(e);
+        setBalance(balance-5);
     }
     return (
         <>

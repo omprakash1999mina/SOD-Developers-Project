@@ -20,7 +20,7 @@ const Login = () => {
         <div className={style.card}>
           <form className={style.formGroup}>
             <h1 className={style.heading}>Login</h1>
-            <Input type='text' name='username' placeholder='Enter Username'></Input>
+            <Input type='email' name='email' placeholder='Enter Email'></Input>
             <Input type='password' name='password' placeholder='Enter Password'></Input>
             <Btn btnText = 'Login'></Btn>
           </form>
