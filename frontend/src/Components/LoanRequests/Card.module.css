@@ -117,39 +117,6 @@
 {
     display: none;
 }
-@media (max-width:600px)
-{
-    .modal
-    {
-        padding-top: 30px;
-    }
-    .modalContent
-    {
-        margin: 0 10px;
-        width: auto!important;
-        
-    }
-}
-@media (max-width:768px)
-{
-    .modal
-    {
-        padding-top: 50px;
-        
-    }
-    .modalContent
-    {
-        width: 500px;
-        
-    }
-}
-@media (min-width:993px)
-{
-    .modalContent
-    {
-        width: 900px;
-    }
-}
 .link
 {
     color: #0088ff;
@@ -205,4 +172,74 @@
 .btn:active
 {
     transform: scale(0.8);
+}
+
+/* Media Query for Responsiveness */
+@media only screen and (min-width:993px)
+{
+    .modalContent
+    {
+        width: 900px;
+    }
+}
+@media only screen and (max-width:768px)
+{
+    .modal
+    {
+        padding-top: 50px;
+        
+    }
+    .modalContent
+    {
+        width: 500px;
+        
+    }
+}
+@media only screen and (max-width:600px)
+{
+    .modal
+    {
+        padding-top: 30px;
+    }
+    .modalContent
+    {
+        margin: 0 10px;
+        width: auto!important;
+        
+    }
+    .row
+    {
+        flex-direction: column;
+    }
+    .btn, .item
+    {
+        margin: 5px;
+    }
+}
+@media only screen and (max-width:400px)
+{
+    .modalContent
+    {
+        width: 95%;
+    }
+    .modalHeading
+    {
+        font-size: medium;
+        font-weight: bold;
+    }
+    .form
+    {
+        width: 95%;
+    }
+    .modalInput, .textarea 
+    {
+        width: 100%;
+        font-size: small;
+        font-weight: lighter;
+        padding: 5px;
+    }
+    .card
+    {
+        width: 80%;
+    }
 }
