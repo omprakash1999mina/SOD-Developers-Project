@@ -49,7 +49,7 @@
 .link
 {
     text-decoration: none;
-    color: white;
+    /* color: white; */
     padding: 5px;
     font-size: medium;
     font-weight: 500;
@@ -58,4 +58,13 @@
 .link:hover
 {
     text-decoration: underline;
+}
+
+/* Media Query Responsiveness */
+@media only screen and (max-width: 500px) 
+{
+    .footer
+    {
+        flex-direction: column;
+    }
 }
