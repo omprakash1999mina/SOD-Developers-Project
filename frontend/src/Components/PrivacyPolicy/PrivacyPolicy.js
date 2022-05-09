@@ -31,7 +31,7 @@ const PrivacyPolicy = () => {
           </li>
           <li>
             Company (referred to as either "the Company", "We", "Us" or "Our" in
-            this Agreement) refers to LoanCircle.
+            this Agreement) refers to LoanCorner.
           </li>
           <li>
             Device means any device that can access the Service such as a
@@ -61,8 +61,8 @@ const PrivacyPolicy = () => {
             (for example, the duration of a page visit).
           </li>
           <li>
-            Website refers to LoanCircle, accessible from
-            https://www.loancircle.com
+            Website refers to LoanCorner, accessible from
+            https://www.loancorner.com
           </li>
           <li>
             You means the individual accessing or using the Service, or the
@@ -167,7 +167,7 @@ const PrivacyPolicy = () => {
           </li>
         </ol>
         <p>
-          LoanCircle is committed to safeguarding any information submitted to us
+          LoanCorner is committed to safeguarding any information submitted to us
           on this Website and/ or Services. The privacy notice provides you with
           a summary of the type of information collected by us, policy regarding
           use of that information and measures taken to safeguard that
@@ -223,7 +223,7 @@ const PrivacyPolicy = () => {
           us:
         </p>
         <ul className={styles.list}>
-          <li>By email: info@loancircle.in </li>
+          <li>By email: info@loancorner.in </li>
         </ul>
       </div>
     </div>
