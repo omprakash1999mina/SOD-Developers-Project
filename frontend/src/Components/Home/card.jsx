@@ -5,7 +5,7 @@ const Card = ({src,text}) => {
   return (
     <div className={style.cardMainContainer}>
         <div className={style.cardTopContainer}>
-            <img className={style.cardImage} src={src} />
+            <img className={style.cardImage} src={src} alt='Card Background'/>
         </div>
         <div className={style.container}>
             <h1 className={style.cardText}>{text}</h1>

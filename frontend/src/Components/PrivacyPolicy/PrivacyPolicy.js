@@ -31,8 +31,7 @@ const PrivacyPolicy = () => {
           </li>
           <li>
             Company (referred to as either "the Company", "We", "Us" or "Our" in
-            this Agreement) refers to VISHWESHWARNATH TECHNOLOGIES PRIVATE
-            LIMITED.
+            this Agreement) refers to LoanCircle.
           </li>
           <li>
             Device means any device that can access the Service such as a
@@ -59,11 +58,11 @@ const PrivacyPolicy = () => {
           <li>
             Usage Data refers to data collected automatically, either generated
             by the use of the Service or from the Service infrastructure itself
-            (for example, the duration of a page visit). */
+            (for example, the duration of a page visit).
           </li>
           <li>
-            Website refers to Dhandolat, accessible from
-            https://www.dhandolat.in
+            Website refers to LoanCircle, accessible from
+            https://www.loancircle.com
           </li>
           <li>
             You means the individual accessing or using the Service, or the
@@ -164,19 +163,19 @@ const PrivacyPolicy = () => {
             To prevent or detect fraud or abuse of our services as well as to
             prevent, detect and investigate potential unlawful or prohibited
             activities, including to comply with requests from courts or
-            authorised Government agencies in accordance with applicable laws.{" "}
+            authorized Government agencies in accordance with applicable laws.{" "}
           </li>
         </ol>
         <p>
-          Dhandolat is committed to safeguarding any information submitted to us
+          LoanCircle is committed to safeguarding any information submitted to us
           on this Website and/ or Services. The privacy notice provides you with
           a summary of the type of information collected by us, policy regarding
           use of that information and measures taken to safeguard that
           information. <br></br>
           <br></br>
-          We may use third party service providers to help us analyse certain
+          We may use third party service providers to help us analyze certain
           online activities. For example, these service providers may help us
-          analyse visitor activity on the Site. We may permit these service
+          analyze visitor activity on the Site. We may permit these service
           providers to use cookies and other technologies to perform these
           services for us.<br></br>
           <br></br>
@@ -224,7 +223,7 @@ const PrivacyPolicy = () => {
           us:
         </p>
         <ul className={styles.list}>
-          <li>By email: info@dhandolat.in </li>
+          <li>By email: info@loancircle.in </li>
         </ul>
       </div>
     </div>
