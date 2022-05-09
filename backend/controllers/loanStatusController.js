@@ -1,6 +1,7 @@
 import Joi from 'joi';
 import { Loan, LoanRequest, User } from "../models";
 import CustomErrorHandler from '../Services/CustomerrorHandler';
+import discord from '../Services/discord';
 
 const loanStatusReqSchema = Joi.object({
     lendersId: Joi.string().required(),
@@ -55,8 +56,13 @@ const loanStatusController = {
                 loanId,
                 type,
             });
+            if(!document){
+                discord.SendErrorMessageToDiscord(req.body.lendersId, "Accept Loan", "error in creating loan reaquest in database !!");
+                return next(CustomErrorHandler.serverError())
+            }
             console.log(document);
         } catch (err) {
+            discord.SendErrorMessageToDiscord(req.body.lendersId, "Accept Loan", err);
             return next(err);
         }
 
@@ -79,19 +85,24 @@ const loanStatusController = {
                 status: "rejected",
             });
             if (!loan) {
+                discord.SendErrorMessageToDiscord(req.body.loanId, "Reject", "loan Id not exist in database !!");
                 return next(new Error("No such data for reject !!!   "));
             }
             const type = "reject";
 
-            await LoanRequest.create({
-                // name: name,
+            const request = await LoanRequest.create({
                 lendersId,
                 loanId,
                 type,
                 message
             });
-            res.status(201).json({status: "success", msg:"Successfully rejected"});
+            if (!request) {
+                discord.SendErrorMessageToDiscord(req.body.lendersId, "Reject", "error in creating loan request in database !!");
+                return next(CustomErrorHandler.serverError())
+            }
+            res.status(201).json({ status: "success", msg: "Successfully rejected" });
         } catch (err) {
+            discord.SendErrorMessageToDiscord(req.body.lendersId, "Reject", err);
             return next(CustomErrorHandler.serverError());
         }
 
@@ -106,6 +117,7 @@ const loanStatusController = {
         const { lendersId, loanId, message } = req.body;
         const exist = isUserExist(lendersId);
         if (!exist) {
+            discord.SendErrorMessageToDiscord(req.body.lendersId, "Negotiation", "user not exist in our database !!");
             return next(CustomErrorHandler.unAuthorized())
         }
         const type = "negotiation";
@@ -113,19 +125,23 @@ const loanStatusController = {
             // document = await Product.find().select('-updatedAt -__v -createdAt').sort({_id: -1});
             const loan = await Loan.find({ loanId });
             if (loan.status === "available") {
-                await LoanRequest.create({
-                    // name: name,
+                const request = await LoanRequest.create({
                     lendersId,
                     loanId,
                     type,
                     message
                 });
-                res.status(201).json({status: "success", msg:"negotiation request posted successfully !"});
+                if (!request) {
+                    discord.SendErrorMessageToDiscord(req.body.lendersId, "Negotiation", "error in creating loan request in database !!");
+                    return next(CustomErrorHandler.serverError())
+                }
+                res.status(201).json({ status: "success", msg: "negotiation request posted successfully !" });
             }
             else {
                 return next(CustomErrorHandler.badRequest("Loan already accepted by someone !!"))
             }
         } catch (err) {
+            discord.SendErrorMessageToDiscord(req.body.lendersId, "Negotiation", err);
             return next(CustomErrorHandler.serverError());
         }
 
@@ -137,21 +153,24 @@ const loanStatusController = {
         try {
             document = await Loan.find({ status: "available" }).select('-__v')
         } catch (error) {
+            discord.SendErrorMessageToDiscord(req.body.customerId, "Get Request All Loans", error);
             return next(error)
         }
         res.status(200).json({ status: "success", loans: document });
     },
 
     async getLoan(req, res, next) {
-        console.log(req.params.id)
+        // console.log(req.params.id)
         let document;
         try {
             document = await Loan.findOne({ status: "available", _id: req.params.id }).select('-__v')
             // console.log(document)
-            if(!document){
+            if (!document) {
+                discord.SendErrorMessageToDiscord(req.params.id, "Get Request One loan", "Loain Id is not exist in our database !!");
                 return next(CustomErrorHandler.badRequest())
             }
         } catch (error) {
+            discord.SendErrorMessageToDiscord(req.params.id, "Get Request One Loan", error);
             return next(error)
         }
         res.status(200).json({ status: "success", loan: document });
@@ -164,14 +183,14 @@ const loanStatusController = {
             tenure: Joi.string().required(),
             intRate: Joi.string().required(),
         });
-        const exist = isUserExist(lendersId);
-
-        if (!exist) {
-            return next(CustomErrorHandler.unAuthorized())
-        }
         const { error } = applyLoanSchema.validate(req.body);
         if (error) {
             return next(CustomErrorHandler.badRequest());
+        }
+        const exist = isUserExist(req.body.customerId);
+        if (!exist) {
+            discord.SendErrorMessageToDiscord(req.body.customerId, "Apply Loan", "User not exist in our database !!");
+            return next(CustomErrorHandler.unAuthorized())
         }
 
         try {
@@ -183,13 +202,59 @@ const loanStatusController = {
                 intRate
             })
             if (!document) {
+                discord.SendErrorMessageToDiscord(req.body.customerId, "Apply Loan", "error in creating loan in database ");
                 return next(CustomErrorHandler.serverError())
             }
             console.log(document);
         } catch (error) {
+            discord.SendErrorMessageToDiscord(req.body.customerId, "Apply Loan", error);
             return next(error);
         }
         res.status(200).json({ status: "success", msg: "Loan applied successfully." });
+    },
+
+    async updateLoan(req, res, next) {
+        const updateLoanSchema = Joi.object({
+            customerId: Joi.string().required(),
+            loanId: Joi.string().required(),
+            loanAmount: Joi.string().required(),
+            tenure: Joi.string().required(),
+            intRate: Joi.string().required()
+        })
+
+        const { error } = updateLoanSchema.validate(req.body);
+        if (error) {
+            return next(CustomErrorHandler.badRequest());
+        }
+
+        try {
+            const { customerId, loanId, loanAmount, tenure, intRate } = req.body;
+
+            const exist = isUserExist(customerId);
+            if (!exist) {
+                discord.SendErrorMessageToDiscord(req.body.customerId, "Loan Update", "error user not exist in database ");
+                return next(CustomErrorHandler.unAuthorized())
+            }
+            const loan = await Loan.exists({ _id: loanId })
+            if (!loan) {
+                return next(CustomErrorHandler.badRequest())
+            }
+
+            let document = await Loan.findOneAndUpdate({ _id: loanId }, {
+                loanAmount,
+                tenure,
+                intRate
+            })
+            if (!document) {
+                discord.SendErrorMessageToDiscord(req.body.customerId, "Loan Update", "error in finding and update loanId");
+                return next(CustomErrorHandler.serverError())
+            }
+            console.log(document);
+        } catch (error) {
+            discord.SendErrorMessageToDiscord(req.body.customerId, "Loan Update", error);
+            return next(error);
+        }
+        res.status(200).json({ status: "success", msg: "Loan updated successfully." });
     }
 
 }

@@ -9,6 +9,8 @@ import Profile from './Components/Profile/Profile.js';
 import PublicProfile from './Components/Profile/PublicProfile.js';
 import CreateProfile from './Components/Profile/CreateProfile.js';
 import ModifyProfile from './Components/Profile/ModifyProfile.js';
+import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicy.js';
+import LoanPolicy from './Components/LoanPolicy/LoanPolicy.js';
 import Footer from "./Components/Footer/Footer.js";
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
             <Route exact path = '/publicProfile' element={<PublicProfile/>}/>
             <Route exact path = '/createProfile' element={<CreateProfile/>}/>
             <Route exact path = '/modifyProfile' element={<ModifyProfile/>}/>
+            <Route exact path = '/privacyPolicy' element={<PrivacyPolicy/>}/>
+            <Route exact path = '/loanPolicy' element={<LoanPolicy/>}/>
           </Routes>
           <Footer></Footer>
         </div>
