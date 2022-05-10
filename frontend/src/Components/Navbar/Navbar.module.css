@@ -137,9 +137,29 @@
     {
         margin: 5px 0px;
     }
+    .select
+    {
+        /* position: absolute; */
+        right: calc(50%);
+        transform: translateX(50%);
+        top: 260px;
+        /* padding: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        background-color: #3ecf8e; */
+    }
     .hideVisibility
     {
         display: none;
+    }
+    .visible
+    {
+        display: block !important;
+        position: fixed;
+        top: 0px;
+        left: 0px;
     }
     .expandNav
     {

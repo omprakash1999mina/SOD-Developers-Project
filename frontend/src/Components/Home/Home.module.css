@@ -125,22 +125,8 @@
     height: 80px;
   }
 }
-/* @media screen and (max-width:420px) {
-  
-  .cardMainContainer {
-    width: 300px;
-    height:350px
-  }
-  .cardImage {
-    width: 300px; 
-    height: 250px; 
-  }
-  .container{
-    height: 80px;
-  }
-} */
 
-@media screen and (max-width: 390px) {
+@media screen and (max-width: 420px) {
   .title {
     font-size: xx-large;
   }
