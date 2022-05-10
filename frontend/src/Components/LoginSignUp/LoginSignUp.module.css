@@ -139,3 +139,24 @@
 {
   width: 45px;
 }
+
+/* Media Query for Responsiveness */
+@media only screen and (max-width : 400px) 
+{
+  .card
+  {
+    width: 85%;
+  }
+}
+@media only screen and (max-width : 300px) 
+{
+  .card
+  {
+    width: 90%;
+    height: 300px;
+  }
+  .input
+  {
+    width: 95%;
+  }
+}
