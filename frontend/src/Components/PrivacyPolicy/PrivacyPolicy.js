@@ -9,7 +9,7 @@ const PrivacyPolicy = () => {
         <h1 className={styles.title}>Privacy Policy</h1>
       </div>
       <div className={styles.mainContainer}>
-        <h1>Loan Corner</h1> <br></br>
+        <h1 className= {styles.primaryHeading}>LoanCorner</h1> <br></br>
         <p>
           This Privacy Policy describes Our policies and procedures on the
           collection, use and disclosure of Your information when You use the
@@ -23,7 +23,7 @@ const PrivacyPolicy = () => {
           accordance with this Privacy Policy
         </p>{" "}
         <br></br> <br></br>
-        <h1>Purpose of Privacy Policy</h1> <br></br>
+        <h1 className= {styles.primaryHeading}>Purpose of Privacy Policy</h1> <br></br>
         <ul className={styles.list}>
           <li>
             Account means a unique account created for You to access our Service
@@ -71,9 +71,9 @@ const PrivacyPolicy = () => {
           </li>
         </ul>
         <br></br> <br></br>
-        <h1>Collection of Information</h1> <br></br> <br></br>
-        <h2>Personal Data</h2> <br></br>
-        <p>
+        <h1 className= {styles.primaryHeading}>Collection of Information</h1> <br></br> <br></br>
+        <h2 className= {styles.secondaryHeading}>Personal Data</h2> <br></br>
+        <div>
           While using Our Service, We may ask You to provide Us with certain
           personally identifiable information that can be used to contact or
           identify You. Personally identifiable information may include, but is
@@ -88,10 +88,10 @@ const PrivacyPolicy = () => {
           <li>Password chosen by User</li>
           <li>Other details as user may volunteer</li>
         </ol>
-        </p>
+        </div>
        
         <br></br> <br></br>
-        <h2>Usage Data</h2> <br></br>
+        <h2 className= {styles.secondaryHeading}>Usage Data</h2> <br></br>
         <p>
           Usage Data is collected automatically when using the Service.{" "}
           <br></br>
@@ -112,7 +112,7 @@ const PrivacyPolicy = () => {
           browser sends whenever You visit our Service or when You access the
           Service by or through a mobile device.
         </p> <br></br> <br></br>
-        <h2>Information from Third-Party Social Media Services</h2> <br></br>
+        <h2 className= {styles.secondaryHeading}>Information from Third-Party Social Media Services</h2> <br></br>
         <p>
           The Company allows You to create an account and log in to use the
           Service through the following Third-party Social Media Services:
@@ -137,13 +137,13 @@ const PrivacyPolicy = () => {
           Policy.{" "}
         </p>{" "}
         <br></br> <br></br>
-        <h1>Use of Personal information</h1> <br></br> 
-        <p>
+        <h1 className= {styles.primaryHeading}>Use of Personal information</h1> <br></br> 
+        <div>
           In general, Personal Information you submit to us regarding you or
           your company is used either to respond to requests that you make, or
           to aid us in serving you better. We use such Personal Information in
           the following ways :
-        </p>
+        </div>
         <ol className={styles.list}>
           <li>To identify you as a user in our system</li>
           <li>To provide improved administration of our Site and Services</li>
@@ -191,14 +191,14 @@ const PrivacyPolicy = () => {
           <br></br>
         </p>{" "}
         <br></br> <br></br>
-        <h1>Children</h1> <br></br>
+        <h1 className= {styles.primaryHeading}>Children</h1> <br></br>
         <p>
           This Site is not directed to children under the age of 13
           (“Children”), and we do not knowingly collect any information,
           including Personal Information, from Children.{" "}
         </p>{" "}
         <br></br> <br></br>
-        <h1>Links to Other Websites</h1><br></br>
+        <h1 className= {styles.primaryHeading}>Links to Other Websites</h1><br></br>
         <p>
           Our Service may contain links to other websites that are not operated
           by Us. If You click on a third party link, You will be directed to
@@ -208,7 +208,7 @@ const PrivacyPolicy = () => {
           third party sites or services.{" "}
         </p>{" "}
         <br></br> <br></br>
-        <h1>Changes to this Privacy Policy</h1><br></br>
+        <h1 className= {styles.primaryHeading}>Changes to this Privacy Policy</h1><br></br>
         <p>
           We may update Our Privacy Policy from time to time. We will notify You
           of any changes by posting the new Privacy Policy on this page. You are
@@ -217,7 +217,7 @@ const PrivacyPolicy = () => {
           this page.{" "}
         </p>{" "}
         <br></br> <br></br>
-        <h1>Contact Us</h1><br></br>
+        <h1 className= {styles.primaryHeading}>Contact Us</h1><br></br>
         <p>
           If you have any questions about this Privacy Policy, You can contact
           us:

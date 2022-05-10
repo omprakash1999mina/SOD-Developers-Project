@@ -6,7 +6,7 @@ const LoanPolicy = () => {
   return (
     <div className={styles.main}>
       <div className={styles.imageContainer}>
-        <h1 className={styles.title}>Privacy Policy</h1>
+        <h1 className={styles.title}>Loan Policy</h1>
       </div>
       <div className={styles.mainContainer}>
         Basically, loan portfolios have the largest effect on the total risk
@@ -32,7 +32,7 @@ const LoanPolicy = () => {
         risk, and mirroring the complexity of the activities in which a bank is
         engaged.<br></br>
         <br></br>
-        <h1>Policy Development</h1>
+        <h1 className= {styles.primaryHeading}>Policy Development</h1>
         <br></br>
         As we know risks are inevitable, banks can lighten credit risk by
         development of and cohesion to efficient and effective loan policies and
@@ -51,7 +51,7 @@ const LoanPolicy = () => {
         risk profile.
         <br></br>
         <br></br>
-        <h1>Policy Objectives</h1>
+        <h1 className= {styles.primaryHeading}>Policy Objectives</h1>
         <br></br>
         The loan policy should clearly communicate the strategic goals and
         objectives of the bank, as well as define the types of loan exposures
@@ -66,7 +66,7 @@ const LoanPolicy = () => {
         procedure manuals for loan products.
         <br></br>
         <br></br>
-        <h1>Policy Elements</h1>
+        <h1 className= {styles.primaryHeading}>Policy Elements</h1>
         <br></br>
         The regulatory agencies{`’`} examination manuals and policy statements
         can be considered as the best place to begin when deciding the key

@@ -30,7 +30,6 @@
 
 .middleContainer{
   margin:60px 20px;
-  
 }
 .link{
   text-decoration: none;
@@ -142,8 +141,6 @@
   .cardImage {
     width: 400px;  
   }
-  
-
 }
 
 @media screen and (max-width: 500px) {
@@ -153,9 +150,6 @@
   .middleTitle,.titleAbout{
     font-size:45px
   }
-}
-@media screen and (max-width:420px) {
-  
   .cardMainContainer {
     width: 300px;
     height:350px
@@ -169,13 +163,38 @@
   }
 }
 
-@media screen and (max-width: 390px) {
+@media screen and (max-width: 420px) {
   .title {
-    font-size: 30px;
+    font-size: xx-large;
+  }
+  .cardText
+  {
+    font-size: x-large;
+  }
+  .cardMainContainer {
+    width: 100%;
+  }
+  .middleContainer {
+    width: 95%;
+    margin:60px auto;
+  }
+  .middleMainContainer {
+    width: 100%;
+  }
+  .cardImage {
+    width: 100%; 
   }
   .paraAbout{
     width:95%;
     font-size:24px
   }
 }
-
+@media screen and (max-width:320px) {
+  .title {
+    font-size: x-large;
+  }
+  .cardText
+  {
+    font-size: large;
+  }
+}
