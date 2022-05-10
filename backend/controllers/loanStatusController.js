@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import { Loan, LoanRequest, User } from "../models";
+import user from '../models/user';
 import CustomErrorHandler from '../Services/CustomerrorHandler';
 import discord from '../Services/discord';
 
@@ -9,19 +10,6 @@ const loanStatusReqSchema = Joi.object({
     message: Joi.string(),
 });
 
-const isUserExist = async (lendersId) => {
-    try {
-        const user = await User.exists({ _id: lendersId })
-        console.log(user)
-        if (!user) {
-            return false
-        }
-    } catch (error) {
-        return false
-    }
-    return true
-}
-
 const loanStatusController = {
     async accept(req, res, next) {
 
@@ -30,9 +18,10 @@ const loanStatusController = {
             return next(CustomErrorHandler.badRequest());
         }
         const { lendersId, loanId } = req.body;
-        const exist = isUserExist(lendersId);
 
+        const exist = await User.exists({ _id: lendersId });
         if (!exist) {
+            discord.SendErrorMessageToDiscord(req.body.lendersId, "Accept Loan", "user not exist in our database !!");
             return next(CustomErrorHandler.unAuthorized())
         }
 
@@ -56,7 +45,7 @@ const loanStatusController = {
                 loanId,
                 type,
             });
-            if(!document){
+            if (!document) {
                 discord.SendErrorMessageToDiscord(req.body.lendersId, "Accept Loan", "error in creating loan reaquest in database !!");
                 return next(CustomErrorHandler.serverError())
             }
@@ -76,9 +65,10 @@ const loanStatusController = {
 
         try {
             const { lendersId, loanId, message } = req.body;
-            const exist = isUserExist(lendersId);
 
+            const exist = await User.exists({ _id: lendersId });
             if (!exist) {
+                discord.SendErrorMessageToDiscord(req.body.lendersId, "Reject", "user not exist in our database !!");
                 return next(CustomErrorHandler.unAuthorized())
             }
             const loan = await Loan.findOneAndUpdate({ loanId }, {
@@ -115,14 +105,13 @@ const loanStatusController = {
         }
         //  use pagination here for big data library is mongoose pagination
         const { lendersId, loanId, message } = req.body;
-        const exist = isUserExist(lendersId);
+        const exist = await User.exists({ _id: lendersId });
         if (!exist) {
             discord.SendErrorMessageToDiscord(req.body.lendersId, "Negotiation", "user not exist in our database !!");
             return next(CustomErrorHandler.unAuthorized())
         }
         const type = "negotiation";
         try {
-            // document = await Product.find().select('-updatedAt -__v -createdAt').sort({_id: -1});
             const loan = await Loan.find({ loanId });
             if (loan.status === "available") {
                 const request = await LoanRequest.create({
@@ -187,12 +176,18 @@ const loanStatusController = {
         if (error) {
             return next(CustomErrorHandler.badRequest());
         }
-        const exist = isUserExist(req.body.customerId);
+
+        const exist = await User.exists({ _id: req.body.customerId });
         if (!exist) {
             discord.SendErrorMessageToDiscord(req.body.customerId, "Apply Loan", "User not exist in our database !!");
             return next(CustomErrorHandler.unAuthorized())
         }
 
+        let already_Applied_for_loan = await Loan.findOne({ customerId: req.body.customerId })
+        if (already_Applied_for_loan.customerId) {
+            discord.SendErrorMessageToDiscord(req.body.customerId, "Apply Loan", "User already exist in database so not allowed to apply for new loan !!");
+            return next(CustomErrorHandler.badRequest("already applied for loan !!"))
+        }
         try {
             const { customerId, loanAmount, tenure, intRate } = req.body;
             let document = await Loan.create({
@@ -229,12 +224,12 @@ const loanStatusController = {
 
         try {
             const { customerId, loanId, loanAmount, tenure, intRate } = req.body;
-
-            const exist = isUserExist(customerId);
+            const exist = await User.exists({ _id: customerId });
             if (!exist) {
-                discord.SendErrorMessageToDiscord(req.body.customerId, "Loan Update", "error user not exist in database ");
+                discord.SendErrorMessageToDiscord(req.body.customerId, "Update Loan", "error user not exist in database ");
                 return next(CustomErrorHandler.unAuthorized())
             }
+
             const loan = await Loan.exists({ _id: loanId })
             if (!loan) {
                 return next(CustomErrorHandler.badRequest())
@@ -255,6 +250,42 @@ const loanStatusController = {
             return next(error);
         }
         res.status(200).json({ status: "success", msg: "Loan updated successfully." });
+    },
+
+    async updateBalance(req, res, next) {
+        const updateCashSchema = Joi.object({
+            customerId: Joi.string().required(),
+            profileAccountBalance: Joi.string().required()
+        })
+
+        const { error } = updateCashSchema.validate(req.body);
+        if (error) {
+            return next(CustomErrorHandler.badRequest(error));
+        }
+        try {
+            const { customerId, profileAccountBalance } = req.body;
+            const exist = await User.exists({ _id: customerId });
+            if (!exist) {
+                discord.SendErrorMessageToDiscord(req.body.customerId, "Profile Account Balance update", "error user not exist in database ");
+                return next(CustomErrorHandler.unAuthorized())
+            }
+            if (profileAccountBalance < 0) {
+                return next(CustomErrorHandler.badRequest())
+            }
+
+            const document = await user.findOneAndUpdate({ _id: customerId }, {
+                profileAccountBalance
+            })
+            if (!document) {
+                console.log(document)
+                return next(CustomErrorHandler.badRequest(document))
+            }
+
+        } catch (error) {
+            discord.SendErrorMessageToDiscord(req.body.customerId, "Profile account balance update", error);
+            return next(CustomErrorHandler.serverError())
+        }
+        res.status(200).json({ status: "success", msg: "Balance updated successfully." });
     }
 
 }
