@@ -43,6 +43,7 @@ const loginController = {
             const ttl = 60 * 60 * 24 * 7;
             const ok = RedisService.createRedisClient().set(user._id, refresh_token,"EX", ttl);
             // const ok = RedisService.set(redis, email, refresh_token, ttl);
+
             if (!ok) {
                 discord.SendErrorMessageToDiscord(email, "LogIN", "error in setup the token in redis !!");
                 return next(CustomErrorHandler.serverError());

@@ -3,14 +3,14 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     userName: { type: String, required: true },
-    age: {type:String, required: false },
-    gender: {type:String, required: false },
     password: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     profileImageName: {type:String, default: "" },
     profileImageLink: {type:String, default: "" },
     profileAccountBalance: {type:String, default: 0 },
     
+    age: {type:String, default: ""},
+    gender: {type:String, default: "" },
     aadhaarNumber: {type:String, default: "" },
     panNumber: {type:String, default: "" },
     ctc: {type:String, default: "" },
