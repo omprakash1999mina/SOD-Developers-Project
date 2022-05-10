@@ -184,7 +184,7 @@ const loanStatusController = {
         }
 
         let already_Applied_for_loan = await Loan.findOne({ customerId: req.body.customerId })
-        if (already_Applied_for_loan.customerId) {
+        if (already_Applied_for_loan) {
             discord.SendErrorMessageToDiscord(req.body.customerId, "Apply Loan", "User already exist in database so not allowed to apply for new loan !!");
             return next(CustomErrorHandler.badRequest("already applied for loan !!"))
         }
