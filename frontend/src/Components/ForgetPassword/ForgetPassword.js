@@ -16,12 +16,9 @@ const ForgetPassword = () => {
         e.preventDefault();
         setIsOTPSent(!isOTPSent);
     }
-    const validateOTP = (e) => {
-        e.preventDefault();
-        setIsOTPValid(!isOTPValid);
-    }
     const changePassword = (e) => {
         e.preventDefault();
+        setIsOTPValid(!isOTPValid);
         console.log('Password Changed!');
     }
     return (
@@ -30,16 +27,14 @@ const ForgetPassword = () => {
             <h1 className={style.heading}>Reset Password</h1>
             <Input type='email' name='email' placeholder='Enter Email'></Input>
             <button className={style.btn} onClick={sendOTP}>Send OTP</button>
-          </form>):((!isOTPValid)?(<form className={style.formGroup}>
+          </form>):(
+          <form className={style.formGroup}>
             <h1 className={style.heading}>Reset Password</h1>
             <Input type='text' name='otp' placeholder='Enter OTP'></Input>
-            <button className={style.btn} onClick={validateOTP}>Submit</button>
-          </form>):(<form className={style.formGroup}>
-            <h1 className={style.heading}>Change Password</h1>
             <Input type='password' name='newPassword' placeholder='Enter new password'></Input>
-            <Input type='password' name='newConfirmPassword' placeholder='Confirm Password'></Input>
-            <button className={style.btn} onClick={changePassword}>Change Password</button>
-          </form>))}
+            <Input type='password' name='newConfirmPassword' placeholder='Confirm new Password'></Input>
+            <button className={style.btn} onClick={changePassword}>Submit</button>
+          </form>)}
           <Link to="/signUp" className={style.link}>Don't have an account?</Link>
         </div>
     );
