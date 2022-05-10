@@ -8,7 +8,7 @@ import profile from '../../Assets/profile.png';
 const Navbar = () => {
   const [burgerClicked, setBurgerClicked] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('loginCredentials') || localStorage.getItem('singUpCredentials'));
   const [isProfileCreated, setIsProfileCreated] = useState(true);
   const handelBurger = () => {
     setBurgerClicked(!burgerClicked);
@@ -22,6 +22,8 @@ const Navbar = () => {
   const handelLogout = () => {
     setIsLoggedIn(false);
     setIsProfileCreated(false);
+    localStorage.removeItem('loginCredentials');
+    localStorage.removeItem('signUpCredentials');
     handelBurger();
   }
 
