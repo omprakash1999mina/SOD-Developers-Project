@@ -9,7 +9,7 @@ const PrivacyPolicy = () => {
         <h1 className={styles.title}>Privacy Policy</h1>
       </div>
       <div className={styles.mainContainer}>
-        <h1>Company Name</h1> <br></br>
+        <h1>Loan Corner</h1> <br></br>
         <p>
           This Privacy Policy describes Our policies and procedures on the
           collection, use and disclosure of Your information when You use the

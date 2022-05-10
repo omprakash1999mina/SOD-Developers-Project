@@ -1,3 +1,7 @@
+.mainContainer{
+  width: 100%;
+}
+
 .topContainer {
   width: 100%;
   height: calc(100vh - 73px);
@@ -28,8 +32,11 @@
   margin:60px 20px;
   
 }
+.link{
+  text-decoration: none;
+}
 
-.middleTitle{
+.middleTitle,.titleAbout{
   text-align: center;
   font-size:60px;
   margin-bottom:40px;
@@ -67,6 +74,31 @@
   color: white;
 }
 
+
+.imageContainerAbout{
+  margin: 30px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.imageLogoAbout{
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  
+}
+
+.paraContainerAbout{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.paraAbout{
+  width:60%;
+  font-size:30px;
+  text-align: justify;
+}
+
 @media screen and (min-width: 1700px) {
   .title {
     font-size: 80px;
@@ -90,12 +122,18 @@
     justify-content: space-evenly;
   }
 }
+@media screen and (max-width:700px) {
+  .paraAbout{
+    width:90%;
+    align-items: justify center
+  }
+}
 
 @media screen and (max-width: 600px) {
   .title {
     font-size: 50px;
   }
-  .middleTitle{
+  .middleTitle,.titleAbout{
     font-size:50px;
   }
   .cardMainContainer {
@@ -112,7 +150,7 @@
   .title {
     font-size: 40px;
   }
-  .middleTitle{
+  .middleTitle,.titleAbout{
     font-size:45px
   }
 }
@@ -134,6 +172,10 @@
 @media screen and (max-width: 390px) {
   .title {
     font-size: 30px;
+  }
+  .paraAbout{
+    width:95%;
+    font-size:24px
   }
 }
 
