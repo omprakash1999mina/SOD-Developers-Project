@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import JwtService from '../../Services/JwtService';
 import firebaseServices from '../../Services/firebaseConfig';
 import discord from '../../Services/discord';
+import RedisService from '../../Services/redis';
 
 const registerController = {
 
@@ -13,12 +14,9 @@ const registerController = {
         // validation
         const registerSchema = Joi.object({
             userName: Joi.string().min(3).max(20).required(),
-            gender: Joi.string().required(),
-            age: Joi.string().min(18).required(),
             email: Joi.string().email().required(),
             password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).min(8).max(50).required(),
             profileImageLink: Joi.string().required(),
-            profileImageName: Joi.string().required(),
 
         });
 
@@ -43,25 +41,14 @@ const registerController = {
         try {
             const exist = await User.exists({ email: req.body.email });
             if (exist) {
-                if (req.body.profileImageName) {
-                    res = firebaseServices.DeleteFileInFirebase(req.body.profileImageName)
-                }
                 // implimetation for discord error logs
-                if (!res) {
-                    discord.SendErrorMessageToDiscord(req.body.email, "Register User", "error in deleting files in firebase !!");
-                    console.log("failed to deleting file")
-                }
-                else {
-                    discord.SendErrorMessageToDiscord(req.body.email, "Register User", "error the email is already exist and All files deleted successfully");
-                    console.log("error accurs and all files deleted on firebase successfully")
-                }
+                discord.SendErrorMessageToDiscord(req.body.email, "Register User", "error the email is already exist ");
                 return next(CustomErrorHandler.alreadyExist('This email is already taken . '));
             }
         } catch (err) {
             return next(err);
         }
-
-        const { userName, age, gender, email, profileImageName, profileImageLink, password } = req.body;
+        const { userName, email, profileImageLink, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
 
         let document;
@@ -71,17 +58,22 @@ const registerController = {
         try {
             document = await User.create({
                 userName,
-                age,
-                gender,
                 email,
-                profileImageName,
                 profileImageLink,
                 password: hashedPassword
             });
             console.log(document);
 
-            access_token = JwtService.sign({ _id: document._id, role: document.role });
-            refresh_token = JwtService.sign({ _id: document._id, role: document.role });
+            access_token = JwtService.sign({ refresh_token: document._id });
+            refresh_token = JwtService.sign({ _id: document._id });
+            //       redis caching
+            const ttl = 60 * 60 * 24 * 7;
+            const working = RedisService.createRedisClient().set(document._id, refresh_token, "EX", ttl);
+            // const working = RedisService.set(email, refresh_token, ttl);
+            if (!working) {
+                discord.SendErrorMessageToDiscord(email, "LogIN", "error in setup the otp in redis !!");
+                return next(CustomErrorHandler.serverError());
+            }
 
         } catch (err) {
             discord.SendErrorMessageToDiscord(req.body.email, "Register User", err);
