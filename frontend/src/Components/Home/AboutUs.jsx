@@ -4,7 +4,7 @@ import logo from "../../Assets/logo.jpg";
 
 const AboutUs = () => {
   return (
-    <>
+    <div className={styles.mainAboutContainer}>
       <h1 className={styles.titleAbout}>About Us</h1>
       <div className={styles.imageContainerAbout}>
         <img src={logo} alt="Logo" className={styles.imageLogoAbout} />
@@ -20,7 +20,7 @@ const AboutUs = () => {
           the difficulties.
         </p>
       </div>
-    </>
+    </div>
   );
 };
 

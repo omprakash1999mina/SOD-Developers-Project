@@ -20,8 +20,9 @@ const Home = () => {
           <Card src={giveLoan} text="Want to give Loan" route="/loanRequests"/>
           <Card src={takeLoan} text="Want to take Loan" route="/takeLoan"/>
         </div>
-        <AboutUs/>
+        
       </div>
+      <AboutUs/>
     </div>
   );
 };
