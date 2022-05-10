@@ -26,7 +26,6 @@
 
 .middleContainer{
   margin:60px 20px;
-  
 }
 
 .middleTitle{
@@ -139,6 +138,7 @@
   }
   .middleContainer {
     width: 95%;
+    margin:60px auto;
   }
   .middleMainContainer {
     width: 100%;
