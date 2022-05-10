@@ -25,7 +25,9 @@ const Login = () => {
       });
       const json = await response.json();
       console.log(json);
-      localStorage.setItem('loginCredentials', JSON.stringify(json));
+      localStorage.setItem('accessToken', json.access_token);
+      localStorage.setItem('refreshToken', json.refresh_token);
+      localStorage.setItem('id', json.id);
       navigate('/');
     }
     return (

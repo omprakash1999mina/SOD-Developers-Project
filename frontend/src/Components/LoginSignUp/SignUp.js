@@ -50,7 +50,9 @@ const SignUp = () => {
     });
     const json = await response.json();
     setPassword('');
-    localStorage.setItem('signUpCredentials', json);
+    localStorage.setItem('accessToken', json.access_token);
+    localStorage.setItem('refreshToken', json.refresh_token);
+    localStorage.setItem('id', json.id);
     console.log(data, json);
     navigate('/');
   }
