@@ -3,6 +3,7 @@ import { Loan, LoanRequest, User } from "../models";
 import user from '../models/user';
 import CustomErrorHandler from '../Services/CustomerrorHandler';
 import discord from '../Services/discord';
+import mailService from '../Services/sendMail';
 
 const loanStatusReqSchema = Joi.object({
     lendersId: Joi.string().required(),
@@ -50,6 +51,10 @@ const loanStatusController = {
                 return next(CustomErrorHandler.serverError())
             }
             console.log(document);
+            const user = await User.findOne({ _id: lendersId })
+            const type = 'loan-accept';
+            mailService.send(user.userName, type, user.email)
+
         } catch (err) {
             discord.SendErrorMessageToDiscord(req.body.lendersId, "Accept Loan", err);
             return next(err);
@@ -90,6 +95,11 @@ const loanStatusController = {
                 discord.SendErrorMessageToDiscord(req.body.lendersId, "Reject", "error in creating loan request in database !!");
                 return next(CustomErrorHandler.serverError())
             }
+            
+            const user = await User.findOne({ _id: lendersId })
+            const mailType = 'loan-reject';
+            mailService.send(user.userName, mailType, user.email)
+
             res.status(201).json({ status: "success", msg: "Successfully rejected" });
         } catch (err) {
             discord.SendErrorMessageToDiscord(req.body.lendersId, "Reject", err);
@@ -124,6 +134,11 @@ const loanStatusController = {
                     discord.SendErrorMessageToDiscord(req.body.lendersId, "Negotiation", "error in creating loan request in database !!");
                     return next(CustomErrorHandler.serverError())
                 }
+
+                const user = await User.findOne({ _id: lendersId })
+                const mailType = 'loan-modify';
+                mailService.send(user.userName, mailType, user.email)
+
                 res.status(201).json({ status: "success", msg: "negotiation request posted successfully !" });
             }
             else {

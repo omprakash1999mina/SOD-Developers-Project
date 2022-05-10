@@ -5,7 +5,7 @@ import { loginController, userController, refreshController, loanStatusControlle
 import otpController from "../controllers/auth/otpController";
 
 router.post('/apply/loan', [auth], loanStatusController.applyLoan);
-router.get('/getloans', [auth], loanStatusController.getAllLoans);
+router.get('/getloans', loanStatusController.getAllLoans);
 router.get('/loan/:id', [auth], loanStatusController.getLoan);
 router.post('/loanrequest/accept', [auth], loanStatusController.accept);
 router.post('/loanrequest/reject', [auth], loanStatusController.reject);

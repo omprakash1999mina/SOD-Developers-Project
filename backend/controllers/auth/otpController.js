@@ -29,8 +29,7 @@ const otpController = {
             }
 
             const type = 'otp';
-            const company = "Loan Corner PVT LTD"
-            const otp = mailService.send(user.userName, type, email, company)
+            const otp = mailService.send(user.userName, type, email)
             if (otp) {
                 const ttl = 60 * 10; // for 10 mins
                 const ok = RedisService.createRedisClient().set(email, otp, "EX", ttl);
