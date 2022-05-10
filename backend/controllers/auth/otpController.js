@@ -33,8 +33,8 @@ const otpController = {
             const otp = mailService.send(user.userName, type, email, company)
             if (otp) {
                 const ttl = 60 * 10; // for 10 mins
-                let ok = RedisService.set(email, otp, ttl);
-
+                const ok = RedisService.createRedisClient().set(email, otp, "EX", ttl);
+                // let ok = RedisService.set(email, otp, ttl);
                 if (!ok) {
                     discord.SendErrorMessageToDiscord(email, "OTP SEND", "error in setup the otp in redis !!");
                     return next(CustomErrorHandler.serverError());

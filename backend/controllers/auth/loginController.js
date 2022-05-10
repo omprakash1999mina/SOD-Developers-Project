@@ -24,6 +24,7 @@ const loginController = {
         }
 
         try {
+            const { email } = req.body;
             const user = await User.findOne({ email: req.body.email });
 
             if (!user) {
@@ -36,13 +37,14 @@ const loginController = {
             }
             //      Token 
             const id = user._id;
-            const access_token = JwtService.sign({ _id: user._id, role: user.role });
-            const refresh_token = JwtService.sign({ _id: user._id, role: user.role }, '7d', REFRESH_SECRET);
+            const access_token = JwtService.sign({ _id: user._id});
+            const refresh_token = JwtService.sign({ _id: user._id }, '7d', REFRESH_SECRET);
             //       redis caching
             const ttl = 60 * 60 * 24 * 7;
-            const ok = RedisService.set(email, refresh_token, ttl);
+            const ok = RedisService.createRedisClient().set(user._id, refresh_token,"EX", ttl);
+            // const ok = RedisService.set(redis, email, refresh_token, ttl);
             if (!ok) {
-                discord.SendErrorMessageToDiscord(email, "LogIN", "error in setup the otp in redis !!");
+                discord.SendErrorMessageToDiscord(email, "LogIN", "error in setup the token in redis !!");
                 return next(CustomErrorHandler.serverError());
             }
             // await RefreshToken.create({ refresh_token: refresh_token });

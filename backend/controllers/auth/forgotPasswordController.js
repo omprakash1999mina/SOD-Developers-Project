@@ -29,8 +29,12 @@ const forgotPasswordController = {
                 return next(CustomErrorHandler.unAuthorized())
             }
             // verifing the otp with redis
-            let redisOTP = RedisService.get(email);
-            
+            let redisOTP;
+            RedisService.createRedisClient().get(email).then((res) => {
+                redisOTP = res
+            });
+            // let redisOTP = RedisService.get(email);
+
             if (redisOTP === null) {
                 return next(CustomErrorHandler.unAuthorized("OTP expired !!"));
             }

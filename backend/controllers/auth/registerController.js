@@ -61,7 +61,7 @@ const registerController = {
         } catch (err) {
             return next(err);
         }
-        if(req.body.age<18){
+        if (req.body.age < 18) {
             res = firebaseServices.DeleteFileInFirebase(req.body.profileImageName)
             return next(CustomErrorHandler.badRequest("age not less than 18 !"))
         }
@@ -84,11 +84,12 @@ const registerController = {
             });
             console.log(document);
 
-            access_token = JwtService.sign({ _id: document._id, role: document.role });
-            refresh_token = JwtService.sign({ _id: document._id, role: document.role });
+            access_token = JwtService.sign({ refresh_token: document._id});
+            refresh_token = JwtService.sign({ _id: document._id});
             //       redis caching
             const ttl = 60 * 60 * 24 * 7;
-            const working = RedisService.set(email, refresh_token, ttl);
+            const working = RedisService.createRedisClient().set(document._id, refresh_token, "EX", ttl);
+            // const working = RedisService.set(email, refresh_token, ttl);
             if (!working) {
                 discord.SendErrorMessageToDiscord(email, "LogIN", "error in setup the otp in redis !!");
                 return next(CustomErrorHandler.serverError());

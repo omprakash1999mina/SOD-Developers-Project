@@ -177,7 +177,7 @@ const loanStatusController = {
             return next(CustomErrorHandler.badRequest());
         }
 
-        const exist = await User.exists({ _id: customerId });
+        const exist = await User.exists({ _id: req.body.customerId });
         if (!exist) {
             discord.SendErrorMessageToDiscord(req.body.customerId, "Apply Loan", "User not exist in our database !!");
             return next(CustomErrorHandler.unAuthorized())
