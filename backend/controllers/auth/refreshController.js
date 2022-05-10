@@ -6,7 +6,6 @@ import { REFRESH_SECRET } from '../../config';
 import discord from '../../Services/discord';
 
 
-
 const refreshController = {
 
      async refresh(req, res, next){

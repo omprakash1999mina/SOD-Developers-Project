@@ -19,6 +19,7 @@
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "firebase": "^9.8.0",
+    "ioredis": "^5.0.4",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.13",

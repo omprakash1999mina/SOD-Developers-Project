@@ -3,11 +3,6 @@ import CustomErrorHandler from "../../Services/CustomerrorHandler";
 import bcrypt from 'bcrypt';
 import Joi from 'joi';
 
-const calculateCIBIL = (ctc) => {
-    return 0;
-};
-
-
 const userController = {
     async getUsersOne(req, res, next) {
 
@@ -79,7 +74,10 @@ const userController = {
             let cibilScore = calculateCIBIL(ctc);
             const { userName, age, gender, email, aadhaarNumber, panNumber, ctc, aadhaarImageLink, panImageLink, salarySlipImageLink, aadhaarImageName, panImageName, salarySlipImageName, profileImageName, profileImageLink, accountHolderName, accountNumber, IFACcode, BankName } = req.body;
             let document;
-
+            // ctc in - ve not possible 
+            if (ctc < 0) {
+                return next(CustomErrorHandler.badRequest())
+            }
             document = await User.findOneAndUpdate({ _id: req.params.id }, {
                 userName,
                 age,
@@ -176,3 +174,47 @@ const DeleteOneFile = (imgName) => {
     }
     console.log("successfully deleted old file")
 }
+
+
+
+const calculateCIBIL = (ctc) => {
+    const lac = 100000;
+    const cr = 10000000;
+    if (0 <= ctc && ctc < 1 * lac) {
+        return 300;
+    }
+    else if (1 * lac <= ctc && ctc < 5 * lac) {
+        return 350;
+    }
+    else if (5 * lac <= ctc && ctc < 10 * lac) {
+        return 400;
+    }
+    else if (10 * lac <= ctc && ctc < 20 * lac) {
+        return 440;
+    }
+    else if (20 * lac <= ctc && ctc < 40 * lac) {
+        return 480;
+    }
+    else if (40 * lac <= ctc && ctc < 60 * lac) {
+        return 520;
+    }
+    else if (60 * lac <= ctc && ctc < 80 * lac) {
+        return 560;
+    }
+    else if (80 * lac <= ctc && ctc < 1 * cr) {
+        return 600;
+    }
+    else if (1 * cr <= ctc && ctc < 10 * cr) {
+        return 620;
+    }
+    else if (10 * cr <= ctc && ctc < 20 * cr) {
+        return 650;
+    }
+    else if (20 * cr <= ctc && ctc < 50 * cr) {
+        return 675;
+    }
+    else if (50 * cr <= ctc) {
+        return 700;
+    }
+    return 0;
+};

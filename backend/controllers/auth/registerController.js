@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import JwtService from '../../Services/JwtService';
 import firebaseServices from '../../Services/firebaseConfig';
 import discord from '../../Services/discord';
+import RedisService from '../../Services/redis';
 
 const registerController = {
 
@@ -14,7 +15,7 @@ const registerController = {
         const registerSchema = Joi.object({
             userName: Joi.string().min(3).max(20).required(),
             gender: Joi.string().required(),
-            age: Joi.string().min(18).required(),
+            age: Joi.string().required(),
             email: Joi.string().email().required(),
             password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).min(8).max(50).required(),
             profileImageLink: Joi.string().required(),
@@ -60,7 +61,10 @@ const registerController = {
         } catch (err) {
             return next(err);
         }
-
+        if(req.body.age<18){
+            res = firebaseServices.DeleteFileInFirebase(req.body.profileImageName)
+            return next(CustomErrorHandler.badRequest("age not less than 18 !"))
+        }
         const { userName, age, gender, email, profileImageName, profileImageLink, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -82,6 +86,13 @@ const registerController = {
 
             access_token = JwtService.sign({ _id: document._id, role: document.role });
             refresh_token = JwtService.sign({ _id: document._id, role: document.role });
+            //       redis caching
+            const ttl = 60 * 60 * 24 * 7;
+            const working = RedisService.set(email, refresh_token, ttl);
+            if (!working) {
+                discord.SendErrorMessageToDiscord(email, "LogIN", "error in setup the otp in redis !!");
+                return next(CustomErrorHandler.serverError());
+            }
 
         } catch (err) {
             discord.SendErrorMessageToDiscord(req.body.email, "Register User", err);

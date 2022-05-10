@@ -9,6 +9,7 @@ const userSchema = new Schema({
     email: { type: String, required: true, unique: true },
     profileImageName: {type:String, default: "" },
     profileImageLink: {type:String, default: "" },
+    profileAccountBalance: {type:String, default: 0 },
     
     aadhaarNumber: {type:String, default: "" },
     panNumber: {type:String, default: "" },

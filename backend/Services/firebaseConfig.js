@@ -16,7 +16,7 @@ const app = initializeApp(firebaseConfig);
 
 const storage = getStorage(app);
 class firebaseServices {
-    static DeleteFileInFirebase = (imgName) => {
+    static DeleteFileInFirebase(imgName){
         // Creating a reference to the file to delete
         const desertRef = ref(storage, `SOD/${imgName}`);
         // Deleting the file
