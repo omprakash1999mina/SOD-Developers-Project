@@ -13,7 +13,7 @@ const userData = {
 
 const PublicProfile = () => {
   return (
-    <>
+    <div className={style.coverContainer}>
         <div className={style.container}>
             <h1 className={style.heading}>Candidate Profile</h1>
             <div className={style.profilePhoto}>
@@ -27,7 +27,7 @@ const PublicProfile = () => {
                 <p className={style.detail}>Age : {userData.age}</p>
             </div>
         </div>
-    </>
+    </div>
   );
 }
 

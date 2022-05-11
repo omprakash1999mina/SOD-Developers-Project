@@ -1,3 +1,11 @@
+.coverContainer{
+    margin-top:73px;
+    min-height:calc(100vh - 135px - 73px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
 .container
 {
     display: flex;
@@ -10,6 +18,7 @@
     margin: 10px;
     margin-top: 25px;
     padding: 10px;
+    
 }
 .left
 {
@@ -181,6 +190,11 @@
     .detail
     {
         font-size: large;
+    }
+}
+@media screen and (max-width:500px) {
+    .coverContainer{
+        min-height:calc(100vh - 255px - 73px)
     }
 }
 @media only screen and (max-width : 425px) 

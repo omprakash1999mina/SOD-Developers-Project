@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import style from './Navbar.module.css';
@@ -8,7 +8,8 @@ import profile from '../../Assets/profile.png';
 const Navbar = () => {
   const [burgerClicked, setBurgerClicked] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('loginCredentials') || localStorage.getItem('singUpCredentials'));
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('accessToken') && localStorage.getItem('refreshToken') && localStorage.getItem("id"));
+  // const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isProfileCreated, setIsProfileCreated] = useState(true);
   const handelBurger = () => {
     setBurgerClicked(!burgerClicked);
@@ -22,8 +23,7 @@ const Navbar = () => {
   const handelLogout = () => {
     setIsLoggedIn(false);
     setIsProfileCreated(false);
-    localStorage.removeItem('loginCredentials');
-    localStorage.removeItem('signUpCredentials');
+    localStorage.clear()
     handelBurger();
   }
 
@@ -73,23 +73,15 @@ const Navbar = () => {
               <Link to="/login"><button className={style.btnLogin}>Login</button></Link>
             </>)
           }
-          
-          
-            {/* {(isLoggedIn && isProfileCreated) && }
-            {((isLoggedIn) && isProfileCreated)?((isLoggedIn) && ):(
-               (isLoggedIn) && 
-            )}
-            {(isLoggedIn)?(<Link className={style.selectLink} to='/' onClick={handelLogout}>Logout</Link>):(
-              <Link className={style.selectLink} to='/login' onClick={handelBurger}>Login</Link>
-            )} */}
           </div>
         
         
-        <div className={style.burger} onClick={handelBurger}>
+        {(!burgerClicked)&&<div className={style.burger} onClick={handelBurger}>
             <div className={style.line}></div>
             <div className={style.line}></div>
             <div className={style.line}></div>
-        </div>
+        </div>}
+        {(burgerClicked)&&<div className={`${style.close} ${style.smallScreen}`} onClick={handelBurger}></div>}
       </nav>
     </>
   );

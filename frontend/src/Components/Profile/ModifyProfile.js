@@ -28,7 +28,7 @@ const ModifyProfile = () => {
     }
 
   return (
-    <>
+    <div className={style.coverContainer}>
         <div className={style.container}>
             <h1 className={style.primaryHeading}>Modify Your Profile</h1>
             <form className={style.form}>
@@ -82,7 +82,7 @@ const ModifyProfile = () => {
                 <button className={style.btn} type='submit'>Submit</button>
             </form>
         </div>
-    </>
+    </div>
   );
 }
 
