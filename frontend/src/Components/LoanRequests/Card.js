@@ -106,12 +106,12 @@ const Card = (props) => {
                 }
                 Promise.resolve(
                     axios.post(
-                        API_URL + "loanrequest/negotiation", data, config
+                        API_URL + "loanrequest/reject", data, config
                     )
                 )
                     .then((res) => {
                         console.log(res)
-                        enqueueSnackbar("Loan negotiation successfully.", {
+                        enqueueSnackbar("Loan reject successfully.", {
                             variant: 'success',
                         });
                         // handelOpenModal1()
@@ -180,12 +180,12 @@ const Card = (props) => {
                 }
                 Promise.resolve(
                     axios.post(
-                        API_URL + "loanrequest/reject", data, config
+                        API_URL + "loanrequest/negotiation", data, config
                     )
                 )
                     .then((res) => {
                         console.log(res)
-                        enqueueSnackbar("Loan rejected successfully.", {
+                        enqueueSnackbar("Loan negotiation send successfully.", {
                             variant: 'success',
                         });
                         // handelOpenModal1()
@@ -371,7 +371,7 @@ const Card = (props) => {
                                 <h3 className={style.modalHeading}>Modify the loan request.</h3>
                                 <form className={style.form}>
                                     <input className={style.modalInput} name='modifiedTenure' type="text" placeholder='Enter modified tenure (in months)' />
-                                    <input className={style.modalInput} name='modifiedRate' type="text" placeholder='Enter modified interest rate (in months)' />
+                                    <input className={style.modalInput} name='modifiedRate' type="text" placeholder='Enter modified interest rate (in %)' />
                                     <textarea className={style.textarea} name="rejectMessage" id="rejectMessage" cols="40" rows="10" placeholder='Enter your message (Optional)'></textarea>
                                     <div className={style.modalFooter}>
                                         <button type='submit' onClick={handelOpenModal3} className={`${style.btn} ${style.submitBtn}`}>Submit</button>
