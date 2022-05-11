@@ -11,7 +11,7 @@ const Home = () => {
     <div className={style.mainContainer}>
       <div className={style.topContainer}>
         <h1 className={style.title}>
-          Take Loan, Give Loan <br /> With No Fikrrr!!!!
+          Take Loan . Give Loan <br /> With No Fikrrr!!!!
         </h1>
       </div>
       <div className={style.middleContainer}>

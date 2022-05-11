@@ -4,7 +4,7 @@ import style from './CreateProfile.module.css';
 
 const CreateProfile = () => {
   return (
-    <>
+    <div className={style.coverContainer}>
         <div className={style.container}>
             <h1 className={style.primaryHeading}>Create Your Profile</h1>
             <form className={style.form}>
@@ -58,7 +58,7 @@ const CreateProfile = () => {
                 <button className={style.btn} type='submit'>Submit</button>
             </form>
         </div>
-    </>
+    </div>
   );
 }
 

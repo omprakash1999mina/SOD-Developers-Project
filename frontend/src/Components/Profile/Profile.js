@@ -23,6 +23,7 @@ const userData = {
 const Profile = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   return (
+    <div className={style.coverContainer}>
     <div className={style.container}>
       <div className={style.left}>
         <div className={style.profilePhoto}>
@@ -64,6 +65,7 @@ const Profile = () => {
         </div>
       </div>
     </div>
+  </div>
   );
 }
 

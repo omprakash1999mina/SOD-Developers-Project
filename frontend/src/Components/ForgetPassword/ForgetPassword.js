@@ -22,6 +22,7 @@ const ForgetPassword = () => {
         console.log('Password Changed!');
     }
     return (
+      <div  className={style.coverContainer}>
         <div className={style.card}>
           {(!isOTPSent)?(<form className={style.formGroup}>
             <h1 className={style.heading}>Reset Password</h1>
@@ -37,6 +38,7 @@ const ForgetPassword = () => {
           </form>)}
           <Link to="/signUp" className={style.link}>Don't have an account?</Link>
         </div>
+      </div>  
     );
 }
 

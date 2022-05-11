@@ -9,6 +9,14 @@
 }
 
 /* Container Styling */
+.coverContainer{
+  margin-top:73px;
+  min-height:calc(100vh - 135px - 73px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
 .container
 {
   display: flex;
@@ -17,6 +25,7 @@
   height: 100vh;
   width: 100vw;
   background-color: rgb(34 38 45);
+  margin-top: 20px;
 }
 
 /* Card Component Styling */
@@ -30,8 +39,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 10px 10px 5px #dde2e9;
+  /* box-shadow: 10px 10px 5px #dde2e9; */
   margin: 10px;
+  border-radius: 8px;
+  margin-top: 20px;
 }
 .heading
 {
@@ -40,7 +51,7 @@
   font-weight: lighter;
   font-family: 'Roboto', sans-serif;
   margin: 10px;
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 .formGroup
 {
@@ -91,7 +102,7 @@
 {
     outline: none;
     text-align: center;
-    background-color: #3ecf8e;
+    background-color: #4a89d9;
     border-radius: 15px;
     color: white;
     font-size: large;
@@ -100,6 +111,7 @@
     margin: 7px;
     border: none;
     cursor: pointer;
+    width:250px;
     transition: all 0.3s ease-in-out;
 }
 .btn:hover
@@ -141,6 +153,11 @@
 }
 
 /* Media Query for Responsiveness */
+@media screen and (max-width:500px) {
+  .coverContainer{
+      min-height:calc(100vh - 255px - 73px)
+  }
+}
 @media only screen and (max-width : 400px) 
 {
   .card
