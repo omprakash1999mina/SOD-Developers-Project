@@ -36,7 +36,7 @@ const AccountStatus = () => {
                 // const json = await response.json();
                 console.log(data, id, accessToken);
                 console.log(response.data.status === 'success');
-                if(response.data.status === 'success')
+                if(response.data.status === 'success') // eslint-disable-next-line
                     setBalance(eval(newBalance));
                 else
                     console.log(response.msg);
@@ -88,17 +88,16 @@ const AccountStatus = () => {
     }
     const depositBalance = (e) => {
         e.preventDefault();
-        handelOpenModal1(e);
-        console.log(dAmount, eval(dAmount));
-        updateBalance((String)(balance+eval(dAmount)));
+        handelOpenModal1(e); // eslint-disable-next-line
+        updateBalance((String)(eval(balance)+eval(dAmount)));
         console.log('Balance deposited.');
     }
     const withdrawBalance = (e) => {
         e.preventDefault();
-        handelOpenModal2(e);
-        if(balance-eval(wAmount) < 0)
-            console.log('Insufficient balance.');
-            updateBalance((String)(balance-eval(wAmount)));
+        handelOpenModal2(e); // eslint-disable-next-line
+        if(eval(balance)-eval(wAmount) < 0)
+            console.log('Insufficient balance.'); // eslint-disable-next-line
+            updateBalance((String)(eval(balance)-eval(wAmount)));
         // else
         console.log('Balance withdrawn.');
     }

@@ -32,31 +32,31 @@ const SignUp = () => {
       console.log(err)
     })
   }
-  const submitData = async () => {
-    setData({userName : data.userName, email : data.email, profileImageLink : data.profileImageLink, password : password});
-    const signData = {
-      userName : data.userName,
-      email : data.email,
-      profileImageLink : data.profileImageLink,
-      password : password
-    };
-    const url = `${host}register`;
-    console.log(signData);
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(signData)
-    });
-    const json = await response.json();
-    setPassword('');
-    localStorage.setItem('accessToken', json.access_token);
-    localStorage.setItem('refreshToken', json.refresh_token);
-    localStorage.setItem('id', json.id);
-    console.log(data, json);
-    navigate('/');
-  }
+  // const submitData = async () => {
+  //   setData({userName : data.userName, email : data.email, profileImageLink : data.profileImageLink, password : password});
+  //   const signData = {
+  //     userName : data.userName,
+  //     email : data.email,
+  //     profileImageLink : data.profileImageLink,
+  //     password : password
+  //   };
+  //   const url = `${host}register`;
+  //   console.log(signData);
+  //   const response = await fetch(url, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(signData)
+  //   });
+  //   const json = await response.json();
+  //   setPassword('');
+  //   localStorage.setItem('accessToken', json.access_token);
+  //   localStorage.setItem('refreshToken', json.refresh_token);
+  //   localStorage.setItem('id', json.id);
+  //   console.log(data, json);
+  //   navigate('/');
+  // }
 
 
   const signupHandler = (e) => {
@@ -66,7 +66,7 @@ const SignUp = () => {
           'Content-Type': 'application/json'
         }
       }
-      const url = `${host}/register`;
+      const url = `${host}register`;
       setData({userName : data.userName, email : data.email, profileImageLink : data.profileImageLink, password : password});
       const signData = {
         userName : data.userName,
