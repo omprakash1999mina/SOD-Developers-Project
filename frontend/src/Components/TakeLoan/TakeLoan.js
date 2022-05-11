@@ -7,7 +7,7 @@ const host = process.env.REACT_APP_API_URL;
 
 const TakeLoan = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState({ loanAmount: 0, tenure: 0, intRate: 0 });
+  const [data, setData] = useState({ loanAmount: '', tenure: '', intRate: ''});
   const handelChangeInput = (event) => {
     const { name, value } = event.target;
     setData({ ...data, [name]: value }); // Modern React Destructuring Syntax
@@ -58,7 +58,7 @@ const TakeLoan = () => {
   };
   useEffect(() => {
     let token = localStorage.getItem("accessToken");
-    if (token) setData({ loanAmount: 0, tenure: 0, intRate: 0 });
+    if (token) setData({ loanAmount: '', tenure: '', intRate: '' });
     else navigate("/login"); // eslint-disable-next-line
   }, []);
 

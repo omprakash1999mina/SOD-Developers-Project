@@ -2,9 +2,28 @@ import React, {useState} from 'react';
 import axios from "axios";
 
 import style from './AccountStatus.module.css';
+import Card from './Card.js';
 // import getRefreshToken from "../../utilities";
 
 const host = process.env.REACT_APP_API_URL;
+
+const dataArr = [];
+// const dataArr = [
+//     {
+//         status : 'Accepted',
+//         message : 'I am accepting.'
+//     },
+//     {
+//         status : 'Rejected',
+//         message : 'I am rejecting.'
+//     },
+//     {
+//         status : 'Modified',
+//         message : 'I am modifying.',
+//         upRate : '5',
+//         upTenure : '12'
+//     }
+// ];
 
 const AccountStatus = () => {
     const fetchBalance = () =>{
@@ -40,6 +59,8 @@ const AccountStatus = () => {
                     setBalance(eval(newBalance));
                 else
                     console.log(response.msg);
+                setDAmount('');
+                setWAmount('');
                 console.log(response);
                 return;
             }).catch((error) => {
@@ -145,6 +166,11 @@ const AccountStatus = () => {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className={style.loanStatus}>
+                {dataArr.length !== 0 && dataArr.map((currentData)=>{
+                    return <Card key={currentData.status+currentData.message+currentData.rate+Math.random()} data={currentData}/>
+                })}
                 </div>
             </div>
         </>
