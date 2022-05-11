@@ -20,7 +20,7 @@ const userController = {
         // validation
 
         const updateSchema = Joi.object({
-            userName: Joi.string().min(3).max(20).required(),
+            userName: Joi.string().min(3).max(50).required(),
             gender: Joi.string().required(),
             age: Joi.string().min(18).required(),
             email: Joi.string().email().required(),
@@ -72,7 +72,7 @@ const userController = {
                 return next(CustomErrorHandler.wrongCredentials());
             }
             let cibilScore = calculateCIBIL(ctc);
-            const { userName, age, gender, email, aadhaarNumber, panNumber, ctc, aadhaarImageLink, panImageLink, salarySlipImageLink, aadhaarImageName, panImageName, salarySlipImageName, profileImageName, profileImageLink, accountHolderName, accountNumber, IFACcode, BankName } = req.body;
+            const { userName, age, gender, aadhaarNumber, panNumber, ctc, aadhaarImageLink, panImageLink, salarySlipImageLink, aadhaarImageName, panImageName, salarySlipImageName, profileImageName, profileImageLink, accountHolderName, accountNumber, IFACcode, BankName } = req.body;
             let document;
             // ctc in - ve not possible 
             if (ctc < 0) {
@@ -82,7 +82,6 @@ const userController = {
                 userName,
                 age,
                 gender,
-                email,
                 profileImageName,
                 profileImageLink,
 

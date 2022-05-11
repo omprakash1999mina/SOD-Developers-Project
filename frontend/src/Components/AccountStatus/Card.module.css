@@ -1,0 +1,68 @@
+.card
+{
+    background-color: rgb(245, 204, 245);
+    color: black;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    margin: 10px;
+    height: 260px;
+    font-size: large;
+    font-weight: 600;
+    padding: 10px;
+}
+.column
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+.link
+{
+    color: #0088ff;
+    text-decoration: underline;
+}
+.link:hover
+{
+    color: #0766b9;
+}
+.item
+{
+    margin: 5px 15px;
+}
+.btn
+{
+    outline: none;
+    text-align: center;
+    border-radius: 15px;
+    color: white;
+    font-size: large;
+    font-weight: 500;
+    padding: 7px 15px;
+    margin: 3px 7px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.acceptBtn
+{
+    background-color: green;
+}
+.rejectBtn
+{
+    background-color: red;
+}
+.btn:hover
+{
+    transform: translateY(-1px);
+    color: rgb(247, 234, 234);
+}
+.btn:active
+{
+    transform: scale(0.8);
+}

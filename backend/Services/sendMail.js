@@ -2,7 +2,7 @@ import axios from "axios";
 import { EMAIL_ADMIN_ID, EMAIL_ADMIN_PASSWORD, EMAIL_API_URL } from '../config'
 
 const mailService = {
-    send(userName, type, email) {
+    send(userName, type, email, lenderName, lenderEmail) {
         const config = {
             headers: {
                 "Content-Type": "application/json"
@@ -13,14 +13,18 @@ const mailService = {
             userName,
             type,
             email,
-            company:"Loan Corner PVT LTD",
+            lenderName,
+            lenderEmail,
+            subject: "Regarding loan approved",
+            company: "LoanCorner PVT LTD",
             adminId: EMAIL_ADMIN_ID,
             password: EMAIL_ADMIN_PASSWORD,
         }
         axios.post(EMAIL_API_URL, data, config).then((res) => {
             return res.result.Code;
         }).catch((err) => {
-            console.log(err)
+            // console.log(err)
+            console.log("error in sending mail to :" + email)
             return false;
         });
     }

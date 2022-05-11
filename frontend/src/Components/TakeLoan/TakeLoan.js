@@ -5,8 +5,10 @@ import axios from "axios";
 import style from "./TakeLoan.module.css";
 const host = process.env.REACT_APP_API_URL;
 const TakeLoan = () => {
+
   const { enqueueSnackbar } = useSnackbar();
   const [data, setData] = useState({ loanAmount: 0, tenure: 0, intRate: 0 });
+
   const handelChangeInput = (event) => {
     const { name, value } = event.target;
     setData({ ...data, [name]: value }); // Modern React Destructuring Syntax
@@ -111,7 +113,6 @@ const TakeLoan = () => {
       return
     }
   }
-
 
   return (
     <div className={style.container}>

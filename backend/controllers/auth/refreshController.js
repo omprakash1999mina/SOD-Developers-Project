@@ -1,5 +1,5 @@
-import Joi, { isRef } from 'joi';
-import { User, RefreshToken } from "../../models";
+import Joi from 'joi';
+import { User } from "../../models";
 import CustomErrorHandler from '../../Services/CustomerrorHandler';
 import JwtService from '../../Services/JwtService';
 import { REFRESH_SECRET } from '../../config';
