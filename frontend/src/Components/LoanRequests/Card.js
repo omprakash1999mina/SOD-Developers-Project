@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import axios from "axios";
+// import axios from "axios";
 import style from './Card.module.css';
 import cardImage from "../../Assets/cardImage.jpg"
 
@@ -97,7 +97,7 @@ const Card = (props) => {
     <>
         <div className={style.card}>
             <div className={style.imageContainer}>
-              <img src={cardImage} className={style.cardImage}/>
+              <img src={cardImage} className={style.cardImage} alt='cardImage'/>
             </div>
             
               <table className={style.table}>
