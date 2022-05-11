@@ -1,8 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import getRefreshToken from "../../utilities";
 
 import style from './Profile.module.css';
 
-const userData = {
+const API_URL = process.env.REACT_APP_API_URL;
+
+const defaultUser = {
   profilePhoto : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7EAjufrsaffFdvLMDspiG0w_MG0N7eHUPUjz0bkF-v3qO7aFyyKxpKLA5lt7m0P2O_ZI&usqp=CAU',
   name : 'Sudheer Kumar Prajapat',
   age : '20',
@@ -21,7 +26,69 @@ const userData = {
 }
 
 const Profile = () => {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [userData, setUserData] = useState(defaultUser);
+  // const [userData, setUserData] = useState({});
+
+  const fetchUser = () => {    
+    const id = localStorage.getItem('id');
+    const url = `${API_URL}users/${id}`;
+    const getData = () => {
+      const accessToken = localStorage.getItem("accessToken");
+      const refreshToken = localStorage.getItem('refreshToken');
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${accessToken}`,
+        },
+      };
+      axios
+        .get(url, config)
+        .then((response) => {
+          if(response.data.status === 'success')
+          {
+          const newUserData = {
+            profilePhoto : response.profileImageLink,
+            name : response.userName,
+            age : response.age,
+            gender : response.gender,
+            email : response.email,
+            aadhaarNo : response.aadhaarNumber,
+            aadhaarPhoto : response.aadhaarImageLink,
+            panNo : response.panNumber,
+            panPhoto : response.panImageLink,
+            ctc : response.ctc,
+            salarySlips : [response.salarySlipImageLink],
+            acHolderName : response.accountHolderName,
+            acNo : response.accountNumber,
+            ifacCode : response.IFACcode,
+            bankName : response.BankName
+          }
+          console.log(newUserData);
+          setUserData(newUserData);
+        }
+          return;
+        })
+        .catch((err) => {
+          console.log(err);
+          const ok = getRefreshToken(refreshToken)
+          if(ok){
+            getData()
+          }
+        });
+    };
+    getData()
+  };
+
+  useEffect(()=>{
+    if(localStorage.getItem('accessToken'))
+      fetchUser();
+    else
+      navigate('/login'); // eslint-disable-next-line
+  }, []);
+
+  fetchUser();
   return (
     <div className={style.coverContainer}>
     <div className={style.container}>

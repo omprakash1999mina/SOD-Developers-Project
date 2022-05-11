@@ -14,7 +14,7 @@ const LoanRequests = () => {
           // console.log("Hii")
           const atoken = window.localStorage.getItem("accessToken");
           const rtoken = window.localStorage.getItem("refreshToken");
-          const id = window.localStorage.getItem("id");
+          // const id = window.localStorage.getItem("id");
           if (atoken) {
             const config = {
               headers: {
@@ -89,7 +89,7 @@ const LoanRequests = () => {
         });
         return
         
-      }
+      } // eslint-disable-next-line
     },[])
 
     
