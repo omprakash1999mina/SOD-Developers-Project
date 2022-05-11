@@ -85,6 +85,9 @@
     font-weight: 700;
     margin: 10px 0px;
 }
+.modalFooter{
+    display: flex;
+}
 .form
 {
     display: flex;
@@ -127,7 +130,7 @@
 }
 .visible
 {
-    display: block;
+    display: flex;
 }
 .hide
 {

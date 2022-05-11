@@ -168,7 +168,7 @@ const Card = (props) => {
                 </div>
             </div>
             <div className={style.row}>
-                <Link to='/publicProfile' className={style.knowDiv}>
+                <Link to={`/publicProfile/${props.data.customerId}`} className={style.knowDiv}>
                   <button className={style.btnKnow}>Know about the Debter</button>
                 </Link>
             </div>
