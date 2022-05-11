@@ -9,7 +9,7 @@ const CreateProfile = () => {
     }
 
   return (
-    <>
+    <div className={style.coverContainer}>
         <div className={style.container}>
             {/* <Uploading></Uploading> */}
             <h1 className={style.primaryHeading}>Create Your Profile</h1>
@@ -68,7 +68,7 @@ const CreateProfile = () => {
                 <button className={style.btn} type='submit'>Submit</button>
             </form>
         </div>
-    </>
+    </div>
   );
 }
 

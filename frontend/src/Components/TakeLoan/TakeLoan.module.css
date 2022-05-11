@@ -9,6 +9,8 @@
     justify-content: center;
     align-items: center;
     padding: 2rem;
+    min-height:calc(100vh - 135px - 73px);
+    margin-top:73px
 }
 .primaryHeading
 {
@@ -57,10 +59,11 @@
 }
 .btn
 {
+    width:250px;
     outline: none;
     text-align: center;
-    background-color: #3ecf8e;
-    border-radius: 15px;
+    background-color: #4a89d9;
+    border-radius: 5px;
     color: white;
     font-size: large;
     font-weight: 500;
@@ -74,6 +77,7 @@
 {
     transform: translateY(-1px);
     color: rgb(247, 234, 234);
+    background-color: #2064bd
 }
 .btn:active
 {
@@ -81,6 +85,11 @@
 }
 
 /* Media Query for Responsiveness */
+@media screen and (max-width: 500px){
+    .container{
+        min-height:calc(100vh - 255px - 73px);;
+    }
+}
 @media only screen and (max-width : 450px) 
 {
     .secondaryHeading

@@ -79,7 +79,7 @@ const registerController = {
             discord.SendErrorMessageToDiscord(req.body.email, "Register User", err);
             return next(err);
         }
-        res.status(201).json({ _id: document._id, msg: "User Registered Successfully !!!  ", access_token: access_token, refresh_token: refresh_token });
+        res.status(201).json({ id: document._id, msg: "User Registered Successfully !!!  ", access_token: access_token, refresh_token: refresh_token });
 
     }
 };

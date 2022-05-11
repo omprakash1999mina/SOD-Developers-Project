@@ -2,17 +2,18 @@ import axios from "axios";
 import { EMAIL_ADMIN_ID, EMAIL_ADMIN_PASSWORD, EMAIL_API_URL } from '../config'
 
 const mailService = {
-    send(userName, type, email, company) {
+    send(userName, type, email) {
         const config = {
             headers: {
                 "Content-Type": "application/json"
             }
         }
+
         const data = {
             userName,
             type,
             email,
-            company,
+            company:"Loan Corner PVT LTD",
             adminId: EMAIL_ADMIN_ID,
             password: EMAIL_ADMIN_PASSWORD,
         }
