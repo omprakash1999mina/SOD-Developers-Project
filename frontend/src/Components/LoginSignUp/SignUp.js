@@ -39,7 +39,7 @@ const SignUp = () => {
       profileImageLink : data.profileImageLink,
       password : password
     };
-    const url = `${host}/register`;
+    const url = `${host}register`;
     console.log(signData);
     const response = await fetch(url, {
       method: 'POST',

@@ -1,0 +1,14 @@
+.uploading
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: 100px;
+    background-color: #e4e9f0;
+}
+.uploading img
+{
+    height: 100%;
+    width: 100%;
+}

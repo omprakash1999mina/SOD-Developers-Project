@@ -14,7 +14,7 @@ const Login = () => {
     }
     const handelLogin = async (e) => {
       e.preventDefault();
-      const url = `${host}/login`;
+      const url = `${host}login`;
       // const response = 'Hello';
       const response = await fetch(url, {
         method: 'POST',
