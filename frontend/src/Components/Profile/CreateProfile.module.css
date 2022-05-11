@@ -1,3 +1,11 @@
+.coverContainer{
+    margin-top:73px;
+    min-height:calc(100vh - 135px - 73px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
 .container
 {
     display: flex;
@@ -10,13 +18,14 @@
     width: 65%;
     margin: 5px auto;
     padding: 5px;
+    margin-top:20px
 }
 .primaryHeading
 {
     text-align: center;
     font-size: xx-large;
     font-weight: 800;
-    margin: 3px 0;
+    margin: 2px 0;
 }
 .form 
 {
@@ -47,7 +56,7 @@
     text-align: center;
     font-size: x-large;
     font-weight: 600;
-    margin: 2px 0;
+    margin: 3px 0;
 }
 .basicDetails, .acDetails
 {
@@ -65,7 +74,7 @@
     background-color: #edf2f8;
     height: 40px;
     width: 250px;
-    margin: 7px 0px;
+    margin: 5px 0px;
     padding: 5px 10px;
     border-radius: 20px;
     font-size: medium;
@@ -75,6 +84,21 @@
 {
     border-color: purple;
     box-shadow: 0 0 5px purple;
+}
+.radios
+{
+    text-align: center;
+    outline: none;
+    color: black;
+    /* height: 40px; */
+    width: 250px;
+    margin: 5px 0px;
+    font-size: small;
+    font-weight: 300;
+}
+.radio
+{
+    margin: 0 5px;
 }
 .documents
 {
@@ -89,7 +113,7 @@
     flex-direction: row;
     align-items: flex-start;
     justify-content: flex-start;
-    margin: 5px;
+    margin: 4px;
 }
 .label
 {
@@ -122,4 +146,103 @@
 .btn:active
 {
     transform: scale(0.8);
+}
+
+/* Media Query for Responsiveness */
+@media only screen and (max-width : 1075px) 
+{
+    .container
+    {
+        flex-direction: column;
+        width: 80%;
+    }
+}
+@media only screen and (max-width : 775px) 
+{
+    .container
+    {
+        width: 95%;
+    }
+}
+@media only screen and (max-width : 675px) 
+{
+    .bigBox
+    {
+        flex-direction: column;
+    }
+    .documents
+    {
+        align-items: center;
+    }
+    .label
+    {
+        margin-left: 10px;
+    }
+}
+@media only screen and (max-width : 500px)
+{
+    .imageInput
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .label, .imgInp
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 5px 0px;
+        padding: 0;
+    }
+    .imgInp
+    {
+        width: 190px;
+    }
+    .coverContainer{
+        min-height:calc(100vh - 255px - 73px)
+    }
+}
+@media only screen and (max-width : 375px)
+{
+    .primaryHeading
+    {
+        font-size: x-large;
+        font-weight: 700;
+    }
+    .secondaryHeading
+    {
+        font-size: large;
+    }
+    .container, .box, .bigBox
+    {
+        margin: 10px 0px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .box, .bigBox, .basicDetails, .acDetails
+    {
+        width: 100%;
+    }
+    .input
+    {
+        font-size: small;
+        font-weight: 400;
+        width: 90%;
+    }
+    .radios
+    {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 500;
+        margin: 5px 0px;
+    }
 }

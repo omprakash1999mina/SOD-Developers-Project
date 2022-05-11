@@ -1,0 +1,71 @@
+.footer
+{
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #4a89d9;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-self: flex-end;
+    width: 100%;
+}
+.left, .middle, .right 
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.logo
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+}
+.logo img
+{
+    width : 100%;
+    height: 100%;
+    border-radius: 50%;
+    margin: 5px;
+}
+.companyName
+{
+    font-size: 20px;
+    font-weight: 750;
+    margin: 5px;
+    color: white;
+}
+.text
+{
+    font-size: medium;
+    font-weight: 500;
+    margin: 5px;
+    color: white;
+}
+.link
+{
+    text-decoration: none;
+    color: white;
+    padding: 5px;
+    font-size: medium;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+} 
+.link:hover
+{
+    cursor: pointer;
+    background-color:#2168c6
+}
+
+/* Media Query Responsiveness */
+@media only screen and (max-width: 500px) 
+{
+    .footer
+    {
+        flex-direction: column;
+    }
+}

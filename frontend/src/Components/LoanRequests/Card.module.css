@@ -1,35 +1,146 @@
 .card
 {
-    background-color: rgb(245, 204, 245);
-    color: black;
+    background-color: #4a89d9;
+    color: white;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: fit-content;
-    margin: 10px;
+    width: 400px;
+    margin: 30px 10px;
     height: fit-content;
     font-size: large;
-    font-weight: 600;
+    font-weight: 500;
     padding: 10px;
+    padding-top:0px;
 }
+.cardImage{
+    width: 400px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.table{
+    width: 100%;
+    padding: 5px;
+}
+.tableRow{
+    height:30px;
+    font-size:20px
+}
+
 .row
 {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+}
+.modalContainer:after, .modalContainer:before
+{
+    content: "";
+    display: table;
+    clear: both;
+}
+.modalContainer
+{
+    /* padding: 0.01em 16px; */
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 5px;
+}
+.modal 
+{
+    z-index: 3;
+    display: none;
+    padding-top: 100px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color:rgba(0,0,0,0.4);
+}
+.modalContent
+{
+    margin: auto;
+    background-color: #fff;
+    position: relative;
+    padding: 10px;
+    outline: 0;
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
+.modalHeading
+{
+    font-size: large;
+    font-weight: 700;
+    margin: 10px 0px;
+}
+.form
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.modalInput
+{
+    text-align: center;
+    outline: none;
+    border: 2px solid black;
+    color: black;
+    background-color: #edf2f8;
+    height: 40px;
+    width: 300px;
+    margin: 10px 0px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: medium;
+    font-weight: 400;
+}
+.modalInput:focus
+{
+    border-color: purple;
+    box-shadow: 0 0 5px purple;
+}
+.textarea
+{
+    border: 2px solid black;
+    border-radius: 15px;
+    outline: none;
+    padding: 10px;
+    margin: 10px 0px;
+}
+.textarea:focus
+{
+    border-color: purple;
+    box-shadow: 0 0 5px purple;
+}
+.visible
+{
+    display: block;
+}
+.hide
+{
+    display: none;
 }
 .link
 {
-    color: rgb(29, 152, 201);
-    text-decoration: none;
+    color: #0088ff;
+    text-decoration: underline;
 }
 .link:hover
 {
-    text-decoration: underline;
+    color: #0766b9;
 }
 .item
 {
@@ -39,8 +150,9 @@
 {
     outline: none;
     text-align: center;
-    border-radius: 15px;
+    border-radius: 5px;
     color: white;
+    width:100%;
     font-size: large;
     font-weight: 500;
     padding: 7px 15px;
@@ -49,17 +161,46 @@
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
-.btn:nth-child(1)
+.knowDiv{
+    width: 100%;
+    margin: 10px 0px;
+}
+.btnKnow{
+    background: royalblue;
+    color: #fff;
+    font-size: 18px;
+    width: 100%;
+    padding: 7px 15px;
+    outline:none;
+    border: none;
+    border-radius: 5px;
+    font-size: large;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+}
+.btnKnow:hover{
+    cursor: pointer;
+    background:rgb(41, 72, 167)
+}
+.acceptBtn
 {
     background-color: green;
 }
-.btn:nth-child(2)
+.rejectBtn
 {
     background-color: red;
 }
-.btn:nth-child(3)
+.modifyBtn
 {
     background-color: blue;
+}
+.cancelBtn
+{
+    background-color: red;
+}
+.submitBtn
+{
+    background-color: green;
 }
 .btn:hover
 {
@@ -69,4 +210,77 @@
 .btn:active
 {
     transform: scale(0.8);
+}
+
+/* Media Query for Responsiveness */
+@media only screen and (min-width:768px)
+{
+    .modalContent
+    {
+        width: 500px;
+    }
+}
+@media only screen and (max-width:768px)
+{
+    .modal
+    {
+        padding-top: 50px;
+        
+    }
+}
+@media only screen and (max-width:600px)
+{
+    .modal
+    {
+        padding-top: 30px;
+    }
+    .modalContent
+    {
+        margin: 0 10px;
+        width: auto!important;
+        
+    }
+    /* .row
+    {
+        flex-direction: column;
+    } */
+     .item
+    {
+        margin: 5px;
+    }
+}
+@media screen and (max-width:420px){
+    .card{
+        width:300px
+    }
+    .cardImage{
+        width: 300px;
+    }
+    .btn{
+        padding:7px 7px
+    }
+}
+@media only screen and (max-width:400px)
+{
+    .modalContent
+    {
+        width: 95%;
+    }
+    .modalHeading
+    {
+        font-size: medium;
+        font-weight: bold;
+    }
+    .form
+    {
+        width: 95%;
+    }
+    .modalInput, .textarea 
+    {
+        width: 100%;
+        font-size: small;
+        font-weight: lighter;
+        padding: 5px;
+    }
+   
 }

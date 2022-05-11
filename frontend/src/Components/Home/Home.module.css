@@ -1,3 +1,8 @@
+.mainContainer{
+  width: 100%;
+  margin-top: 73px;
+}
+
 .topContainer {
   width: 100%;
   height: calc(100vh - 73px);
@@ -8,31 +13,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  
 }
 
 .title {
-  color: #00d676;
-  background: -webkit-linear-gradient(
-    189.94deg,
-    #009150 -25.33%,
-    #81ffc6 120.28%
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #4a89d9;
   text-align: center;
   font-size: 60px;
+  background-color: #fdf9fa;
 }
 
 .middleContainer{
   margin:60px 20px;
-  
+}
+.link{
+  text-decoration: none;
 }
 
-.middleTitle{
+.middleTitle,.titleAbout{
   text-align: center;
-  font-size:60px;
+  font-size:50px;
   margin-bottom:40px;
+  color: #4a89d9;
 }
 
 .middleMainContainer {
@@ -51,7 +53,7 @@
   height: 450px;
   border-radius: 8px;
   margin: 30px;
-  background-color: rgb(45, 215, 82);
+  background-color: #4a89d9;
 }
 .cardImage {
   width: 500px;
@@ -65,6 +67,36 @@
   align-items: center;
   justify-content: center;
   color: white;
+}
+
+.mainAboutContainer{
+  padding-top:30px;
+  background-color:white;
+  padding-bottom:40px
+}
+
+.imageContainerAbout{
+  margin: 30px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.imageLogoAbout{
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  
+}
+
+.paraContainerAbout{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.paraAbout{
+  width:60%;
+  font-size:30px;
+  text-align: justify;
 }
 
 @media screen and (min-width: 1700px) {
@@ -90,12 +122,18 @@
     justify-content: space-evenly;
   }
 }
+@media screen and (max-width:700px) {
+  .paraAbout{
+    width:90%;
+    align-items: justify center
+  }
+}
 
 @media screen and (max-width: 600px) {
   .title {
     font-size: 50px;
   }
-  .middleTitle{
+  .middleTitle,.titleAbout{
     font-size:50px;
   }
   .cardMainContainer {
@@ -104,20 +142,15 @@
   .cardImage {
     width: 400px;  
   }
-  
-
 }
 
 @media screen and (max-width: 500px) {
   .title {
     font-size: 40px;
   }
-  .middleTitle{
+  .middleTitle,.titleAbout{
     font-size:45px
   }
-}
-@media screen and (max-width:420px) {
-  
   .cardMainContainer {
     width: 300px;
     height:350px
@@ -131,9 +164,43 @@
   }
 }
 
-@media screen and (max-width: 390px) {
+@media screen and (max-width: 420px) {
   .title {
-    font-size: 30px;
+    font-size: xx-large;
+  }
+  .cardText
+  {
+    font-size: x-large;
+  }
+  .cardMainContainer {
+    width: 320px;
+    margin: 30px 0px;
+  }
+  .middleContainer {
+    width: 100%;
+    margin:60px 0px;
+  }
+  .middleMainContainer {
+    width: 100%;
+  }
+  .cardImage {
+    width: 100%; 
+  }
+  .paraAbout{
+    width:95%;
+    font-size:24px
   }
 }
-
+@media screen and (max-width:320px) {
+  .title {
+    font-size: x-large;
+  }
+  .cardMainContainer {
+    width: 280px;
+    margin: 20px 0px;
+  }
+  .cardText
+  {
+    font-size: 24px;
+  }
+}

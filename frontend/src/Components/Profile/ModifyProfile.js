@@ -6,9 +6,10 @@ const fetchedData = {
     profilePhoto : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7EAjufrsaffFdvLMDspiG0w_MG0N7eHUPUjz0bkF-v3qO7aFyyKxpKLA5lt7m0P2O_ZI&usqp=CAU',
     name : 'Sudheer Kumar Prajapat',
     age : '20',
+    gender : 'Male',
     email : 'example@gmail.com',
-    aadharNo : '123456789012',
-    aadharPhoto : 'https://gujjupost.in/wp-content/uploads/2021/08/searchpng.com-sample-aadhaar-card-icon-png-image-free-download-1024x658.png',
+    aadhaarNo : '123456789012',
+    aadhaarPhoto : 'https://gujjupost.in/wp-content/uploads/2021/08/searchpng.com-sample-aadhaar-card-icon-png-image-free-download-1024x658.png',
     panNo : '123AB567890',
     panPhoto : 'https://images.livemint.com/img/2019/07/11/original/e-pan_card_download_1562831552156.PNG',
     ctc : '20000',
@@ -27,9 +28,9 @@ const ModifyProfile = () => {
     }
 
   return (
-    <>
+    <div className={style.coverContainer}>
         <div className={style.container}>
-            <h1 className={style.primaryHeading}>Create Your Profile</h1>
+            <h1 className={style.primaryHeading}>Modify Your Profile</h1>
             <form className={style.form}>
                 <div className={style.bigBox}>
                     <div className={style.box}>
@@ -37,8 +38,14 @@ const ModifyProfile = () => {
                         <div className={style.basicDetails}>
                             <input className={style.input} value={userData.name} type="text" name='name' placeholder='Enter your name' required onChange={handelChangeInput}/>
                             <input className={style.input} value={userData.age} type="text" name='age' placeholder='Enter your age' required onChange={handelChangeInput}/>
+                            <div className={style.radios}>
+                                <label htmlFor="gender">Gender : &nbsp;</label>
+                                <label htmlFor="male">Male</label><input className={style.radio} id='male' type="radio" name='gender' value='Male' checked={userData.gender === 'Male'} onChange={handelChangeInput}/>
+                                <label htmlFor="female">Female</label><input className={style.radio} id='female' type="radio" name='gender' value='Female' checked={userData.gender === 'Female'} onChange={handelChangeInput}/>
+                                <label htmlFor="other">Other</label><input className={style.radio} id='other' type="radio" name='gender' value='Other' checked={userData.gender === 'Other'} onChange={handelChangeInput}/>
+                            </div>
                             <input className={style.input} value={userData.email} type="email" name='email' placeholder='Enter your email' required onChange={handelChangeInput}/>
-                            <input className={style.input} value={userData.aadharNo} type="text" name='aadharNo' placeholder='Enter your Aadhar No.' required onChange={handelChangeInput}/>
+                            <input className={style.input} value={userData.aadhaarNo} type="text" name='aadhaarNo' placeholder='Enter your Aadhaar No.' required onChange={handelChangeInput}/>
                             <input className={style.input} value={userData.ctc} type="text" name='ctc' placeholder='Enter your CTC' required onChange={handelChangeInput}/>
                         </div>
                     </div>
@@ -60,8 +67,8 @@ const ModifyProfile = () => {
                         <input className={style.imgInp}  type="file" name='profilePhoto' id='profilePhoto'/>
                     </div>
                     <div className={style.imageInput}>
-                        <label className={style.label} htmlFor="aadharPhoto">Upload Aadhar Card Photo</label>
-                        <input className={style.imgInp}  type="file" name='aadharPhoto' id='aadharPhoto'/>
+                        <label className={style.label} htmlFor="aadhaarPhoto">Upload Aadhaar Card Photo</label>
+                        <input className={style.imgInp}  type="file" name='aadhaarPhoto' id='aadhaarPhoto'/>
                     </div>
                     <div className={style.imageInput}>
                         <label className={style.label} htmlFor="panPhoto">Upload PAN Card Photo</label>
@@ -75,7 +82,7 @@ const ModifyProfile = () => {
                 <button className={style.btn} type='submit'>Submit</button>
             </form>
         </div>
-    </>
+    </div>
   );
 }
 
