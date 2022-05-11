@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from 'notistack';
 import axios from "axios";
 import style from "./TakeLoan.module.css";
 const host = process.env.REACT_APP_API_URL;
-import { useSnackbar } from 'notistack';
 const TakeLoan = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [data, setData] = useState({ loanAmount: 0, tenure: 0, intRate: 0 });
