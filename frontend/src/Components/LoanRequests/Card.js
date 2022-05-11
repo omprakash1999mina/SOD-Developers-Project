@@ -11,6 +11,7 @@ const Card = (props) => {
     const [openModal1, setOpenModal1] = useState(false);
     const [openModal2, setOpenModal2] = useState(false);
     const [openModal3, setOpenModal3] = useState(false);
+    const [message, Message3] = useState(false);
     const id = window.localStorage.getItem("id");
 
     const handelOpenModal1 = (e) => {
@@ -88,10 +89,150 @@ const Card = (props) => {
     }
     const handelOpenModal2 = (e) => {
         e.preventDefault();
+        const getdata = () => {
+            // console.log("Hii")
+            const atoken = window.localStorage.getItem("accessToken");
+            const rtoken = window.localStorage.getItem("refreshToken");
+            if (atoken) {
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${atoken}`,
+                    },
+                };
+                const data = {
+                    lendersId: id,
+                    loanId: props.data._id,
+                    message: message
+                }
+                Promise.resolve(
+                    axios.post(
+                        API_URL + "loanrequest/negotiation", data, config
+                    )
+                )
+                    .then((res) => {
+                        console.log(res)
+                        enqueueSnackbar("Loan negotiation successfully.", {
+                            variant: 'success',
+                        });
+                        // handelOpenModal1()
+                        return;
+                    })
+                    .catch((error) => {
+                        if (error.response && error.response.status === 401) {
+                            axios
+                                .post(
+                                    "https://apis.opdevelopers.live/api/refresh",
+                                    {
+                                        refresh_token: rtoken
+                                    }
+                                )
+                                .then((res) => {
+                                    localStorage.setItem(
+                                        "access_token",
+                                        res.data.result.accessToken
+                                    );
+                                    localStorage.setItem(
+                                        "refresh_token",
+                                        res.data.result.refreshToken
+                                    );
+                                    getdata();
+                                    return;
+                                })
+                                .catch((error) => {
+                                    // reload()
+                                    enqueueSnackbar("You need to login first !", {
+                                        variant: 'error',
+                                    });
+                                    window.localStorage.clear();
+                                    // dispatch(userLogout);
+                                    return;
+                                });
+                        }
+                    });
+            } else {
+                // reload()
+                enqueueSnackbar("You need to login first to view loan requests", {
+                    variant: 'error',
+                });
+                window.localStorage.clear();
+                return;
+            }
+        };
+        getdata();
         setOpenModal2(!openModal2);
     }
     const handelOpenModal3 = (e) => {
         e.preventDefault();
+        const getdata = () => {
+            // console.log("Hii")
+            const atoken = window.localStorage.getItem("accessToken");
+            const rtoken = window.localStorage.getItem("refreshToken");
+            if (atoken) {
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${atoken}`,
+                    },
+                };
+                const data = {
+                    lendersId: id,
+                    loanId: props.data._id,
+                    message: message
+                }
+                Promise.resolve(
+                    axios.post(
+                        API_URL + "loanrequest/reject", data, config
+                    )
+                )
+                    .then((res) => {
+                        console.log(res)
+                        enqueueSnackbar("Loan rejected successfully.", {
+                            variant: 'success',
+                        });
+                        // handelOpenModal1()
+                        return;
+                    })
+                    .catch((error) => {
+                        if (error.response && error.response.status === 401) {
+                            axios
+                                .post(
+                                    "https://apis.opdevelopers.live/api/refresh",
+                                    {
+                                        refresh_token: rtoken
+                                    }
+                                )
+                                .then((res) => {
+                                    localStorage.setItem(
+                                        "access_token",
+                                        res.data.result.accessToken
+                                    );
+                                    localStorage.setItem(
+                                        "refresh_token",
+                                        res.data.result.refreshToken
+                                    );
+                                    getdata();
+                                    return;
+                                })
+                                .catch((error) => {
+                                    // reload()
+                                    enqueueSnackbar("You need to login first !", {
+                                        variant: 'error',
+                                    });
+                                    window.localStorage.clear();
+                                    // dispatch(userLogout);
+                                    return;
+                                });
+                        }
+                    });
+            } else {
+                // reload()
+                enqueueSnackbar("You need to login first to view loan requests", {
+                    variant: 'error',
+                });
+                window.localStorage.clear();
+                return;
+            }
+        };
+        getdata();
         setOpenModal3(!openModal3);
     }
 
@@ -171,7 +312,7 @@ const Card = (props) => {
         <>
             <div className={style.card}>
                 <div className={style.imageContainer}>
-                    <img src={cardImage} className={style.cardImage} />
+                    <img src={cardImage} className={style.cardImage} alt='cardImage' />
                 </div>
 
                 <table className={style.table}>

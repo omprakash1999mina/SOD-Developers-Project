@@ -1,11 +1,17 @@
 import React from 'react';
 
 import style from './CreateProfile.module.css';
+// import Uploading from '../Uploading/Uploading';
 
 const CreateProfile = () => {
+    const upload = () => {
+
+    }
+
   return (
     <div className={style.coverContainer}>
         <div className={style.container}>
+            {/* <Uploading></Uploading> */}
             <h1 className={style.primaryHeading}>Create Your Profile</h1>
             <form className={style.form}>
                 <div className={style.bigBox}>
@@ -41,18 +47,22 @@ const CreateProfile = () => {
                     <div className={style.imageInput}>
                         <label className={style.label} htmlFor="profilePhoto">Upload Profile Photo</label>
                         <input className={style.imgInp} type="file" name='profilePhoto' id='profilePhoto' required />
+                        <button className={style.btn}onClick={upload}>Upload</button>
                     </div>
                     <div className={style.imageInput}>
                         <label className={style.label} htmlFor="aadhaarPhoto">Upload Aadhaar Card Photo</label>
                         <input className={style.imgInp} type="file" name='aadhaarPhoto' id='aadhaarPhoto' required />
+                        <button className={style.btn}onClick={upload}>Upload</button>
                     </div>
                     <div className={style.imageInput}>
                         <label className={style.label} htmlFor="panPhoto">Upload PAN Card Photo</label>
                         <input className={style.imgInp} type="file" name='panPhoto' id='panPhoto' required />
+                        <button className={style.btn}onClick={upload}>Upload</button>
                     </div>
                     <div className={style.imageInput}>
                         <label className={style.label} htmlFor="salarySlips">Upload Salary Slips</label>
                         <input className={style.imgInp} type="file" name='salarySlips' id='salarySlips' required />
+                        <button className={style.btn}onClick={upload}>Upload</button>
                     </div>
                 </div>
                 <button className={style.btn} type='submit'>Submit</button>
