@@ -20,18 +20,25 @@ const loanStatusController = {
         }
         const { lendersId, loanId } = req.body;
 
-        const exist = await User.exists({ _id: lendersId });
+        const exist = await User.findOne({ _id: lendersId });
         if (!exist) {
             discord.SendErrorMessageToDiscord(req.body.lendersId, "Accept Loan", "user not exist in our database !!");
             return next(CustomErrorHandler.unAuthorized())
         }
 
         const type = 'accepted';
+        let loan;
         // check does loan already accepted by someone or not
         try {
-            const loan = Loan.find({ loanId });
+            loan = await Loan.findOne({ _id: loanId });
             if (loan.status === 'accepted') {
                 return next(CustomErrorHandler.badRequest("Loan already accepted by someone !!"))
+            }
+            if(lendersId === loan.customerId){
+                return next(CustomErrorHandler.badRequest("Invalid loan accept request !!"))
+            }
+            if (exist.profileAccountBalance < loan.loanAmount) {
+                return next(CustomErrorHandler.badRequest("Insufficient balance !!"))
             }
         }
         catch (err) {
@@ -50,10 +57,18 @@ const loanStatusController = {
                 discord.SendErrorMessageToDiscord(req.body.lendersId, "Accept Loan", "error in creating loan reaquest in database !!");
                 return next(CustomErrorHandler.serverError())
             }
+            document = await Loan.findOneAndUpdate({ _id: loan._id }, {
+                status: "accepted"
+            })
             console.log(document);
-            const user = await User.findOne({ _id: lendersId })
-            const type = 'loan-accept';
-            mailService.send(user.userName, type, user.email)
+            const newBalanceLender = eval(exist.profileAccountBalance) - eval(loan.loanAmount);
+            const lender = await User.findOneAndUpdate({ _id: lendersId }, { profileAccountBalance: newBalanceLender })
+            let user = await User.findOne({ _id: loan.customerId })
+            const newBalanceUser = eval(user.profileAccountBalance) + eval(loan.loanAmount);
+            user = await User.findOneAndUpdate({ _id: loan.customerId }, { profileAccountBalance: newBalanceUser })
+            // console.log(lender)
+
+            mailService.send(user.userName, 'loan-accept', user.email, lender.userName, lender.email)
 
         } catch (err) {
             discord.SendErrorMessageToDiscord(req.body.lendersId, "Accept Loan", err);
@@ -76,7 +91,7 @@ const loanStatusController = {
                 discord.SendErrorMessageToDiscord(req.body.lendersId, "Reject", "user not exist in our database !!");
                 return next(CustomErrorHandler.unAuthorized())
             }
-            const loan = await Loan.findOneAndUpdate({ loanId }, {
+            const loan = await Loan.findOneAndUpdate({ _id: loanId }, {
                 status: "rejected",
             });
             if (!loan) {
@@ -95,10 +110,14 @@ const loanStatusController = {
                 discord.SendErrorMessageToDiscord(req.body.lendersId, "Reject", "error in creating loan request in database !!");
                 return next(CustomErrorHandler.serverError())
             }
-            
-            const user = await User.findOne({ _id: lendersId })
-            const mailType = 'loan-reject';
-            mailService.send(user.userName, mailType, user.email)
+            document = await Loan.findOneAndUpdate({ _id: loan._id }, {
+                status: "rejected"
+            })
+            // console.log(document);
+            const lender = await User.findOne({ _id: lendersId })
+            const user = await User.findOne({ _id: loan.customerId })
+
+            mailService.send(user.userName, 'loan-reject', user.email, lender.userName, lender.email)
 
             res.status(201).json({ status: "success", msg: "Successfully rejected" });
         } catch (err) {
@@ -122,7 +141,7 @@ const loanStatusController = {
         }
         const type = "negotiation";
         try {
-            const loan = await Loan.find({ loanId });
+            const loan = await Loan.findOne({ _id: loanId });
             if (loan.status === "available") {
                 const request = await LoanRequest.create({
                     lendersId,
@@ -135,9 +154,11 @@ const loanStatusController = {
                     return next(CustomErrorHandler.serverError())
                 }
 
-                const user = await User.findOne({ _id: lendersId })
-                const mailType = 'loan-modify';
-                mailService.send(user.userName, mailType, user.email)
+                // console.log(document);
+                const lender = await User.findOne({ _id: lendersId })
+                const user = await User.findOne({ _id: loan.customerId })
+
+                mailService.send(user.userName, 'loan-modify', user.email, lender.userName, lender.email)
 
                 res.status(201).json({ status: "success", msg: "negotiation request posted successfully !" });
             }
@@ -191,14 +212,16 @@ const loanStatusController = {
         if (error) {
             return next(CustomErrorHandler.badRequest());
         }
-
+        console.log('level 1')
         const exist = await User.exists({ _id: req.body.customerId });
         if (!exist) {
             discord.SendErrorMessageToDiscord(req.body.customerId, "Apply Loan", "User not exist in our database !!");
             return next(CustomErrorHandler.unAuthorized())
         }
+        console.log('level 2')
 
         let already_Applied_for_loan = await Loan.findOne({ customerId: req.body.customerId })
+        console.log(already_Applied_for_loan)
         if (already_Applied_for_loan) {
             discord.SendErrorMessageToDiscord(req.body.customerId, "Apply Loan", "User already exist in database so not allowed to apply for new loan !!");
             return next(CustomErrorHandler.badRequest("already applied for loan !!"))

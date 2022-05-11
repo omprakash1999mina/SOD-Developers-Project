@@ -29,8 +29,9 @@ const otpController = {
             }
 
             const type = 'otp';
-            const otp = mailService.send(user.userName, type, email)
+            const otp = mailService.send(user.userName, type, email,"","")
             if (otp) {
+                // check if otp exist with same key delete old and set new
                 const ttl = 60 * 10; // for 10 mins
                 const ok = RedisService.createRedisClient().set(email, otp, "EX", ttl);
                 // let ok = RedisService.set(email, otp, ttl);
