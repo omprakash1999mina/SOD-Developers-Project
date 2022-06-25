@@ -1,66 +1,118 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from 'notistack';
 import axios from "axios";
 import style from "./TakeLoan.module.css";
-import getRefreshToken from "../../utilities";
 const host = process.env.REACT_APP_API_URL;
-
 const TakeLoan = () => {
-  const navigate = useNavigate();
-  const [data, setData] = useState({ loanAmount: '', tenure: '', intRate: ''});
+
+  const { enqueueSnackbar } = useSnackbar();
+  const [data, setData] = useState({ loanAmount: 0, tenure: 0, intRate: 0 });
+
   const handelChangeInput = (event) => {
     const { name, value } = event.target;
     setData({ ...data, [name]: value }); // Modern React Destructuring Syntax
   };
 
-  const takeLoan = async (e) => {
-    e.preventDefault();
-    
-    const id = localStorage.getItem("id");
-    const url = `${host}apply/loan`;
-    console.log(data);
-    const loanData = {
-      customerId: id,
-      loanAmount: data.loanAmount,
-      tenure: data.tenure,
-      intRate: data.intRate,
-    };
-    console.log(loanData);
-    const getData = () => {
-      const accessToken = localStorage.getItem("accessToken");
-      const refreshToken = localStorage.getItem('refreshToken');
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `bearer ${accessToken}`,
-        },
-      };
-      // const response = await fetch(url, {
-      //   method: 'POST',
 
-      //   body: JSON.stringify(loanData)
-      // });
-      axios
-        .post(url, loanData, config)
-        .then((response) => {
-          // const json = await response.json();
-          console.log(response);
-          return;
-        })
-        .catch((err) => {
-          const ok = getRefreshToken(refreshToken)
-          if(ok){
-            getData()
-          }
-        });
-    };
-    getData()
-  };
-  useEffect(() => {
-    let token = localStorage.getItem("accessToken");
-    if (token) setData({ loanAmount: '', tenure: '', intRate: '' });
-    else navigate("/login"); // eslint-disable-next-line
-  }, []);
+  const takeLoan = (e)=>{
+    e.preventDefault();
+    const url = `${host}apply/loan`;
+    try {
+      console.log("first")
+      const getdata = () => {
+        const atoken = window.localStorage.getItem("accessToken");
+        const rtoken = window.localStorage.getItem("refreshToken");
+        const id = window.localStorage.getItem("id");
+        if (atoken) {
+          console.log("first1")
+          const config = {
+            headers: {
+              Authorization: `Bearer ${atoken}`,
+              "Content-Type": "application/json",
+            },
+          };
+          const loanData = {
+            customerId: id,
+            loanAmount: data.loanAmount,
+            tenure: data.tenure,
+            intRate: data.intRate,
+          };
+
+          Promise.resolve(
+            axios.post(
+              url,
+              loanData,
+              config
+            )
+          )
+            .then((res) => {
+              console.log(res)
+              enqueueSnackbar("Loan applied successfully", {
+                variant: 'success',
+              });
+              return;
+            })
+            .catch((error) => {
+              if (error.response && error.response.status === 401) {
+                axios
+                  .post(
+                    "https://apis.opdevelopers.live/api/refresh",
+                    {
+                      refresh_token:rtoken
+                    }
+                  )
+                  .then((res) => {
+                    console.log(res)
+                    localStorage.setItem(
+                      "accessToken",
+                      res.data.access_token
+                    );
+                    localStorage.setItem(
+                      "refreshToken",
+                      res.data.refresh_token
+                    );
+                    getdata();
+                    return;
+                  })
+                  .catch((error) => {
+                    console.log(error)
+                    enqueueSnackbar("You need to login first to apply for loan", {
+                      variant: 'error',
+                    });
+                    window.localStorage.clear();
+                    return;
+                  });
+
+              }else{
+                console.log(error)
+                let message = error.response.data.message
+                enqueueSnackbar(message, {
+                  variant: 'error',
+                });
+                return
+              }
+            });
+        }else{
+          enqueueSnackbar("You need to login first to apply for loan", {
+             variant: 'error',
+           });
+          window.localStorage.clear();
+     
+          return
+        }
+      };
+
+      getdata();
+      return;
+    } catch (error) {
+      console.log(error);
+      enqueueSnackbar("You need to login first to apply for loan", {
+        variant: 'error',
+      });
+      return
+    }
+  }
 
   return (
     <div className={style.container}>

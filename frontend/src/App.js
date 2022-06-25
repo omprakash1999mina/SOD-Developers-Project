@@ -28,7 +28,7 @@ function App() {
             <Route exact path = '/loanRequests' element={<LoanRequests/>}/>
             <Route exact path = '/takeLoan' element={<TakeLoan/>}/>
             <Route exact path = '/profile' element={<Profile/>}/>
-            <Route exact path = '/publicProfile' element={<PublicProfile/>}/>
+            <Route exact path = '/publicProfile/:customerId' element={<PublicProfile/>}/>
             <Route exact path = '/createProfile' element={<CreateProfile/>}/>
             <Route exact path = '/modifyProfile' element={<ModifyProfile/>}/>
             <Route exact path = '/privacyPolicy' element={<PrivacyPolicy/>}/>
