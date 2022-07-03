@@ -11,8 +11,8 @@ const forgotPasswordController = {
 
         const forgotPasswordSchema = Joi.object({
             email: Joi.string().required(),
-            otp: Joi.string().required(),
-            password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).min(8).max(50).required()
+            otp: Joi.number().required(),
+            password: Joi.string().min(8).max(50).required()
         });
 
         const { error } = forgotPasswordSchema.validate(req.body);
@@ -30,11 +30,9 @@ const forgotPasswordController = {
             }
             // verifing the otp with redis
             let redisOTP;
-            RedisService.createRedisClient().get(email).then((res) => {
+            await RedisService.createRedisClient().get(email).then((res) => {
                 redisOTP = res
             });
-            // let redisOTP = RedisService.get(email);
-
             if (redisOTP === null) {
                 return next(CustomErrorHandler.unAuthorized("OTP expired !!"));
             }
@@ -43,11 +41,16 @@ const forgotPasswordController = {
             }
             // if otp verified then update in database
             const hashedPassword = await bcrypt.hash(password, 10);
-            let document = User.findOneAndUpdate({ email: email }, {
+            let document = await User.findOneAndUpdate({ email: email }, {
                 password: hashedPassword
             })
             if (!document) {
                 discord.SendErrorMessageToDiscord(req.body.email, "forgot password", err);
+            }
+            // after update the password delete otp in redis cache
+            const deleted = RedisService.createRedisClient().del(req.body.email);
+            if (!deleted) {
+                discord.SendErrorMessageToDiscord(req.body.email, "Forgot password", "error in deleting otp in redis !!");
             }
         } catch (err) {
             discord.SendErrorMessageToDiscord(req.body.email, "forgot password", err);

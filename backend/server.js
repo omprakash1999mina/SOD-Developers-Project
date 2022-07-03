@@ -2,15 +2,13 @@
 import express from 'express';
 import { APP_PORT, DB_URL } from './config';
 import errorHandler from './middleware/errorHandler';
-const PORT = APP_PORT || 5000;
+const PORT = process.env.PORT || 5000;
 const app = express();
 import routes from './routes';
 import mongoose from 'mongoose';
 import path from "path";
 import cors from "cors";
-// import RedisService from './Services/redis';
 
-// RedisService.createRedisClient();
 global.appRoot = path.resolve(__dirname);
 app.use(cors({
   origin: '*',
@@ -32,15 +30,12 @@ try {
 }
 
 app.use(express.json());
-app.use('/api', routes);
+app.use('/api/v1', routes);
 app.use(errorHandler);
 app.set('view engine', 'ejs');
 
 //The 404 Route (ALWAYS Keep this as the last route)
-app.get('*', (req, res) => {
-  res.render('NotFound')
-})
-app.post('*', (req, res) => {
+app.all('*', (req, res) => {
   res.render('NotFound')
 })
 

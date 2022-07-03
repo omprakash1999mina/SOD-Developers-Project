@@ -28,8 +28,10 @@ const refreshController = {
             try {
                 const { _id } = JwtService.verify(req.body.refresh_token, REFRESH_SECRET);
                 userId = _id;
-                RedisService.createRedisClient().get(userId).then((res) => {
+                const redis = RedisService.createRedisClient();
+                await redis.get(userId).then((res) => {
                     refreshtoken = res;
+                    redis.disconnect();
                 })
                 if (refreshtoken === null) {
                     discord.SendErrorMessageToDiscord(req.body.refresh_token, "Refresh token", "invalid refresh token !!");
