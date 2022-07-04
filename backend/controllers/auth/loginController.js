@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { User, RefreshToken } from "../../models";
+import { User } from "../../models";
 import CustomErrorHandler from '../../Services/CustomerrorHandler';
 import bcrypt from 'bcrypt';
 import JwtService from '../../Services/JwtService';
@@ -13,8 +13,9 @@ const loginController = {
         // validation
         const loginSchema = Joi.object({
             email: Joi.string().email().required(),
-            password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+            password: Joi.string().required(),
         });
+        // password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$@')).required(),
 
         console.log(req.body);
 
@@ -37,11 +38,11 @@ const loginController = {
             }
             //      Token 
             const id = user._id;
-            const access_token = JwtService.sign({ _id: user._id});
+            const access_token = JwtService.sign({ _id: user._id });
             const refresh_token = JwtService.sign({ _id: user._id }, '7d', REFRESH_SECRET);
             //       redis caching
             const ttl = 60 * 60 * 24 * 7;
-            const ok = RedisService.createRedisClient().set(user._id, refresh_token,"EX", ttl);
+            const ok = await RedisService.createRedisClient().set(user._id, refresh_token, "EX", ttl);
             // const ok = RedisService.set(redis, email, refresh_token, ttl);
 
             if (!ok) {
@@ -52,28 +53,31 @@ const loginController = {
             res.status(200).json({ id, access_token, refresh_token });
         } catch (err) {
             discord.SendErrorMessageToDiscord(req.body.email, "Login", err);
-            return next(err);
+            return next(CustomErrorHandler.serverError());
         }
-
     },
-
-
     async logout(req, res, next) {
         // validation
         const refreshSchema = Joi.object({
             refresh_token: Joi.string().required(),
         });
         const { error } = refreshSchema.validate(req.body);
-
         if (error) {
             return next(error);
         }
 
         try {
-            await RefreshToken.deleteOne({ refresh_token: req.body.refresh_token });
+            // deleting the refresh token in redis if exist
+            const { _id } = JwtService.verify(req.body.refresh_token, REFRESH_SECRET);
+            const ok = await RedisService.createRedisClient().del(_id);
+            if (!ok) {
+                discord.SendErrorMessageToDiscord(_id, "Logout", "error in deleting refresh token in redis !!");
+                return next(CustomErrorHandler.badRequest("you're already logout !!"))
+            }
+            // await RefreshToken.deleteOne({ refresh_token: req.body.refresh_token });
         } catch (err) {
             discord.SendErrorMessageToDiscord(req.body.refresh_token, "Logout", err);
-            return next(new Error('Something went wrong in the database'));
+            return next(CustomErrorHandler.serverError());
         }
         res.status(200).json({ msg: "logout successfully", status: "success" });
 

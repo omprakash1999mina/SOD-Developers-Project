@@ -8,7 +8,7 @@ const userController = {
 
         let document;
         try {
-            document = await User.findOne({ _id: req.params.id }).select('-updatedAt -__v -createdAt -password');
+            document = await User.findOne({ _id: req.params.id }).select('-updatedAt -__v -createdAt -password -_id');
         } catch (err) {
             discord.SendErrorMessageToDiscord(req.params.id, "Get one user", err);
             return next(CustomErrorHandler.serverError());
@@ -20,13 +20,12 @@ const userController = {
         // validation
 
         const updateSchema = Joi.object({
-            userName: Joi.string().min(3).max(50).required(),
+            userName: Joi.string().min(3).max(100).required(),
             gender: Joi.string().required(),
             age: Joi.string().min(18).required(),
             email: Joi.string().email().required(),
-            password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).min(8).max(50).required(),
+            password: Joi.string().min(8).max(50).required(),
             profileImageLink: Joi.string().required(),
-            profileImageName: Joi.string().required(),
 
             aadhaarNumber: Joi.string().min(12).max(12).required(),
             panNumber: Joi.string().min(10).max(10).required(),
@@ -34,11 +33,7 @@ const userController = {
 
             aadhaarImageLink: Joi.string().required(),
             panImageLink: Joi.string().required(),
-            salarySlipImageLink: Joi.string().required(),
-            aadhaarImageName: Joi.string().required(),
-            panImageName: Joi.string().required(),
-            salarySlipImageName: Joi.string().required(),
-
+            salarySlipImageLink: Joi.array().required(),
 
             accountHolderName: Joi.string().required(),
             accountNumber: Joi.string().required(),
@@ -52,7 +47,7 @@ const userController = {
         // if error in the updation of profile delete the uploaded file 
         if (error) {
             // Delete the uploaded file
-            DeleteFiles(req.body.aadhaarImageName, req.body.panImageName, req.body.salarySlipImageName, req.body.email, error)
+            DeleteFiles(req.body.aadhaarImageLink, req.body.panImageLink, req.body.salarySlipImageLink, req.body.email, error)
             return next(error);
             // rootfolder/uploads/filename.png
         }
@@ -68,11 +63,11 @@ const userController = {
             const match = await bcrypt.compare(req.body.password, user.password);
             if (!match) {
                 // Delete the uploaded file
-                DeleteFiles(req.body.aadhaarImageName, req.body.panImageName, req.body.salarySlipImageName, req.body.email, error)
+                DeleteFiles(req.body.aadhaarImageLink, req.body.panImageLink, req.body.salarySlipImageLink, req.body.email, error)
                 return next(CustomErrorHandler.wrongCredentials());
             }
             let cibilScore = calculateCIBIL(ctc);
-            const { userName, age, gender, aadhaarNumber, panNumber, ctc, aadhaarImageLink, panImageLink, salarySlipImageLink, aadhaarImageName, panImageName, salarySlipImageName, profileImageName, profileImageLink, accountHolderName, accountNumber, IFACcode, BankName } = req.body;
+            const { userName, age, gender, email, aadhaarNumber, panNumber, ctc, aadhaarImageLink, panImageLink, salarySlipImageLink, profileImageLink, accountHolderName, accountNumber, IFACcode, BankName } = req.body;
             let document;
             // ctc in - ve not possible 
             if (ctc < 0) {
@@ -82,7 +77,7 @@ const userController = {
                 userName,
                 age,
                 gender,
-                profileImageName,
+                email,
                 profileImageLink,
 
                 aadhaarNumber,
@@ -93,9 +88,6 @@ const userController = {
                 aadhaarImageLink,
                 panImageLink,
                 salarySlipImageLink,
-                aadhaarImageName,
-                panImageName,
-                salarySlipImageName,
 
                 accountHolderName,
                 accountNumber,
@@ -107,45 +99,45 @@ const userController = {
             // document have old data so we can compare it with new 
             // Delete the uploaded old file
 
-            if (document.profileImageName != req.body.profileImageName) {
-                DeleteOneFile(document.profileImageName)
+            if (document.profileImageLink != req.body.profileImageLink) {
+                DeleteOneFile(document.profileImageLink)
             }
-            if (document.aadhaarImageName != req.body.aadhaarImageName) {
-                DeleteOneFile(document.profileImageName)
+            if (document.aadhaarImageLink != req.body.aadhaarImageLink) {
+                DeleteOneFile(document.profileImageLink)
             }
-            if (document.panImageName != req.body.panImageName) {
-                DeleteOneFile(document.profileImageName)
+            if (document.panImageLink != req.body.panImageLink) {
+                DeleteOneFile(document.profileImageLink)
             }
-            if (document.salarySlipImageName.toString() != req.body.salarySlipImageName.toString()) {
-                document.salarySlipImageName.forEach(imgName => {
-                    DeleteOneFile(imgName)
+            if (document.salarySlipImageLink.toString() != req.body.salarySlipImageLink.toString()) {
+                document.salarySlipImageLink.forEach(imgLink => {
+                    DeleteOneFile(imgLink)
                 });
             }
 
         } catch (err) {
             // Delete the uploaded file
-            DeleteFiles(req.body.aadhaarImageName, req.body.panImageName, req.body.salarySlipImageName, req.body.email, error)
+            DeleteFiles(req.body.aadhaarImageLink, req.body.panImageLink, req.body.salarySlipImageLink, req.body.email, error)
             discord.SendErrorMessageToDiscord(req.body.email, "Update User", err);
             return next(CustomErrorHandler.alreadyExist('This email is not registered please contact to technical team ! . '));
             // return next( err );
         }
 
-        res.status(201).json({ msg: "Updated Successfully !!!  ", });
+        res.status(200).json({ msg: "Updated Successfully !!!  ", });
     }
 
 }
 
 export default userController;
 
-const DeleteFiles = (aadhaarImageName, panImageName, salarySlipImageName, email, error) => {
+const DeleteFiles = (aadhaarImageLink, panImageLink, salarySlipImageLink, email, error) => {
     let res1 = false;
     let res2 = false;
     let res3 = false;
 
-    res1 = firebaseServices.DeleteFileInFirebase(aadhaarImageName)
-    res2 = firebaseServices.DeleteFileInFirebase(panImageName)
-    salarySlipImageName.forEach(imgName => {
-        let temp = firebaseServices.DeleteFileInFirebase(imgName)
+    res1 = firebaseServices.DeleteFileInFirebase(aadhaarImageLink)
+    res2 = firebaseServices.DeleteFileInFirebase(panImageLink)
+    salarySlipImageLink.forEach(imgLink => {
+        let temp = firebaseServices.DeleteFileInFirebase(imgLink)
         res3 = res3 * temp;
     });
     // implimetation for discord error logs

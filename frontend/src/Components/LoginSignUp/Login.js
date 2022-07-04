@@ -13,27 +13,6 @@ const Login = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value }); // Modern React Destructuring Syntax
   };
-  // const handelLogin = async (e) => {
-  //   e.preventDefault();
-  //   const url = `${host}login`;
-  //   // const response = 'Hello';
-  //   const response = await fetch(url, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(formData)
-  //   });
-  //   const json = await response.json();
-  //   // console.log(json);
-  //   localStorage.setItem('accessToken', json.access_token);
-  //   localStorage.setItem('refreshToken', json.refresh_token);
-  //   localStorage.setItem('id', json.id);
-  //   navigate('/');
-  //   enqueueSnackbar("Logged In successfully", {
-  //     variant: 'success',
-  //   });
-  // }
 
   const signinHandler = (e) => {
     e.preventDefault();
@@ -56,10 +35,12 @@ const Login = () => {
       })
       .catch((e) => {
         console.log(e);
-        let message = e.response.data.message;
-        enqueueSnackbar(message, {
-          variant: "error",
-        });
+        if (e.response) {
+          let message = e.response.data.message;
+          enqueueSnackbar(message, {
+            variant: "error",
+          });
+        }
       });
   };
 
@@ -84,7 +65,7 @@ const Login = () => {
             placeholder="Enter Password"
             onChange={handelChangeInput}
           ></input>
-          <button className={style.btn} onClick={signinHandler}>
+          <button className={style.btn} onClick={(e)=>signinHandler(e)}>
             Login
           </button>
         </form>
