@@ -43,7 +43,7 @@ const Navbar = () => {
       const id = localStorage.getItem('id');
       let access_token = localStorage.getItem('accessToken');
       let refresh_token = localStorage.getItem('refreshToken');
-      if (!access_token || Object.keys(user.userInfo).length != 0) { return; }
+      if (!access_token || Object.keys(user.userInfo).length !== 0) { return; }
 
       if (access_token) {
         const config = {
@@ -54,6 +54,7 @@ const Navbar = () => {
 
         axios.get(API_URL + 'users/' + id, config).then(response => {
           const data = response.data;
+          setIsProfileCreated(true);
           dispatch(userLogin(data));
         }).catch(async (error) => {
           // console.log(error);

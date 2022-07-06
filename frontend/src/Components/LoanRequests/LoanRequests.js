@@ -12,7 +12,7 @@ const LoanRequests = () => {
   useEffect(() => {
     if (dataArr == null) {
       axios.get(host + "getloans").then((res) => {
-        console.log(res)
+        // console.log(res)
         setDataArr(res.data.loans)
       }).catch((error) => {
         console.log(error.response.data.message);
