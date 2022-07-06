@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation} from 'react-router-dom';
 import utils from '../../utils'
 import style from './Navbar.module.css';
 import logo from '../../Assets/logo.jpg';
@@ -14,7 +14,7 @@ const Navbar = () => {
   const user = useSelector(getUser);
   const [burgerClicked, setBurgerClicked] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const [isProfileCreated, setIsProfileCreated] = useState(true);
+  const [isProfileCreated, setIsProfileCreated] = useState(false);
   const handelBurger = () => {
     setBurgerClicked(!burgerClicked);
   }
@@ -31,19 +31,19 @@ const Navbar = () => {
     dispatch(userLogout({}));
     handelBurger();
   }
-
+  const pathname = useLocation().pathname;
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
     getalldata();
     // console.log("updated")
-  }, []);
+  }, [pathname]);
 
   const getalldata = () => {
     try {
       const id = localStorage.getItem('id');
       let access_token = localStorage.getItem('accessToken');
       let refresh_token = localStorage.getItem('refreshToken');
-      if (!access_token || user.userInfo) { return; }
+      if (!access_token || Object.keys(user.userInfo).length !== 0) { return; }
 
       if (access_token) {
         const config = {
@@ -54,6 +54,7 @@ const Navbar = () => {
 
         axios.get(API_URL + 'users/' + id, config).then(response => {
           const data = response.data;
+          setIsProfileCreated(true);
           dispatch(userLogin(data));
         }).catch(async (error) => {
           // console.log(error);
@@ -76,8 +77,6 @@ const Navbar = () => {
       dispatch(userLogout({}));
     }
   }
-
-
 
 
   return (

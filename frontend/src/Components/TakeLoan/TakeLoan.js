@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from 'notistack';
 import axios from "axios";
 import style from "./TakeLoan.module.css";
+import utils from '../../utils'
+import { userLogout } from '../../states/User/UserSlice';
+import { useDispatch } from 'react-redux';
+
 const host = process.env.REACT_APP_API_URL;
 const TakeLoan = () => {
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [data, setData] = useState({ loanAmount: 0, tenure: 0, intRate: 0 });
 
@@ -14,105 +19,71 @@ const TakeLoan = () => {
     setData({ ...data, [name]: value }); // Modern React Destructuring Syntax
   };
 
-
-  const takeLoan = (e)=>{
+  const takeLoan = (e) => {
     e.preventDefault();
-    const url = `${host}apply/loan`;
+    postalldata();
+  }
+
+
+  const postalldata = () => {
     try {
-      console.log("first")
-      const getdata = () => {
-        const atoken = window.localStorage.getItem("accessToken");
-        const rtoken = window.localStorage.getItem("refreshToken");
-        const id = window.localStorage.getItem("id");
-        if (atoken) {
-          console.log("first1")
-          const config = {
-            headers: {
-              Authorization: `Bearer ${atoken}`,
-              "Content-Type": "application/json",
-            },
-          };
-          const loanData = {
-            customerId: id,
-            loanAmount: data.loanAmount,
-            tenure: data.tenure,
-            intRate: data.intRate,
-          };
-
-          Promise.resolve(
-            axios.post(
-              url,
-              loanData,
-              config
-            )
-          )
-            .then((res) => {
-              console.log(res)
-              enqueueSnackbar("Loan applied successfully", {
-                variant: 'success',
-              });
-              return;
-            })
-            .catch((error) => {
-              if (error.response && error.response.status === 401) {
-                axios
-                  .post(
-                    "https://apis.opdevelopers.live/api/refresh",
-                    {
-                      refresh_token:rtoken
-                    }
-                  )
-                  .then((res) => {
-                    console.log(res)
-                    localStorage.setItem(
-                      "accessToken",
-                      res.data.access_token
-                    );
-                    localStorage.setItem(
-                      "refreshToken",
-                      res.data.refresh_token
-                    );
-                    getdata();
-                    return;
-                  })
-                  .catch((error) => {
-                    console.log(error)
-                    enqueueSnackbar("You need to login first to apply for loan", {
-                      variant: 'error',
-                    });
-                    window.localStorage.clear();
-                    return;
-                  });
-
-              }else{
-                console.log(error)
-                let message = error.response.data.message
-                enqueueSnackbar(message, {
-                  variant: 'error',
-                });
-                return
-              }
-            });
-        }else{
-          enqueueSnackbar("You need to login first to apply for loan", {
-             variant: 'error',
-           });
-          window.localStorage.clear();
-     
-          return
+      let access_token = localStorage.getItem('accessToken');
+      let refresh_token = localStorage.getItem('refreshToken');
+      const id = localStorage.getItem('id');
+      
+      if (access_token) {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${access_token}`,
+          }
         }
-      };
+        const url = `${host}apply/loan`;
+        const loanData = {
+          customerId: id,
+          loanAmount: data.loanAmount,
+          tenure: data.tenure,
+          intRate: data.intRate,
+        };
 
-      getdata();
-      return;
+        axios.post(url, loanData, config).then((res) => {
+          enqueueSnackbar("Loan applied successfully", {
+            variant: 'success',
+          });
+          navigate('/loanRequests');
+          return;
+        }).catch(async (error) => {
+          // console.log(error);
+          if (error.response && error.response.status === 401) {
+            access_token = await utils.getNewAccessToken(refresh_token);
+            if (!access_token) {
+              dispatch(userLogout({}));
+              navigate('/login');
+              return;
+            } else {
+              localStorage.setItem("accessToken", access_token);
+              postalldata();
+            }
+          }
+          else if(error.response){
+            enqueueSnackbar(error.response.data.message, {
+              variant: "error",
+            });
+            return;
+          }
+        });
+      }
     } catch (error) {
-      console.log(error);
-      enqueueSnackbar("You need to login first to apply for loan", {
-        variant: 'error',
+      // console.log(error)
+      dispatch(userLogout({}));
+      enqueueSnackbar("You need to login first", {
+        variant: "error",
       });
-      return
+      navigate('/login');
+      return;
     }
   }
+
 
   return (
     <div className={style.container}>
@@ -123,7 +94,7 @@ const TakeLoan = () => {
         </h2>
         <input
           className={style.input}
-          value={data.loanAmount}
+          // value={data.loanAmount}
           type="text"
           name="loanAmount"
           id="amount"
@@ -133,7 +104,7 @@ const TakeLoan = () => {
         />
         <input
           className={style.input}
-          value={data.tenure}
+          // value={data.tenure}
           type="text"
           name="tenure"
           id="tenure"
@@ -143,7 +114,7 @@ const TakeLoan = () => {
         />
         <input
           className={style.input}
-          value={data.intRate}
+          // value={data.intRate}
           type="text"
           name="intRate"
           id="rate"

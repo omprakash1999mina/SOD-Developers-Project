@@ -18,7 +18,7 @@ const defaultUser = {
   panNo: '123AB567890',
   panImageLink: 'https://images.livemint.com/img/2019/07/11/original/e-pan_card_download_1562831552156.PNG',
   ctc: '20000',
-  salarySlipImageLink: ['https://www.hrcabin.com/wp-content/uploads/2021/05/Salary-slip-format-in-excel-download.png', 'https://i.pinimg.com/736x/ed/f6/28/edf6283d6955d5b8488e977e8613b557.jpg'],
+  salarySlipImageLink: ['https://i.pinimg.com/736x/ed/f6/28/edf6283d6955d5b8488e977e8613b557.jpg'],
   acHolderName: 'Sudheer Kumar Prajapat',
   acNo: '123456780123456',
   ifacCode: 'abc',
@@ -87,18 +87,18 @@ const Profile = () => {
         <div className={style.container}>
           <div className={style.left}>
             <div className={style.profilePhoto}>
-              <img src={user.userInfo.profileImageLink == "" ? defaultUser.profileImageLink : user.userInfo.profileImageLink} alt="Profile" />
+              <img src={user.userInfo.profileImageLink === "" ? defaultUser.profileImageLink : user.userInfo.profileImageLink} alt="Profile" />
             </div>
             <div className={style.documentsPhoto}>
               <div className={style.aadhaarPhoto}>
-                <img src={user.userInfo.aadhaarImageLink == "" ? defaultUser.aadhaarImageLink : user.userInfo.aadhaarImageLink} alt="Aadhaar Card" />
+                <img src={user.userInfo.aadhaarImageLink === "" ? defaultUser.aadhaarImageLink : user.userInfo.aadhaarImageLink} alt="Aadhaar Card" />
               </div>
               <div className={style.panPhoto}>
-                <img src={user.userInfo.panImageLink == "" ? defaultUser.panImageLink : user.userInfo.panImageLink} alt="PAN Card" />
+                <img src={user.userInfo.panImageLink === "" ? defaultUser.panImageLink : user.userInfo.panImageLink} alt="PAN Card" />
               </div>
             </div>
             <div className={style.slipsPhoto}>
-              <img src={user.userInfo.salarySlipImageLink.length != 0 ? user.userInfo.salarySlipImageLink[currentIndex] : defaultUser.salarySlipImageLink} alt="Slips" />
+              <img src={user.userInfo.salarySlipImageLink.length !== 0 ? user.userInfo.salarySlipImageLink[currentIndex] : defaultUser.salarySlipImageLink} alt="Slips" />
               <div className={style.buttons}>
                 <button className={style.btn} onClick={() => ((currentIndex === 0) ? (setCurrentIndex(user.userInfo.salarySlips.length - 1)) : (setCurrentIndex(currentIndex - 1)))}>&lt;</button>
                 <button className={style.btn} onClick={() => ((currentIndex === user.userInfo.salarySlips.length - 1) ? (setCurrentIndex(0)) : (setCurrentIndex(currentIndex + 1)))}>&gt;</button>

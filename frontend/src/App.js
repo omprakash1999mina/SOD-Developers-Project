@@ -22,7 +22,7 @@ function App() {
     <>
       <Router>
         <div className={styles.container}>
-          <Navbar></Navbar>
+          <Navbar/>
           <Routes>
             <Route exact path = '/' element={<Home/>}/>
             <Route exact path = '/loanRequests' element={<LoanRequests/>}/>
