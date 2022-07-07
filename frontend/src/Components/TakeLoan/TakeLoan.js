@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from 'notistack';
 import axios from "axios";
@@ -43,7 +43,6 @@ const TakeLoan = () => {
       let access_token = localStorage.getItem('accessToken');
       let refresh_token = localStorage.getItem('refreshToken');
       const id = localStorage.getItem('id');
-
       if (access_token) {
         const config = {
           headers: {

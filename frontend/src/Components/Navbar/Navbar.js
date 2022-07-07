@@ -78,7 +78,6 @@ const Navbar = () => {
     }
   }
 
-
   const refOutSideClick = React.useRef();
 
   useEffect(() => {
