@@ -7,7 +7,7 @@ import LoanRequests from './Components/LoanRequests/LoanRequests.js';
 import TakeLoan from './Components/TakeLoan/TakeLoan.js';
 import Profile from './Components/Profile/Profile.js';
 import PublicProfile from './Components/Profile/PublicProfile.js';
-import CreateProfile from './Components/Profile/CreateProfile.js';
+// import CreateProfile from './Components/Profile/CreateProfile.js';
 import ModifyProfile from './Components/Profile/ModifyProfile.js';
 import PrivacyPolicy from './Components/PrivacyPolicy/PrivacyPolicy.js';
 import LoanPolicy from './Components/LoanPolicy/LoanPolicy.js';
@@ -16,6 +16,7 @@ import Login from './Components/LoginSignUp/Login';
 import SignUp from './Components/LoginSignUp/SignUp';
 import ForgetPassword from './Components/ForgetPassword/ForgetPassword.js';
 import Footer from "./Components/Footer/Footer.js";
+import NotFound from "./Components/NotFound/NotFound";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route exact path='/login' element={<Login/>}></Route>
             <Route exact path='/signUp' element={<SignUp/>}></Route>
             <Route exact path='/forgetPassword' element={<ForgetPassword/>}></Route>
+            <Route exact path='*' element={<NotFound/>}></Route>
           </Routes>
           <Footer></Footer>
         </div>
