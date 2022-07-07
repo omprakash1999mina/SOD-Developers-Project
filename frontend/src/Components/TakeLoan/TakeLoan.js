@@ -1,15 +1,16 @@
-import React, { useState, } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from 'notistack';
 import axios from "axios";
 import style from "./TakeLoan.module.css";
 import utils from '../../utils'
-import { userLogout } from '../../states/User/UserSlice';
-import { useDispatch } from 'react-redux';
+import { userLogout, getUser } from '../../states/User/UserSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const host = process.env.REACT_APP_API_URL;
 const TakeLoan = () => {
   const dispatch = useDispatch();
+  const user = useSelector(getUser);
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [data, setData] = useState({ loanAmount: 0, tenure: 0, intRate: 0 });
@@ -24,13 +25,24 @@ const TakeLoan = () => {
     postalldata();
   }
 
+  useEffect(() => {
+    const empty = "";
+    const { age, gender, ctc } = user.userInfo;
+    if (age === empty || gender === empty || ctc === empty) {
+      enqueueSnackbar("Complete your profile", {
+        variant: "error",
+      });
+      setTimeout(() => {
+        navigate('/modifyProfile');
+      }, 1000);
+    }
+  }, []);
 
   const postalldata = () => {
     try {
       let access_token = localStorage.getItem('accessToken');
       let refresh_token = localStorage.getItem('refreshToken');
       const id = localStorage.getItem('id');
-      
       if (access_token) {
         const config = {
           headers: {
@@ -65,7 +77,7 @@ const TakeLoan = () => {
               postalldata();
             }
           }
-          else if(error.response){
+          else if (error.response) {
             enqueueSnackbar(error.response.data.message, {
               variant: "error",
             });

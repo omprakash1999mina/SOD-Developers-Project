@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation} from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import utils from '../../utils'
 import style from './Navbar.module.css';
 import logo from '../../Assets/logo.jpg';
@@ -78,6 +78,22 @@ const Navbar = () => {
     }
   }
 
+  const refOutSideClick = React.useRef();
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      // If the menu is open and the clicked target is not within the menu,
+      // then close the menu
+      if (refOutSideClick.current && !refOutSideClick.current.contains(e.target)) {
+        setIsClicked(false);
+      }
+    }
+    document.addEventListener("mousedown", checkIfClickedOutside);
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener("mousedown", checkIfClickedOutside)
+    }
+  }, [refOutSideClick])
 
   return (
     <>
@@ -94,23 +110,15 @@ const Navbar = () => {
           <Link className={style.link} to="/loanRequests" onClick={() => handelBurger()}><li>Loan Requests</li></Link>
           <Link className={style.link} to="/takeLoan" onClick={() => handelBurger()}><li>Take Loan</li></Link>
           <Link className={style.link} to="/accountStatus" onClick={() => handelBurger()}><li>Account Status</li></Link>
-          {(user.isLogin) ? (<>
-            {
-              (isProfileCreated) ? (
-                <>
-                  <Link className={`${style.link} ${style.smallScreen}`} to="/profile" onClick={() => handelBurger()}><li>Profile</li></Link>
-                  <Link className={`${style.link} ${style.smallScreen}`} to="/modifyProfile" onClick={() => handelBurger()}><li>Update Profile</li></Link>
-                </>) : (
-                <>
-                  <Link className={`${style.link} ${style.smallScreen}`} to="/createProfile" onClick={() => handelBurger()}><li>Create Profile</li></Link>
-                </>)
-            }
 
-            <Link className={`${style.link} ${style.smallScreen}`} to="/" onClick={() => handelLogout()}><li>Logout</li></Link></>) : (
-            <Link className={`${style.link} ${style.smallScreen}`} to="/login" onClick={() => handelBurger()}><li>Login</li></Link>)}
+
+          {user.isLogin && <Link className={`${style.link} ${style.smallScreen}`} to="/profile" onClick={() => handelBurger()}><li>Profile</li></Link>}
+          {user.isLogin && <Link className={`${style.link} ${style.smallScreen}`} to="/modifyProfile" onClick={() => handelBurger()}><li>Update Profile</li></Link>}
+          {user.isLogin && <Link className={`${style.link} ${style.smallScreen}`} to="/" onClick={() => handelLogout()}><li>Logout</li></Link>}
+          {!user.isLogin && <Link className={`${style.link} ${style.smallScreen}`} to="/login" onClick={() => handelBurger()}><li>Login</li></Link>}
 
         </ul>
-        <div className={`${style.profile} ${(!burgerClicked) ? (style.hideVisibility) : ('')} ${style.bigScreen}`} onClick={() => handelClick()}>
+        <div ref={refOutSideClick} className={`${style.profile} ${(!burgerClicked) ? (style.hideVisibility) : ('')} ${style.bigScreen}`} onClick={() => handelClick()}>
           {
             (user.isLogin) ? (
               <>
@@ -118,7 +126,7 @@ const Navbar = () => {
                 <div className={`${style.select} ${(!isClicked) ? (style.hide) : ('')}`}>
                   {(isProfileCreated) ? (<><Link className={style.selectLink} to='/profile' onClick={() => handelBurger()}>Profile</Link>
                     <Link className={style.selectLink} to='/modifyProfile' onClick={() => handelBurger()}>Modify Profile</Link>
-                  </>) : (<><Link className={style.selectLink} to='/createProfile' onClick={() => handelBurger()}>Create Profile</Link></>)}
+                  </>) : (<><Link className={style.selectLink} to='/signup' onClick={() => handelBurger()}>Create Profile</Link></>)}
                   <Link className={style.selectLink} to='/' onClick={() => handelLogout()}>Logout</Link>
                 </div>
               </>) : (<>
