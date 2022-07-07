@@ -1,89 +1,92 @@
-import React, {useState} from 'react';
-
+import React, { useState, useEffect } from 'react';
+import { userLogout, getUser } from '../../states/User/UserSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import style from './ModifyProfile.module.css';
-
-const fetchedData = {
-    profilePhoto : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7EAjufrsaffFdvLMDspiG0w_MG0N7eHUPUjz0bkF-v3qO7aFyyKxpKLA5lt7m0P2O_ZI&usqp=CAU',
-    name : 'Sudheer Kumar Prajapat',
-    age : '20',
-    gender : 'Male',
-    email : 'example@gmail.com',
-    aadhaarNo : '123456789012',
-    aadhaarPhoto : 'https://gujjupost.in/wp-content/uploads/2021/08/searchpng.com-sample-aadhaar-card-icon-png-image-free-download-1024x658.png',
-    panNo : '123AB567890',
-    panPhoto : 'https://images.livemint.com/img/2019/07/11/original/e-pan_card_download_1562831552156.PNG',
-    ctc : '20000',
-    salarySlips : ['https://www.hrcabin.com/wp-content/uploads/2021/05/Salary-slip-format-in-excel-download.png', 'https://i.pinimg.com/736x/ed/f6/28/edf6283d6955d5b8488e977e8613b557.jpg'],
-    acHolderName : 'Sudheer Kumar Prajapat',
-    acNo : '123456780123456',
-    ifacCode : 'abc',
-    bankName : 'PNB'
-}
+import { useNavigate } from "react-router-dom";
+import { useSnackbar } from 'notistack';
 
 const ModifyProfile = () => {
-    const [userData, setUserData] = useState(fetchedData);
-    const handelChangeInput = (event)=> {
-        const {name, value} = event.target; 
-        setUserData({ ...userData, [name] : value}); // Modern React Destructuring Syntax
+    const [userData, setUserData] = useState();
+    const user = useSelector(getUser);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
+    const handelChangeInput = (event) => {
+        const { name, value } = event.target;
+        setUserData({ ...userData, [name]: value }); // Modern React Destructuring Syntax
     }
+    const isLogin = Object.keys(user.userInfo).length;
+    
+    useEffect(() => { 
+        if (!isLogin) {
+            enqueueSnackbar("You need to login first", {
+                variant: "error",
+            });
+            dispatch(userLogout({}));
+            setTimeout(() => {
+                navigate('/login');
+            }, 1000);
+        }
+    }, [])
 
-  return (
-    <div className={style.coverContainer}>
-        <div className={style.container}>
-            <h1 className={style.primaryHeading}>Modify Your Profile</h1>
-            <form className={style.form}>
-                <div className={style.bigBox}>
-                    <div className={style.box}>
-                        <h2 className={style.secondaryHeading}>Basic Details</h2>
-                        <div className={style.basicDetails}>
-                            <input className={style.input} value={userData.name} type="text" name='name' placeholder='Enter your name' required onChange={handelChangeInput}/>
-                            <input className={style.input} value={userData.age} type="text" name='age' placeholder='Enter your age' required onChange={handelChangeInput}/>
-                            <div className={style.radios}>
-                                <label htmlFor="gender">Gender : &nbsp;</label>
-                                <label htmlFor="male">Male</label><input className={style.radio} id='male' type="radio" name='gender' value='Male' checked={userData.gender === 'Male'} onChange={handelChangeInput}/>
-                                <label htmlFor="female">Female</label><input className={style.radio} id='female' type="radio" name='gender' value='Female' checked={userData.gender === 'Female'} onChange={handelChangeInput}/>
-                                <label htmlFor="other">Other</label><input className={style.radio} id='other' type="radio" name='gender' value='Other' checked={userData.gender === 'Other'} onChange={handelChangeInput}/>
+    return (
+        <div className={style.coverContainer}>
+            <div className={style.container}>
+                <h1 className={style.primaryHeading}>Modify Your Profile</h1>
+                <form className={style.form}>
+                    <div className={style.bigBox}>
+                        <div className={style.box}>
+                            <h2 className={style.secondaryHeading}>Basic Details</h2>
+                            <div className={style.basicDetails}>
+                                <input className={style.input} value={isLogin ? user.userInfo.userName: ""} type="text" name='name' placeholder='Enter your name' required onChange={handelChangeInput} />
+                                <input className={style.input} value={isLogin ? user.userInfo.age: ""} type="text" name='age' placeholder='Enter your age' required onChange={handelChangeInput} />
+                                <div className={style.radios}>
+                                    {/* <label htmlFor="gender">{isLogin ? user.userInfo.gender: "Gender :"} &nbsp;</label> */}
+                                    <label htmlFor="gender">Gender : &nbsp;</label>
+                                    <label htmlFor="male">Male</label><input className={style.radio} id='male' type="radio" name='gender' value='Male' checked={user.userInfo.gender === 'Male'} onChange={handelChangeInput} />
+                                    <label htmlFor="female">Female</label><input className={style.radio} id='female' type="radio" name='gender' value='Female' checked={user.userInfo.gender  === 'Female'} onChange={handelChangeInput} />
+                                    <label htmlFor="other">Other</label><input className={style.radio} id='other' type="radio" name='gender' value='Other' checked={user.userInfo.gender  === 'Other'} onChange={handelChangeInput} />
+                                </div>
+                                <input className={style.input} value={isLogin ? user.userInfo.email: ""} type="email" name='email' placeholder='Enter your email' required onChange={handelChangeInput} />
+                                <input className={style.input} value={isLogin ? user.userInfo.aadhaarNumber: ""} type="text" name='aadhaarNumber' placeholder='Enter your Aadhaar No.' required onChange={handelChangeInput} />
+                                <input className={style.input} value={isLogin ? user.userInfo.ctc: ""} type="text" name='ctc' placeholder='Enter your CTC' required onChange={handelChangeInput} />
                             </div>
-                            <input className={style.input} value={userData.email} type="email" name='email' placeholder='Enter your email' required onChange={handelChangeInput}/>
-                            <input className={style.input} value={userData.aadhaarNo} type="text" name='aadhaarNo' placeholder='Enter your Aadhaar No.' required onChange={handelChangeInput}/>
-                            <input className={style.input} value={userData.ctc} type="text" name='ctc' placeholder='Enter your CTC' required onChange={handelChangeInput}/>
+                        </div>
+                        <div className={style.box}>
+                            <h2 className={style.secondaryHeading}>Bank Account Details</h2>
+                            <div className={style.acDetails}>
+                                <input className={style.input} value={isLogin ? user.userInfo.accountHolderName: ""} type="text" name='accountHolderName' placeholder='Enter account holder name' required onChange={handelChangeInput} />
+                                <input className={style.input} value={isLogin ? user.userInfo.accountNumber: ""} type="text" name='accountNumber' placeholder='Enter account number' required onChange={handelChangeInput} />
+                                <input className={style.input} value={isLogin ? user.userInfo.IFACcode: ""} type="text" name='IFACcode' placeholder='Enter IFAC Code' required onChange={handelChangeInput} />
+                                <input className={style.input} value={isLogin ? user.userInfo.BankName: ""} type="text" name='BankName' placeholder='Enter name of bank' required onChange={handelChangeInput} />
+                                <input className={style.input} value={isLogin ? user.userInfo.panNumber: ""} type="text" name='panNumber' placeholder='Enter your PAN No.' required onChange={handelChangeInput} />
+                            </div>
                         </div>
                     </div>
-                    <div className={style.box}>
-                        <h2 className={style.secondaryHeading}>Bank Account Details</h2>
-                        <div className={style.acDetails}>
-                            <input className={style.input} value={userData.acHolderName} type="text" name='acHolderName' placeholder='Enter account holder name' required onChange={handelChangeInput}/>
-                            <input className={style.input} value={userData.acNo} type="text" name='acNo' placeholder='Enter account number' required onChange={handelChangeInput}/>
-                            <input className={style.input} value={userData.ifacCode} type="text" name='ifacCode' placeholder='Enter IFAC Code' required onChange={handelChangeInput}/>
-                            <input className={style.input} value={userData.bankName} type="text" name='bankName' placeholder='Enter name of bank' required onChange={handelChangeInput}/>
-                            <input className={style.input} value={userData.panNo} type="text" name='panNo' placeholder='Enter your PAN No.' required onChange={handelChangeInput}/>
+                    <h2 className={style.secondaryHeading}>Documents</h2>
+                    <div className={style.documents}>
+                        <div className={style.imageInput}>
+                            <label className={style.label} htmlFor="profilePhoto">Upload Profile Photo</label>
+                            <input className={style.imgInp} type="file" name='profilePhoto' id='profilePhoto' />
+                        </div>
+                        <div className={style.imageInput}>
+                            <label className={style.label} htmlFor="aadhaarPhoto">Upload Aadhaar Card Photo</label>
+                            <input className={style.imgInp} type="file" name='aadhaarPhoto' id='aadhaarPhoto' />
+                        </div>
+                        <div className={style.imageInput}>
+                            <label className={style.label} htmlFor="panPhoto">Upload PAN Card Photo</label>
+                            <input className={style.imgInp} type="file" name='panPhoto' id='panPhoto' />
+                        </div>
+                        <div className={style.imageInput}>
+                            <label className={style.label} htmlFor="salarySlips">Upload Salary Slips</label>
+                            <input className={style.imgInp} type="file" name='salarySlips' id='salarySlips' />
                         </div>
                     </div>
-                </div>
-                <h2 className={style.secondaryHeading}>Documents</h2>
-                <div className={style.documents}>
-                    <div className={style.imageInput}>
-                        <label className={style.label} htmlFor="profilePhoto">Upload Profile Photo</label>
-                        <input className={style.imgInp}  type="file" name='profilePhoto' id='profilePhoto'/>
-                    </div>
-                    <div className={style.imageInput}>
-                        <label className={style.label} htmlFor="aadhaarPhoto">Upload Aadhaar Card Photo</label>
-                        <input className={style.imgInp}  type="file" name='aadhaarPhoto' id='aadhaarPhoto'/>
-                    </div>
-                    <div className={style.imageInput}>
-                        <label className={style.label} htmlFor="panPhoto">Upload PAN Card Photo</label>
-                        <input className={style.imgInp}  type="file" name='panPhoto' id='panPhoto'/>
-                    </div>
-                    <div className={style.imageInput}>
-                        <label className={style.label} htmlFor="salarySlips">Upload Salary Slips</label>
-                        <input className={style.imgInp} type="file" name='salarySlips' id='salarySlips'/>
-                    </div>
-                </div>
-                <button className={style.btn} type='submit'>Submit</button>
-            </form>
+                    <button className={style.btn} type='submit'>Submit</button>
+                </form>
+            </div>
         </div>
-    </div>
-  );
+    );
 }
 
 export default ModifyProfile;

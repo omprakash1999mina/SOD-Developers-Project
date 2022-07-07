@@ -1,40 +1,28 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
-
 import style from './AccountStatus.module.css';
 import Card from './Card.js';
-// import getRefreshToken from "../../utilities";
+import { userLogout, getUser } from '../../states/User/UserSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { useSnackbar } from 'notistack';
 
 const host = process.env.REACT_APP_API_URL;
-
 const dataArr = [];
-// const dataArr = [
-//     {
-//         status : 'Accepted',
-//         message : 'I am accepting.'
-//     },
-//     {
-//         status : 'Rejected',
-//         message : 'I am rejecting.'
-//     },
-//     {
-//         status : 'Modified',
-//         message : 'I am modifying.',
-//         upRate : '5',
-//         upTenure : '12'
-//     }
-// ];
+
 
 const AccountStatus = () => {
-    const fetchBalance = () =>{
-        // const url = `${host}update/balance`;
-        return 0;
-    }
+    const user = useSelector(getUser);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
+
     const [dAmount, setDAmount] = useState('');
     const [wAmount, setWAmount] = useState('');
-    const [balance, setBalance] = useState(fetchBalance);
+    const [balance, setBalance] = useState(0);
     const [openModal1, setOpenModal1] = useState(false);
     const [openModal2, setOpenModal2] = useState(false);
+
     const updateBalance = (newBalance) => {
         const getData = () => {
             const url = `${host}update/balance`;
@@ -42,8 +30,8 @@ const AccountStatus = () => {
             const refreshToken = localStorage.getItem('refreshToken');
             const id = localStorage.getItem('id');
             const data = {
-                customerId : id,
-                profileAccountBalance : newBalance
+                customerId: id,
+                profileAccountBalance: newBalance
             }
             const config = {
                 headers: {
@@ -55,7 +43,7 @@ const AccountStatus = () => {
                 // const json = await response.json();
                 console.log(data, id, accessToken);
                 console.log(response.data.status === 'success');
-                if(response.data.status === 'success') // eslint-disable-next-line
+                if (response.data.status === 'success') // eslint-disable-next-line
                     setBalance(eval(newBalance));
                 else
                     console.log(response.msg);
@@ -88,7 +76,7 @@ const AccountStatus = () => {
                         window.localStorage.clear();
                         // dispatch(userLogout);
                         //   return false;
-    
+
                         // const ok = getRefreshToken(refreshToken)
                         // if(ok){
                         //   getData();
@@ -110,34 +98,51 @@ const AccountStatus = () => {
     const depositBalance = (e) => {
         e.preventDefault();
         handelOpenModal1(e); // eslint-disable-next-line
-        updateBalance((String)(eval(balance)+eval(dAmount)));
+        updateBalance((String)(eval(balance) + eval(dAmount)));
         console.log('Balance deposited.');
     }
     const withdrawBalance = (e) => {
         e.preventDefault();
         handelOpenModal2(e); // eslint-disable-next-line
-        if(eval(balance)-eval(wAmount) < 0)
+        if (eval(balance) - eval(wAmount) < 0)
             console.log('Insufficient balance.'); // eslint-disable-next-line
-            updateBalance((String)(eval(balance)-eval(wAmount)));
+        updateBalance((String)(eval(balance) - eval(wAmount)));
         // else
         console.log('Balance withdrawn.');
     }
-    const handelChangeInputDeposit = (event)=> {
+    const handelChangeInputDeposit = (event) => {
         setDAmount(event.target.value);
     }
-    const handelChangeInputWithdraw = (event)=> {
+    const handelChangeInputWithdraw = (event) => {
         setWAmount(event.target.value);
     }
+
+    const isLogin = Object.keys(user.userInfo).length;
+    useEffect(() => {
+        if (!isLogin) {
+            enqueueSnackbar("You need to login first", {
+                variant: "error",
+            });
+            dispatch(userLogout({}));
+            setTimeout(() => {
+                navigate('/login');
+            }, 1000);
+        }else{
+            setBalance(user.userInfo.profileAccountBalance)
+        }
+    }, [])
+
+
     return (
         <>
             <div className={style.container}>
                 <div className={style.box}>
                     <h1 className={style.primaryHeading}>Your Account Status</h1>
-                    <h2 className={style.secondaryHeading}>Current Bank Balance : {balance}</h2>
+                    <h2 className={style.secondaryHeading}>Current Profile-Account Balance : {balance}</h2>
                     <div className={style.innerBox}>
                         <div className={style.modalContainer}>
                             <button onClick={handelOpenModal1} className={style.btn}>Deposit</button>
-                            <div className={`${style.modal} ${(openModal1)?(style.visible):(style.hide)}`}>
+                            <div className={`${style.modal} ${(openModal1) ? (style.visible) : (style.hide)}`}>
                                 <div className={style.modalContent}>
                                     <h3 className={style.modalHeading}>Do you really want to deposit the money??</h3>
                                     <form className={style.form}>
@@ -152,7 +157,7 @@ const AccountStatus = () => {
                         </div>
                         <div className={style.modalContainer}>
                             <button onClick={handelOpenModal2} className={style.btn}>Withdraw</button>
-                            <div className={`${style.modal} ${(openModal2)?(style.visible):(style.hide)}`}>
+                            <div className={`${style.modal} ${(openModal2) ? (style.visible) : (style.hide)}`}>
                                 <div className={style.modalContent}>
                                     <h3 className={style.modalHeading}>Do you really want to withdraw the money?</h3>
                                     <form className={style.form}>
@@ -168,9 +173,9 @@ const AccountStatus = () => {
                     </div>
                 </div>
                 <div className={style.loanStatus}>
-                {dataArr.length !== 0 && dataArr.map((currentData)=>{
-                    return <Card key={currentData.status+currentData.message+currentData.rate+Math.random()} data={currentData}/>
-                })}
+                    {dataArr.length !== 0 && dataArr.map((currentData) => {
+                        return <Card key={currentData.status + currentData.message + currentData.rate + Math.random()} data={currentData} />
+                    })}
                 </div>
             </div>
         </>
