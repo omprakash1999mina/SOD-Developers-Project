@@ -17,6 +17,8 @@ import SignUp from './Components/LoginSignUp/SignUp';
 import ForgetPassword from './Components/ForgetPassword/ForgetPassword.js';
 import Footer from "./Components/Footer/Footer.js";
 import NotFound from "./Components/NotFound/NotFound";
+import AboutUs from "./Components/AboutUs/AboutUs";
+import ContactUs from "./Components/Contactus/ContactUs";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
           <Navbar/>
           <Routes>
             <Route exact path = '/' element={<Home/>}/>
+            <Route exact path = '/aboutus' element={<AboutUs/>}/>
+            <Route exact path = '/contactus' element={<ContactUs/>}/>
             <Route exact path = '/loanRequests' element={<LoanRequests/>}/>
             <Route exact path = '/takeLoan' element={<TakeLoan/>}/>
             <Route exact path = '/profile' element={<Profile/>}/>
