@@ -3,19 +3,26 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import style from "./LoginSignUp.module.css";
 import axios from "axios";
+import Loader from '../Loader/Loader';
+
 const host = process.env.REACT_APP_API_URL;
 
 const Login = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const navigate = useNavigate();
+  const navigate = useNavigate();  
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [loading, setLoading] = React.useState(false);
+  
+  
   const handelChangeInput = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value }); // Modern React Destructuring Syntax
   };
-
+  
   const signinHandler = (e) => {
     e.preventDefault();
+    setLoading(true);
+
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -25,6 +32,7 @@ const Login = () => {
     Promise.resolve(axios.post(url, JSON.stringify(formData), config))
       .then((res) => {
         // console.log(res);
+        setLoading(false);
         localStorage.setItem("id", res.data.id);
         localStorage.setItem("accessToken", res.data.access_token);
         localStorage.setItem("refreshToken", res.data.refresh_token);
@@ -41,12 +49,13 @@ const Login = () => {
             variant: "error",
           });
         }
+        setLoading(false);
       });
   };
 
   return (
     <div className={style.coverContainer}>
-      
+      {loading && <Loader/>}
       <section className="vh-100">
         <div className="container py-5 h-100">
           <div className="row d-flex align-items-center justify-content-center h-100">
