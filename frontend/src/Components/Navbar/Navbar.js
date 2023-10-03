@@ -97,7 +97,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`${style.navbar} ${(burgerClicked) ? (style.expandNav) : ('')}`}>
+      {/* <nav className={`${style.navbar} ${(burgerClicked) ? (style.expandNav) : ('')}`}>
         <div className={`${style.logo} ${style.visible}`} onClick={handelBurgerByLogo}>
           <Link to="/">
             <img src={logo} alt="Logo" />
@@ -130,7 +130,7 @@ const Navbar = () => {
                   <Link className={style.selectLink} to='/' onClick={() => handelLogout()}>Logout</Link>
                 </div>
               </>) : (<>
-                <Link to="/login"><button className={style.btnLogin}>Login</button></Link>
+                <Link to="/login"><button className={style.btnLogin}>SignIn</button></Link>
               </>)
           }
         </div>
@@ -142,7 +142,47 @@ const Navbar = () => {
           <div className={style.line}></div>
         </div>}
         {(burgerClicked) && <div className={`${style.close} ${style.smallScreen}`} onClick={() => handelBurger()}></div>}
-      </nav>
+      </nav> */}
+      <div className={style.mainContainer}>
+
+        <nav className="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5">
+            {/* <a href="index.html" className="navbar-brand d-flex align-items-center">
+                <h1 className="m-0"><img className="img-fluid me-3" src={logo} alt="Logo"/>Insure</h1>
+            </a> */}
+            <Link to={"/"}>
+              <h3 className="row d-flex align-items-center">
+                <div className={style.logo}>
+                    <img className="img-fluid" src="img/logo.jpg" alt="logo"/>
+                </div>
+              LoanCorner</h3>
+            </Link>
+            {/*  mobile */}
+            <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span className="navbar-toggler-icon"></span>
+            </button>
+
+            <div className="collapse navbar-collapse" id="navbarCollapse">
+                <div className="navbar-nav mx-auto bg-light rounded pe-4 py-3 py-lg-0">
+                    <Link to={"/"} className="nav-item nav-link active">Home</Link>
+                    <Link to={"/aboutus"} className="nav-item nav-link">About Us</Link>
+                    <Link to={"/loanRequests"} className="nav-item nav-link">Loan Requests</Link>
+                    <Link to={"/takeloan"} className="nav-item nav-link">Take Loan</Link>
+                    {/* <div className="nav-item dropdown">
+                        <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <div className="dropdown-menu bg-light border-0 m-0">
+                            <a href="feature.html" className="dropdown-item">Features</a>
+                            <a href="appointment.html" className="dropdown-item">Appointment</a>
+                            <a href="team.html" className="dropdown-item">Team Members</a>
+                            <a href="testimonial.html" className="dropdown-item">Testimonial</a>
+                            <a href="404.html" className="dropdown-item">404 Page</a>
+                        </div>
+                    </div> */}
+                    <Link to={"/accountStatus"} className="nav-item nav-link">Account Status</Link>
+                </div>
+            </div>
+            <Link to={"/login"} className="btn btn-primary px-3 d-none d-lg-block">Sign In</Link>
+        </nav>
+      </div>
     </>
   );
 }

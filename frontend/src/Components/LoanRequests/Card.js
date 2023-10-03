@@ -17,7 +17,6 @@ const Card = (props) => {
     const handelOpenModal1 = (e) => {
         e.preventDefault();
         const getdata = () => {
-            // console.log("Hii")
             const atoken = window.localStorage.getItem("accessToken");
             const rtoken = window.localStorage.getItem("refreshToken");
             if (atoken) {
@@ -90,7 +89,6 @@ const Card = (props) => {
     const handelOpenModal2 = (e) => {
         e.preventDefault();
         const getdata = () => {
-            // console.log("Hii")
             const atoken = window.localStorage.getItem("accessToken");
             const rtoken = window.localStorage.getItem("refreshToken");
             if (atoken) {
@@ -164,7 +162,6 @@ const Card = (props) => {
     const handelOpenModal3 = (e) => {
         e.preventDefault();
         const getdata = () => {
-            // console.log("Hii")
             const atoken = window.localStorage.getItem("accessToken");
             const rtoken = window.localStorage.getItem("refreshToken");
             if (atoken) {
@@ -236,78 +233,6 @@ const Card = (props) => {
         setOpenModal3(!openModal3);
     }
 
-    // const accept = (e)=>{
-    //         e.preventDefault();
-    //             try {
-    //               const getdata = () => {
-    //                 const atoken = window.localStorage.getItem("access_token");
-    //                 const rtoken = window.localStorage.getItem("refresh_token");
-    //                 const id = window.localStorage.getItem("id");
-    //                 if (atoken) {
-    //                   const config = {
-    //                     headers: {
-    //                       Authorization: `Bearer ${atoken}`,
-    //                     },
-    //                   };
-
-    //                   Promise.resolve(
-    //                     axios.post(
-    //                      "https://apis.opdevelopers.live/api/loanrequest/accept",
-    //                       {
-    //                         Authorization: `Bearer ${atoken}`,
-    //                         lendersId: id,
-    //                         loanid:props.id
-    //                       }
-    //                     )
-    //                   )
-    //                     .then((res) => {
-    //                       console.log(res)
-    //                       enqueueSnackbar("Loan accepted successfully", {
-    //                         variant: 'success',
-    //                       });
-    //                       handelOpenModal1()
-    //                       return;
-    //                     })
-    //                     .catch((error) => {
-    //                       if (error.response && error.response.status === 401) {
-    //                         axios
-    //                           .post(
-    //                             "https://apis.opdevelopers.live/api/refresh",
-    //                             {
-    //                                 refresh_token:rtoken
-    //                             }
-    //                           )
-    //                           .then((res) => {
-    //                             localStorage.setItem(
-    //                               "access_token",
-    //                               res.data.result.accessToken
-    //                             );
-    //                             localStorage.setItem(
-    //                               "refreshToken",
-    //                               res.data.result.refreshToken
-    //                             );
-    //                             getdata();
-    //                             return;
-    //                           })
-    //                           .catch((error) => {
-    //                             window.localStorage.clear();
-    //                             dispatch(userLogout);
-    //                             return;
-    //                           });
-    //                       }
-    //                     });
-    //                 }
-    //               };
-
-    //               getdata();
-    //               return;
-    //             } catch (error) {
-    //               console.log(error);
-    //               dispatch(userLogout);
-    //             }
-
-
-    //     }
     return (
         <>
             <div className={style.card}>
@@ -349,7 +274,7 @@ const Card = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div className={style.modalContainer}>
+                    {/* <div className={style.modalContainer}>
                         <button onClick={handelOpenModal2} className={`${style.btn} ${style.rejectBtn}`}>Reject</button>
                         <div className={`${style.modal} ${(openModal2) ? (style.visible) : (style.hide)}`}>
                             <div className={style.modalContent}>
@@ -363,7 +288,7 @@ const Card = (props) => {
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className={style.modalContainer}>
                         <button onClick={handelOpenModal3} className={`${style.btn} ${style.modifyBtn}`}>Modify</button>
                         <div className={`${style.modal} ${(openModal3) ? (style.visible) : (style.hide)}`}>

@@ -23,4 +23,3 @@ router.get('/users/:id', [auth], userController.getUsersOne);
 router.post('/email/verify', otpController.send);
 
 export default router;
-
