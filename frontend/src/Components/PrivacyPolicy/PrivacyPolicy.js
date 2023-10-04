@@ -223,7 +223,7 @@ const PrivacyPolicy = () => {
           us:
         </p>
         <ul className={styles.list}>
-          <li>By email: info@loancorner.in </li>
+          <li>By email: omprakash.bairwa.iitbhu20@gmail.com </li>
         </ul>
       </div>
     </div>

@@ -27,7 +27,7 @@ const Footer = () => {
                     <h5 className="text-light mb-4">Get In Touch</h5>
                     <p><i className="fa fa-map-marker-alt me-3"></i>123 Street, New Delhi, India</p>
                     <p><i className="fa fa-phone-alt me-3"></i>+91 1234567890</p>
-                    <p><i className="fa fa-envelope me-3"></i>info@example.com</p>
+                    <p><i className="fa fa-envelope me-3"></i>omprakash.bairwa.iitbhu20@gmail.com</p>
                 </div>
                 <div className="col-lg-3 col-md-6">
                     <h5 className="text-light mb-4">Quick Links</h5>
