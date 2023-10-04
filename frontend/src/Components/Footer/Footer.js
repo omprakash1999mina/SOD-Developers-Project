@@ -27,15 +27,15 @@ const Footer = () => {
                     <h5 className="text-light mb-4">Get In Touch</h5>
                     <p><i className="fa fa-map-marker-alt me-3"></i>123 Street, New Delhi, India</p>
                     <p><i className="fa fa-phone-alt me-3"></i>+91 1234567890</p>
-                    <p><i className="fa fa-envelope me-3"></i>omprakash.bairwa.iitbhu20@gmail.com</p>
+                    <p><i className="fa fa-envelope me-3"></i>info@LoanCorner.in</p>
                 </div>
                 <div className="col-lg-3 col-md-6">
                     <h5 className="text-light mb-4">Quick Links</h5>
                     <Link to="/aboutus" className="btn btn-link">About Us</Link>
                     <Link to="/contactus" className="btn btn-link">Contact Us</Link>
                     {/* <Link to="#" className="btn btn-link">Our Services</Link> */}
-                    {/* <Link to="#" className="btn btn-link">Terms & Condition</Link> */}
-                    <Link to="#" className="btn btn-link">Support</Link>
+                    <Link to="/privacyPolicy" className="btn btn-link">Terms & Condition</Link>
+                    {/* <Link to="#" className="btn btn-link">Support</Link> */}
                 </div>
                 <div className="col-lg-3 col-md-6">
                     <h5 className="text-light mb-4">Newsletter</h5>
