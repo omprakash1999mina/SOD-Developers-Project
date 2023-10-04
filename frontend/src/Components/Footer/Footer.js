@@ -33,8 +33,8 @@ const Footer = () => {
                     <h5 className="text-light mb-4">Quick Links</h5>
                     <Link to="/aboutus" className="btn btn-link">About Us</Link>
                     <Link to="/contactus" className="btn btn-link">Contact Us</Link>
-                    <Link to="#" className="btn btn-link">Our Services</Link>
-                    <Link to="#" className="btn btn-link">Terms & Condition</Link>
+                    {/* <Link to="#" className="btn btn-link">Our Services</Link> */}
+                    {/* <Link to="#" className="btn btn-link">Terms & Condition</Link> */}
                     <Link to="#" className="btn btn-link">Support</Link>
                 </div>
                 <div className="col-lg-3 col-md-6">
