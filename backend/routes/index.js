@@ -12,6 +12,7 @@ router.post('/loanrequest/reject', [auth], loanStatusController.reject);
 router.post('/loanrequest/negotiation', [auth], loanStatusController.negotiation);
 router.post('/loanrequest/update/loan', [auth], loanStatusController.updateLoan);
 router.post('/update/balance', [auth], loanStatusController.updateBalance);
+router.post('/pay/installment', [auth], loanStatusController.payInstallment);
 
 router.post('/login', loginController.login);
 router.post('/forgot/password', forgotPasswordController.forgot);
