@@ -1,7 +1,7 @@
 const router = express.Router();
 import express from "express";
 import auth from "../middleware/auth";
-import { loginController, userController, refreshController, loanStatusController, registerController, forgotPasswordController } from '../controllers';
+import { loginController, userController, refreshController, loanStatusController, registerController, forgotPasswordController,NotificationController } from '../controllers';
 import otpController from "../controllers/auth/otpController";
 
 router.post('/apply/loan', [auth], loanStatusController.applyLoan);
@@ -22,5 +22,6 @@ router.post('/logout', loginController.logout);
 router.put('/update/:id', [auth], userController.update);
 router.get('/users/:id', [auth], userController.getUsersOne);
 router.post('/email/verify', otpController.send);
+router.put('/notification/cycle/:username/:key', NotificationController.DailyCheck);
 
 export default router;

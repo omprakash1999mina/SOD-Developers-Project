@@ -22,6 +22,8 @@
     "ioredis": "^5.0.4",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
+    "kafkajs": "^2.2.4",
+    "moment": "^2.30.1",
     "mongoose": "^5.12.13",
     "nodemon": "^2.0.16",
     "redis": "^4.1.0"

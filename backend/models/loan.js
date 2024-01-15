@@ -8,7 +8,7 @@ const loanSchema = new Schema({
     intRate: {type: String, required: true },
     EMIAmount: {type: String, required: true },
     installments: {type: Array, required: true },
-    currentInstallment: {type: String, required: true },
+    NextInstallment: {type: String, required: true },
     status: {type: String, default: 'available' }
 }, { timestamps: true  });
 

@@ -5,6 +5,7 @@ import CustomErrorHandler from '../Services/CustomerrorHandler';
 import discord from '../Services/discord';
 import mailService from '../Services/sendMail';
 import loan from '../models/loan';
+import moment from 'moment';
 
 const loanStatusReqSchema = Joi.object({
     lendersId: Joi.string().required(),
@@ -214,13 +215,13 @@ const loanStatusController = {
         if (error) {
             return next(CustomErrorHandler.badRequest());
         }
-        console.log('level 1')
+        // console.log('level 1')
         const exist = await User.exists({ _id: req.body.customerId });
         if (!exist) {
             discord.SendErrorMessageToDiscord(req.body.customerId, "Apply Loan", "User not exist in our database !!");
             return next(CustomErrorHandler.unAuthorized())
         }
-        console.log('level 2')
+        // console.log('level 2')
 
         let already_Applied_for_loan = await Loan.findOne({ customerId: req.body.customerId })
         console.log(already_Applied_for_loan)
@@ -232,7 +233,8 @@ const loanStatusController = {
             const { customerId, loanAmount, tenure, intRate } = req.body;
             let EMIAmount = (loanAmount + loanAmount*intRate)/tenure;
             let installments = Array(tenure).fill(0);
-            let currentInstallment = 0;
+            let NextInstallment = NextDate();
+
             let document = await Loan.create({
                 customerId,
                 loanAmount,
@@ -240,7 +242,7 @@ const loanStatusController = {
                 intRate,
                 EMIAmount,
                 installments,
-                currentInstallment
+                NextInstallment
             })
             if (!document) {
                 discord.SendErrorMessageToDiscord(req.body.customerId, "Apply Loan", "error in creating loan in database ");
@@ -283,14 +285,14 @@ const loanStatusController = {
 
             let EMIAmount = (loanAmount + loanAmount*intRate)/tenure;
             let installments = Array(tenure).fill(0);
-            let currentInstallment = 0;
+            let NextInstallment = NextDate();
             let document = await Loan.findOneAndUpdate({ _id: loanId }, {
                 loanAmount,
                 tenure,
                 intRate,
                 EMIAmount,
                 installments,
-                currentInstallment
+                NextInstallment
             })
             if (!document) {
                 discord.SendErrorMessageToDiscord(req.body.customerId, "Loan Update", "error in finding and update loanId");
@@ -389,3 +391,12 @@ const loanStatusController = {
 
 }
 export default loanStatusController;
+
+
+const NextDate=()=>{
+    const today = moment().utcOffset(330);
+    // let date = today.date() + 30;
+    // if(date == 31) date = 30;
+    // return toString(date)+'-'+toString()+'-'+toString(today.year());
+    return today.milliseconds();
+}
