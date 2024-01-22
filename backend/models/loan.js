@@ -7,7 +7,13 @@ const loanSchema = new Schema({
     tenure: {type: Object, required: true },
     intRate: {type: String, required: true },
     EMIAmount: {type: String, required: true },
-    installments: {type: Array, required: true },
+    installments: {
+        type: [{
+            dueDate: { type: String, required: true },
+            isDue: { type: Boolean, default: true }
+        }],
+        required: true
+    },
     NextInstallment: {type: String, required: true },
     status: {type: String, default: 'available' }
 }, { timestamps: true  });
