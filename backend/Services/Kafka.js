@@ -18,6 +18,7 @@ const kafka = new Kafka({
 const KafkaService = {
     async send(data) {
         const producer = kafka.producer();
+        let success = false;
 
         const run = async () => {
             // Connect the producer
@@ -33,12 +34,15 @@ const KafkaService = {
             console.log("Message sent successfully");
             await producer.disconnect();
             console.log("Kafka Disconnected");
+            success=true
         };
 
         run().catch(err =>{
             console.error('Erros Kafka-Service: ', err)
             Discord.SendErrorMessageToDiscord("Error","Kafka-Service",err)
         });
+
+        return success
     }
 }
 

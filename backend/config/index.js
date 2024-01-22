@@ -1,15 +1,16 @@
-import dotenv  from "dotenv";
+import dotenv from "dotenv";
 dotenv.config();
 
-export const{
+export const {
     APP_PORT,
     DEBUG_MODE,
+    OWNER_EMAIL,
     DB_URL,
     APP_URL,
     WEB_URL,
     JWT_SECRET,
     REFRESH_SECRET,
-    
+
     FIREBASE_API_KEY,
     FIREBASE_AUTH_DOMAIN,
     FIREBASE_PROJECT_ID,
@@ -27,6 +28,11 @@ export const{
     EMAIL_ADMIN_ID,
     EMAIL_ADMIN_PASSWORD,
 
+    TEMPLATE_ID_FORGOT_PASSWORD,
+    TEMPLATE_ID_SIGNUP_SUCCESS,
+    TEMPLATE_ID_LOAN_DUE,
+    TEMPLATE_ID_LOAN_BASIC,
+
     NOTIFICATION_USERNAME,
     NOTIFICATION_KEY,
     KAFKA_USERNAME,
@@ -35,5 +41,5 @@ export const{
     KAFKA_BROKER1,
     KAFKA_CLIENT_ID,
     KAFKA_TOPIC
-    
-}= process.env;
+
+} = process.env;
