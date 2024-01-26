@@ -10,7 +10,7 @@
 
 /* Container Styling */
 .coverContainer{
-  margin-top:73px;
+  /* margin-top:73px; */
   min-height:calc(100vh - 135px - 73px);
   display: flex;
   align-items: center;
