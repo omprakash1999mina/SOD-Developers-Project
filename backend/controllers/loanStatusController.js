@@ -231,7 +231,7 @@ const loanStatusController = {
         }
         try {
             const { customerId, loanAmount, tenure, intRate } = req.body;
-            let EMIAmount = (loanAmount + loanAmount*intRate)/tenure;
+            let EMIAmount = (loanAmount + loanAmount * intRate) / tenure;
             let currentDate = new Date();
 
             let installments = installmentBreakdown(currentDate, tenure);
@@ -285,7 +285,7 @@ const loanStatusController = {
                 return next(CustomErrorHandler.badRequest())
             }
 
-            let EMIAmount = (loanAmount + loanAmount*intRate)/tenure;
+            let EMIAmount = (loanAmount + loanAmount * intRate) / tenure;
 
             let currentDate = new Date();
             let installments = installmentBreakdown(currentDate, tenure);
@@ -375,8 +375,8 @@ const loanStatusController = {
                 profileAccountBalance
             })
             let currentInstallment = loanExist.currentInstallment;
-            currentInstallment=currentInstallment+1;
-            
+            currentInstallment = currentInstallment + 1;
+
             const loanUpdated = await loan.findOneAndUpdate({ _id: loanId }, {
                 currentInstallment
             })
@@ -398,17 +398,21 @@ const loanStatusController = {
 export default loanStatusController;
 
 
-const NextDate=(currentDate, steps = 1)=>{
+const NextDate = (currentDate, steps = 1) => {
     let newDate = new Date();
-    newDate.setDate(currentDate.getDate()+30*steps);
-    return newDate.toString("");
+    newDate.setDate(currentDate.getDate() + 30 * steps);
+    const mili = Date.parse(newDate.toString(""));
+    // console.log(mili);
+    // Convert hours to days
+    const days = mili / (24 * 3600 * 1000);
+    // console.log(days)
+    return days;
 }
 
 const installmentBreakdown = (currentDate, tenure) => {
     let installments = Array(tenure);
-    for(let i = 0; i < tenure; i++)
-    {
-        installments[i] = {dueDate: NextDate(currentDate, i+1), isDue: true};
+    for (let i = 0; i < tenure; i++) {
+        installments[i] = { dueDate: NextDate(currentDate, i + 1), isDue: true };
     }
     return installments;
 }

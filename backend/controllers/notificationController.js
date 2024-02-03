@@ -2,31 +2,43 @@ import { Loan, User } from "../models";
 import CustomErrorHandler from '../Services/CustomerrorHandler';
 import discord from '../Services/discord';
 import kafka from '../Services/Kafka';
-// import moment from 'moment';
-import { NOTIFICATION_KEY, NOTIFICATION_USERNAME } from '../config';
+import moment from 'moment';
+import { NOTIFICATION_KEY, NOTIFICATION_USERNAME, OWNER_EMAIL, TEMPLATE_ID_LOAN_DUE } from '../config';
 
 const NotificationController = {
     async DailyCheck(req, res, next) {
-        const {username,key } = req.params;
-        const ok = validate(username,key);
+        const { username, key } = req.params;
+        const ok = validate(username, key);
         if (!ok) {
             return next(CustomErrorHandler.badRequest());
         }
         try {
-            // const today = moment().utcOffset(330);
+            const today = moment().utcOffset(330);
+            const days = (today.valueOf())/(24*3600*1000)
             let loan;
-            // loan = await Loan.find({ NextInstallment: {$lte: today.milliseconds()} }).select('customerId -_id');
-            loan = await Loan.find().select('customerId -_id');
-            let userIds=[]
+            loan = await Loan.find({ NextInstallment: {$lte: days} }).select('customerId -_id');
+            // loan = await Loan.find().select('customerId -_id');
+            let userIds = []
             loan.map(obj => userIds.push(obj.customerId))
-            // console.log(userIds)
-            let data = await User.find({'_id': {$in: userIds}}).select('userName email -_id');
-            // console.log(users);
-            if(data){
-                console.log(data);
+            let data = await User.find({ '_id': { $in: userIds } }).select('userName email -_id').lean();
+            
+            if (data) {
+                // console.log("Before:");
+                // console.log(data);
+                const externalFields = { From: `${OWNER_EMAIL}`, MailName: "", Subject: "Payment Due!", company: "LoanCorner", TemplateId: `${TEMPLATE_ID_LOAN_DUE}` }
+                data = data.map(user => {
+                    user['To'] = user['email'];
+                    Object.keys(externalFields).forEach(key => {
+                        const value = externalFields[key];
+                        user[key]=value;
+                    });
+                    return user;
+                });
+                // console.log("After: ")
+                // console.log(data)
                 kafka.send(data);
             }
-            else{
+            else {
                 discord.SendErrorMessageToDiscord(loan, "Notification Controller", "No loan EMI's due");
             }
 
@@ -40,6 +52,6 @@ const NotificationController = {
 }
 export default NotificationController;
 
-const validate = (username,key)=>{
-    return (username==NOTIFICATION_USERNAME && key==NOTIFICATION_KEY);
+const validate = (username, key) => {
+    return (username == NOTIFICATION_USERNAME && key == NOTIFICATION_KEY);
 }
