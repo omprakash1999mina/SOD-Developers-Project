@@ -15,10 +15,15 @@ const NotificationController = {
         try {
             const today = moment().utcOffset(330);
             const days = (today.valueOf())/(24*3600*1000)
+            // console.log(days)
             let loan;
             loan = await Loan.find({ NextInstallment: {$lte: days} }).select('customerId -_id');
             // loan = await Loan.find().select('customerId -_id');
             let userIds = []
+            if(loan.length == 0){
+                res.status(200).json({ status: "success", msg: "No Notifications exist to process !" });
+                return;
+            }
             loan.map(obj => userIds.push(obj.customerId))
             let data = await User.find({ '_id': { $in: userIds } }).select('userName email -_id').lean();
             
@@ -39,7 +44,7 @@ const NotificationController = {
                 kafka.send(data);
             }
             else {
-                discord.SendErrorMessageToDiscord(loan, "Notification Controller", "No loan EMI's due");
+                discord.SendErrorMessageToDiscord(loan, "Notification Controller", "No loan EMIs due");
             }
 
         } catch (err) {

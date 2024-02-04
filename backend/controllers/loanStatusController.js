@@ -235,7 +235,9 @@ const loanStatusController = {
             let currentDate = new Date();
 
             let installments = installmentBreakdown(currentDate, tenure);
-            let NextInstallment = NextDate(currentDate, 1);
+            const milliseconds = Date.parse(NextDate(currentDate, 1));
+            // Convert milliseconds to days
+            let NextInstallment = milliseconds / (24 * 3600 * 1000);
 
             let document = await Loan.create({
                 customerId,
@@ -289,7 +291,9 @@ const loanStatusController = {
 
             let currentDate = new Date();
             let installments = installmentBreakdown(currentDate, tenure);
-            let NextInstallment = NextDate(currentDate, 1);
+            const milliseconds = Date.parse(NextDate(currentDate, 1));
+            // Convert milliseconds to days
+            let NextInstallment = milliseconds / (24 * 3600 * 1000);
 
             let document = await Loan.findOneAndUpdate({ _id: loanId }, {
                 loanAmount,
@@ -401,12 +405,7 @@ export default loanStatusController;
 const NextDate = (currentDate, steps = 1) => {
     let newDate = new Date();
     newDate.setDate(currentDate.getDate() + 30 * steps);
-    const mili = Date.parse(newDate.toString(""));
-    // console.log(mili);
-    // Convert hours to days
-    const days = mili / (24 * 3600 * 1000);
-    // console.log(days)
-    return days;
+    return newDate.toString("");
 }
 
 const installmentBreakdown = (currentDate, tenure) => {
