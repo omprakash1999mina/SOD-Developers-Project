@@ -23,7 +23,7 @@ try {
 } catch (err) {
   console.log('DB connection failed');
 }
-global.appRoot = path.resolve(__dirname);
+// global.appRoot = path.resolve(__dirname);
 const reqResTime = new PClient.Histogram({
   name: "Server_req_res_time",
   help: "This shows the time taken by a request",
