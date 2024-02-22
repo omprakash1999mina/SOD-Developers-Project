@@ -1,8 +1,12 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "",
+  "name": "sod-server",
+  "version": "5.2.0",
+  "description": "SOD project developed by Om Prakash Bairwa [Royal_IITian] ",
   "main": "index.js",
+  "engines": {
+    "node": "~21.0.0",
+    "npm": "~10.2.0"
+  },
   "scripts": {
     "dev": "nodemon -r esm server.js",
     "start": "node -r esm server.js"
