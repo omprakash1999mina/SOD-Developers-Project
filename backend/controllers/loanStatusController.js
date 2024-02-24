@@ -6,7 +6,6 @@ import discord from '../Services/discord';
 import mailService from '../Services/sendMail';
 import loan from '../models/loan';
 import moment from 'moment';
-import Logger from '../Services/logger';
 
 const loanStatusReqSchema = Joi.object({
     lendersId: Joi.string().required(),
@@ -57,8 +56,7 @@ const loanStatusController = {
                 type,
             });
             if (!document) {
-                Logger.error(req.body.lendersId, "Accept Loan",err.message);
-                discord.SendErrorMessageToDiscord(req.body.lendersId, "Accept Loan", "error in creating loan request in database !!");
+                discord.SendErrorMessageToDiscord(req.body.lendersId, "Accept Loan", "error in creating loan reaquest in database !!");
                 return next(CustomErrorHandler.serverError())
             }
             document = await Loan.findOneAndUpdate({ _id: loan._id }, {
@@ -75,7 +73,6 @@ const loanStatusController = {
             mailService.send(user.userName, 'loan-accept', user.email, lender.userName, lender.email)
 
         } catch (err) {
-            Logger.error(req.body.lendersId, "Accept Loan",err.message);
             discord.SendErrorMessageToDiscord(req.body.lendersId, "Accept Loan", err);
             return next(err);
         }
@@ -112,7 +109,6 @@ const loanStatusController = {
                 message
             });
             if (!request) {
-                Logger.error(req.body.lendersId, "Reject", "error in creating loan request in database !!");
                 discord.SendErrorMessageToDiscord(req.body.lendersId, "Reject", "error in creating loan request in database !!");
                 return next(CustomErrorHandler.serverError())
             }
@@ -127,7 +123,6 @@ const loanStatusController = {
 
             res.status(201).json({ status: "success", msg: "Successfully rejected" });
         } catch (err) {
-            Logger.error(req.body.lendersId, "Reject", err.message);
             discord.SendErrorMessageToDiscord(req.body.lendersId, "Reject", err);
             return next(CustomErrorHandler.serverError());
         }
@@ -157,7 +152,6 @@ const loanStatusController = {
                     message
                 });
                 if (!request) {
-                    Logger.error(req.body.lendersId, "Negotiation", "error in creating loan request in database !!");
                     discord.SendErrorMessageToDiscord(req.body.lendersId, "Negotiation", "error in creating loan request in database !!");
                     return next(CustomErrorHandler.serverError())
                 }
@@ -171,11 +165,9 @@ const loanStatusController = {
                 res.status(201).json({ status: "success", msg: "negotiation request posted successfully !" });
             }
             else {
-                Logger.info("Loan-modify" ,"Loan already accepted by someone !!")
                 return next(CustomErrorHandler.badRequest("Loan already accepted by someone !!"))
             }
         } catch (err) {
-            Logger.error(req.body.lendersId, "Negotiation", err);
             discord.SendErrorMessageToDiscord(req.body.lendersId, "Negotiation", err);
             return next(CustomErrorHandler.serverError());
         }
@@ -188,7 +180,6 @@ const loanStatusController = {
         try {
             document = await Loan.find({ status: "available" }).select('-__v')
         } catch (error) {
-            Logger.error(req.body.customerId, "Get Request All Loans", error.message);
             discord.SendErrorMessageToDiscord(req.body.customerId, "Get Request All Loans", error);
             return next(error)
         }
@@ -206,7 +197,6 @@ const loanStatusController = {
                 return next(CustomErrorHandler.badRequest())
             }
         } catch (error) {
-            Logger.error(req.params.id, "Get Request One Loan", error.message);
             discord.SendErrorMessageToDiscord(req.params.id, "Get Request One Loan", error);
             return next(error)
         }
@@ -259,13 +249,11 @@ const loanStatusController = {
                 NextInstallment
             })
             if (!document) {
-                Logger.error(req.body.customerId, "Apply Loan", "error in creating loan in database ");
                 discord.SendErrorMessageToDiscord(req.body.customerId, "Apply Loan", "error in creating loan in database ");
                 return next(CustomErrorHandler.serverError())
             }
             console.log(document);
         } catch (error) {
-            Logger.error(req.body.customerId, "Apply Loan", error.message);
             discord.SendErrorMessageToDiscord(req.body.customerId, "Apply Loan", error);
             return next(error);
         }
@@ -316,13 +304,11 @@ const loanStatusController = {
                 NextInstallment
             })
             if (!document) {
-                Logger.error(req.body.customerId, "Loan Update", "error in finding and update loanId");
                 discord.SendErrorMessageToDiscord(req.body.customerId, "Loan Update", "error in finding and update loanId");
                 return next(CustomErrorHandler.serverError())
             }
             console.log(document);
         } catch (error) {
-            Logger.error(req.body.customerId, "Loan Update", error.message);
             discord.SendErrorMessageToDiscord(req.body.customerId, "Loan Update", error);
             return next(error);
         }
@@ -359,7 +345,6 @@ const loanStatusController = {
             }
 
         } catch (error) {
-            Logger.error(req.body.customerId, "Profile account balance update", error.message);
             discord.SendErrorMessageToDiscord(req.body.customerId, "Profile account balance update", error);
             return next(CustomErrorHandler.serverError())
         }
@@ -407,7 +392,6 @@ const loanStatusController = {
             }
 
         } catch (error) {
-            Logger.error(req.body.customerId, "Installment Payment", error.message);
             discord.SendErrorMessageToDiscord(req.body.customerId, "Installment Payment", error);
             return next(CustomErrorHandler.serverError())
         }
