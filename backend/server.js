@@ -6,6 +6,12 @@ const app = express();
 import routes from './routes';
 import mongoose from 'mongoose';
 import PrometheusMetricsController from './Services/Prometheus';
+import cors from "cors";
+
+app.use(cors({
+  origin: '*',
+  methods: ["GET", "POST", "DELETE", "PUT"]
+}));
 
 //Database connection
 try {
